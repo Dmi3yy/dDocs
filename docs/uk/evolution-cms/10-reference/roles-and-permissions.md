@@ -1,0 +1,124 @@
+# Довідка про ролі та дозволи
+
+[Назад](system-settings.md) / [Вгору](../README.md) / [Далі](blade-and-template-rendering.md)
+
+Evolution CMS розділяє дозволи менеджера, доступ до групи документів, веб-користувача
+access, element locks, and file permissions. This page documents the current
+основні поверхні дозволів для документації продукту. Package-specific permission
+екрани належать до власного джерела dDocs кожного пакета.
+
+## Manager Модель для наслідування
+
+Ролі Manager представлені моделлю `UserRole`. Користувачі Manager отримують a
+роль через атрибути користувача та перевірки дозволів на читання активного сеансу
+permission array for the current context.
+
+| Поверхня | Призначення |
+| --- | --- |
+| `UserRole` | Назва ролі, опис і прапорці дозволу менеджера. |
+| `UserAttribute.role` | Role assigned to a manager or web user account. |
+| `RolePermissions` | Additional permission records linked by role. |
+| `Permissions` and `PermissionsGroups` | Permission definitions and grouping. |
+| `UserRoleVar` | Template Variable access/rank by role. |
+| `ActiveUserLock` | Стан блокування для елементів і ресурсів, які зараз редагуються. |
+
+Основним помічником дозволів є `hasPermission($permission, $context = '')`.
+`hasAnyPermissions([...], $context = '')` returns true when any listed
+доступний дозвіл.
+
+## Прапорці дозволу ролі
+
+| Площа | Прапори дозволів |
+| --- | --- |
+| Manager оболонка | `frames`, `home`, `logout`, `help`, `messages`, `about`, `credits`, `action_ok`, `error_dialog` |
+| Resources | `view_document`, `new_document`, `edit_document`, `save_document`, `publish_document`, `delete_document`, `empty_trash`, `view_unpublished`, `change_resourcetype` |
+| Шаблони | `new_template`, `edit_template`, `save_template`, `delete_template` |
+| Template Variables | TV доступ обробляється через відносини ролі TV і дозволи, такі як `manage_tv_permissions`, якщо вони присутні. |
+| Chunks | `new_chunk`, `edit_chunk`, `save_chunk`, `delete_chunk` |
+| Snippets | `new_snippet`, `edit_snippet`, `save_snippet`, `delete_snippet` |
+| Plugins | `new_plugin`, `edit_plugin`, `save_plugin`, `delete_plugin` |
+| Modules | `new_module`, `edit_module`, `save_module`, `delete_module`, `exec_module` |
+| Користувачі | `new_user`, `edit_user`, `save_user`, `delete_user`, `change_password`, `save_password` |
+| Ролі | `new_role`, `edit_role`, `save_role`, `delete_role` |
+| Дозволи | `access_permissions`, `web_access_permissions` |
+| Файли | `file_manager`, `assets_files`, `assets_images`, `bk_manager` |
+| Колоди та замки | `logs`, `view_eventlog`, `delete_eventlog`, `remove_locks`, `display_locks` |
+| Static import/export | `import_static`, `export_static` |
+| Web users | `new_web_user`, `edit_web_user`, `save_web_user`, `delete_web_user` |
+
+Деякі поточні шляхи коду також перевіряють нові іменовані дозволи, такі як
+`manage_groups`, `manage_document_permissions`, `manage_tv_permissions`,
+`manage_metatags`, `system_tasks.view`, `system_tasks.site_update` та
+`system_tasks.manage_packages`. Задокументуйте ці дозволи за допомогою функції, яка
+використовує їх, оскільки це назви можливостей, а не стовпці основних ролей.
+
+## Document Access Permissions
+
+Дозволи доступу до документів використовують групи документів і групи учасників.
+
+| Model/Table Surface | Призначення |
+| --- | --- |
+| `DocumentgroupName` | Named document groups. |
+| `DocumentGroup` | Зв’язує ресурси з групами документів. |
+| `MemberGroup` | Посилає користувачів на групи учасників. |
+| `membergroup_access` | Зв’язує групи учасників із групами документів. |
+| `use_udperms` | Вмикає перевірку дозволів користувача/документа. |
+| `udperms_allowroot` | Контролює поведінку кореневого користувача для дозволів документа. |
+
+Коли `use_udperms` увімкнено, користувачі, які не є адміністраторами, перевіряються на відповідність
+groups they can access. Resource збереження та потоки дерева/запиту повинні зберігати їх
+checks intact.
+
+## Дозволи веб-доступу
+
+Дозволи веб-доступу захищають інтерфейсні ресурси для автентифікованих веб-користувачів.
+Вони відокремлені від дозволів ролі менеджера.| Поверхня | Призначення |
+| --- | --- |
+| Веб-користувачі | Users who authenticate on the site frontend. |
+| Ролі веб-користувачів | Optional role assignment on user attributes. |
+| Групи веб-користувачів | Groups used for frontend access decisions. |
+| Групи документів | Resource групи, які можна підключити до груп учасників. |
+| `web_access_permissions` | Manager permission for web access management. |
+
+Використовуйте цей рівень, коли відвідувачі сайту мають бачити лише вибрані захищені ресурси.
+Не використовуйте ролі менеджера як модель авторизації інтерфейсу.
+
+## Замки
+
+Evolution CMS відстежує заблоковані елементи для запобігання небезпечного одночасного редагування.
+Типи, що закриваються, включають:
+
+| Тип ID | Елемент |
+| ---: | --- |
+| `1` | Шаблон |
+| `2` | Template Variable |
+| `3` | Chunk |
+| `4` | Snippet |
+| `5` | Plugin |
+| `6` | Module |
+| `7` | Resource |
+| `8` | Роль |
+
+Контролери та моделі виявляють стан блокування за допомогою таких методів, як
+`getLockedElements()`, `isAlreadyEdit`, and `alreadyEditInfo`.
+
+## Права доступу до файлів
+
+Поведінка створення файлу контролюється параметрами системи:
+
+| Налаштування | За замовчуванням | Значення |
+| --- | --- | --- |
+| `new_file_permissions` | `0644` | Дозволи застосовуються до нових файлів там, де їх встановлює файловий менеджер. |
+| `new_folder_permissions` | `0755` | Дозволи застосовуються до нових папок, де їх встановлює файловий менеджер. |
+| `filemanager_path` | `[(base_path)]` | Root for file manager operations. |
+| `rb_base_dir` | `[(base_path)]assets/` | Resource browser base directory. |
+
+Дозволи файлів не замінюють дозволи менеджера. Користувач потребує
+можливість керування та доступ до файлової системи для успішного запису.
+
+## Правило документації
+
+Документуючи дозвіл, назвіть точний ключ дозволу та менеджера
+поверхню, яка його перевіряє. Якщо функція належить до встановленого пакета, збережіть
+документація дозволів у документах цього пакета та посилання на цю сторінку лише для
+the core permission model.

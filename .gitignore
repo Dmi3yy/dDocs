@@ -1,0 +1,17 @@
+.DS_Store
+.idea/
+.playwright-cli/
+
+/vendor/
+/node_modules/
+/composer.lock
+
+/ProjectDocs/
+
+*.log
+*.tmp
+*.cache
+
+/coverage/
+/build/
+/dist/

@@ -1,0 +1,515 @@
+<?php namespace Dmi3yy\dDocs\Support;
+
+final class DocsSourceRegistry
+{
+    public function __construct(
+        protected ?DocumentPath $paths = null,
+    ) {
+        $this->paths ??= new DocumentPath();
+    }
+
+    public function sources(): array
+    {
+        $sources = [];
+
+        foreach ($this->candidatePackageRoots() as $root) {
+            foreach ($this->docsPathsForRoot($root) as $docsPath) {
+                $source = $this->sourceFromPath($root, $docsPath, 'package', true);
+                $sources[$source['key']] = $source;
+            }
+        }
+
+        foreach ($this->userDocsSources() as $source) {
+            $sources[$source['key']] = $source;
+        }
+
+        foreach ($this->configuredRoots() as $root) {
+            foreach ($this->docsPathsForRoot($root) as $docsPath) {
+                $source = $this->sourceFromPath($root, $docsPath, 'project', false);
+                $sources[$source['key']] = $source;
+            }
+        }
+
+        return array_values($sources);
+    }
+
+    protected function candidatePackageRoots(): array
+    {
+        $roots = [$this->packageRoot()];
+
+        if ((bool) config('dmi3yy.settings.dDocs.scan_vendor_packages', true)) {
+            $roots = array_merge($roots, $this->composerInstalledRoots(), $this->vendorPackageRoots());
+        }
+
+        return $this->uniqueExistingDirectories($roots);
+    }
+
+    public function userDocsPath(): string
+    {
+        return $this->packageRoot() . DIRECTORY_SEPARATOR . 'ProjectDocs';
+    }
+
+    protected function userDocsSources(): array
+    {
+        $path = $this->paths->normalize($this->userDocsPath());
+        if ($path === null || !is_dir($path)) {
+            return [];
+        }
+
+        return [[
+            'key' => 'ddocs-projectdocs',
+            'name' => ManagerText::get('project_docs') ?: 'Project Docs',
+            'description' => ManagerText::get('project_docs_description') ?: '',
+            'icon' => 'tabler-folder',
+            'type' => 'project',
+            'source_type' => 'project',
+            'package_name' => 'project/docs',
+            'root_path' => $path,
+            'docs_path' => $path,
+            'root_readme_only' => false,
+            'is_vendor' => false,
+            'readonly' => false,
+            'enabled' => true,
+        ]];
+    }
+
+    protected function configuredRoots(): array
+    {
+        if (!(bool) config('dmi3yy.settings.dDocs.scan_project_docs', true)) {
+            return [];
+        }
+
+        $roots = array_merge(
+            Settings::list('safe_roots'),
+            Settings::list('extra_docs_roots'),
+        );
+
+        return $this->uniqueExistingDirectories($roots);
+    }
+
+    protected function composerInstalledRoots(): array
+    {
+        $vendorRoot = $this->vendorRoot();
+        if ($vendorRoot === null) {
+            return [];
+        }
+
+        $installedJson = $vendorRoot . '/composer/installed.json';
+        if (!is_file($installedJson)) {
+            return [];
+        }
+
+        $payload = json_decode((string) file_get_contents($installedJson), true);
+        if (!is_array($payload)) {
+            return [];
+        }
+
+        $packages = $payload['packages'] ?? $payload;
+        if (!is_array($packages)) {
+            return [];
+        }
+
+        $roots = [];
+        foreach ($packages as $package) {
+            if (!is_array($package)) {
+                continue;
+            }
+
+            $installPath = (string) ($package['install-path'] ?? '');
+            if ($installPath === '') {
+                continue;
+            }
+
+            $root = $this->resolveRelative($vendorRoot . '/composer', $installPath);
+            if ($this->isDiscoverablePackage($package, $root)) {
+                $roots[] = $root;
+            }
+        }
+
+        return $roots;
+    }
+
+    protected function vendorPackageRoots(): array
+    {
+        $vendorRoot = $this->vendorRoot();
+        if ($vendorRoot === null || !is_dir($vendorRoot)) {
+            return [];
+        }
+
+        $roots = [];
+        foreach (glob($vendorRoot . '/*/*', GLOB_ONLYDIR) ?: [] as $candidate) {
+            $metadata = $this->composerMetadata($candidate);
+            if ($metadata !== [] && $this->isDiscoverablePackage($metadata, $candidate)) {
+                $roots[] = $candidate;
+            }
+        }
+
+        return $roots;
+    }
+
+    protected function docsPathsForRoot(string $root): array
+    {
+        $paths = [];
+
+        foreach (['Docs', 'docs'] as $folder) {
+            $candidate = $root . DIRECTORY_SEPARATOR . $folder;
+            if (is_dir($candidate)) {
+                $paths[] = $candidate;
+            }
+        }
+
+        if ($paths !== []) {
+            return $this->uniqueExistingDirectories($paths);
+        }
+
+        foreach (['README.md', 'README.mdx', 'index.md', 'index.mdx'] as $file) {
+            $candidate = $root . DIRECTORY_SEPARATOR . $file;
+            if (is_file($candidate)) {
+                $paths[] = $root;
+                break;
+            }
+        }
+
+        return $this->uniqueExistingDirectories($paths);
+    }
+
+    protected function sourceFromPath(string $root, string $docsPath, string $type, bool $vendor): array
+    {
+        $composer = $this->composerMetadata($root);
+        $package = (string) ($composer['name'] ?? basename($root));
+        $name = $this->displayName($package, $root, $composer);
+        $key = $this->sourceKey($package, $docsPath);
+        $isVendor = $vendor;
+
+        return [
+            'key' => $key,
+            'name' => $name,
+            'description' => $this->displayDescription($package, $root, $composer),
+            'icon' => $this->displayIcon($package, $root, $composer),
+            'type' => $type,
+            'source_type' => $type,
+            'package_name' => $package,
+            'root_path' => $this->paths->normalize($root),
+            'docs_path' => $this->paths->normalize($docsPath),
+            'root_readme_only' => $this->isRootReadmeOnly($root, $docsPath),
+            'is_vendor' => $isVendor,
+            'readonly' => $isVendor,
+            'enabled' => true,
+        ];
+    }
+
+    protected function isRootReadmeOnly(string $root, string $docsPath): bool
+    {
+        $root = $this->paths->normalize($root);
+        $docsPath = $this->paths->normalize($docsPath);
+
+        return $root !== null && $docsPath !== null && $root === $docsPath;
+    }
+
+    protected function isUnderVendor(string $path): bool
+    {
+        $parts = explode(DIRECTORY_SEPARATOR, trim($path, DIRECTORY_SEPARATOR));
+
+        return in_array('vendor', $parts, true);
+    }
+
+    protected function composerMetadata(string $root): array
+    {
+        $path = $root . '/composer.json';
+        if (!is_file($path)) {
+            return [];
+        }
+
+        $payload = json_decode((string) file_get_contents($path), true);
+
+        return is_array($payload) ? $payload : [];
+    }
+
+    protected function isDiscoverablePackage(array $package, string $root): bool
+    {
+        $name = strtolower((string) ($package['name'] ?? ''));
+        foreach (['dmi3yy/', 'seiger/', 'evolution-cms/', 'evolutioncms-services/'] as $prefix) {
+            if (str_starts_with($name, $prefix)) {
+                return true;
+            }
+        }
+
+        $type = strtolower((string) ($package['type'] ?? ''));
+        if (str_contains($type, 'evolution') || str_contains($type, 'evo')) {
+            return true;
+        }
+
+        $providers = $package['extra']['laravel']['providers'] ?? [];
+        if (is_array($providers)) {
+            foreach ($providers as $provider) {
+                $provider = (string) $provider;
+                if (
+                    str_starts_with($provider, 'Dmi3yy\\')
+                    || str_starts_with($provider, 'Seiger\\')
+                    || str_starts_with($provider, 'EvoUI\\')
+                    || str_starts_with($provider, 'EvolutionCMS\\')
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    protected function displayName(string $package, string $root, array $composer): string
+    {
+        $translated = $this->translatedPackageName($package, $root);
+        if ($translated !== null) {
+            return $translated;
+        }
+
+        $aliases = $composer['extra']['laravel']['aliases'] ?? [];
+        if (is_array($aliases) && $aliases !== []) {
+            $alias = (string) array_key_first($aliases);
+            if ($alias !== '') {
+                return $alias;
+            }
+        }
+
+        $canonical = [
+            'dmi3yy/ddocs' => 'dDocs',
+            'dmi3yy/dissues' => 'dIssues',
+            'dmi3yy/dtui-editor' => 'dTui Editor',
+            'evolution-cms/etinymce' => 'eTinyMCE',
+            'evolution-cms/evo-ui' => 'evo-ui',
+            'seiger/sarticles' => 'sArticles',
+            'seiger/slang' => 'sLang',
+            'seiger/sseo' => 'sSeo',
+        ];
+
+        if (isset($canonical[strtolower($package)])) {
+            return $canonical[strtolower($package)];
+        }
+
+        $name = str_contains($package, '/') ? substr($package, strrpos($package, '/') + 1) : $package;
+        $name = str_replace(['-', '_'], ' ', $name);
+        $name = preg_replace('/\s+/', ' ', $name) ?: $name;
+
+        return $name !== '' ? ucwords($name) : basename($root);
+    }
+
+    protected function translatedPackageName(string $package, string $root): ?string
+    {
+        $keys = $this->metadataKeys($package, 'title');
+
+        if ($keys === []) {
+            return null;
+        }
+
+        foreach (ManagerText::languageCandidates() as $language) {
+            $path = $root . '/lang/' . $language . '/global.php';
+            if (!is_file($path)) {
+                continue;
+            }
+
+            $labels = include $path;
+            if (!is_array($labels)) {
+                continue;
+            }
+
+            foreach ($keys as $key) {
+                $value = trim((string) ($labels[$key] ?? ''));
+                if ($value !== '') {
+                    return $value;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    protected function displayIcon(string $package, string $root, array $composer): string
+    {
+        $translated = $this->translatedMetadata($package, $root, 'icon');
+        if ($translated !== null) {
+            return $translated;
+        }
+
+        return [
+            'dmi3yy/ddocs' => 'tabler-book-2',
+            'dmi3yy/dissues' => 'tabler-circle-dot',
+            'dmi3yy/dtui-editor' => 'tabler-pencil',
+            'evolution-cms/etinymce' => 'tabler-writing',
+            'evolution-cms/evo-ui' => 'tabler-brush',
+            'seiger/sarticles' => 'tabler-rss',
+            'seiger/slang' => 'tabler-language',
+            'seiger/sseo' => 'tabler-chart-line',
+        ][strtolower($package)] ?? 'tabler-package';
+    }
+
+    protected function displayDescription(string $package, string $root, array $composer): string
+    {
+        $translated = $this->translatedMetadata($package, $root, 'description');
+        if ($translated !== null) {
+            return $this->cleanDescription($translated);
+        }
+
+        $description = trim((string) ($composer['description'] ?? ''));
+        if ($description !== '') {
+            return $this->cleanDescription($description);
+        }
+
+        return $this->cleanDescription([
+            'dmi3yy/ddocs' => 'File-first documentation browser for Evolution CMS manager.',
+            'dmi3yy/dissues' => 'Task board and issue workflow for Evolution manager.',
+            'dmi3yy/dtui-editor' => 'Toast UI based Markdown and rich text editor for Evolution manager.',
+            'evolution-cms/etinymce' => 'TinyMCE integration for Evolution CMS manager.',
+            'evolution-cms/evo-ui' => 'Shared Evolution manager UI components and styling primitives.',
+            'seiger/sarticles' => 'Publication and article management module for Evolution CMS.',
+            'seiger/slang' => 'Multilingual content and language tools for Evolution CMS.',
+            'seiger/sseo' => 'SEO tools and metadata management for Evolution CMS.',
+        ][strtolower($package)] ?? '');
+    }
+
+    protected function cleanDescription(string $description): string
+    {
+        $description = html_entity_decode(strip_tags($description), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $description = trim(preg_replace('/\s+/', ' ', $description) ?? $description);
+
+        return mb_strlen($description) > 140 ? mb_substr($description, 0, 137) . '...' : $description;
+    }
+
+    protected function translatedMetadata(string $package, string $root, string $kind): ?string
+    {
+        $keys = $this->metadataKeys($package, $kind);
+        if ($keys === []) {
+            return null;
+        }
+
+        foreach (ManagerText::languageCandidates() as $language) {
+            $path = $root . '/lang/' . $language . '/global.php';
+            if (!is_file($path)) {
+                continue;
+            }
+
+            $labels = include $path;
+            if (!is_array($labels)) {
+                continue;
+            }
+
+            foreach ($keys as $key) {
+                $value = trim((string) ($labels[$key] ?? ''));
+                if ($value !== '') {
+                    return $value;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    protected function metadataKeys(string $package, string $kind): array
+    {
+        $genericKeys = [
+            'title' => ['module_title'],
+            'icon' => ['module_icon'],
+            'description' => ['module_description'],
+        ];
+
+        $titleKeys = [
+            'dmi3yy/ddocs' => ['module_title', 'docs', 'documentation'],
+            'dmi3yy/dissues' => ['module_title', 'issues'],
+            'evolution-cms/evo-ui' => ['module_title'],
+            'seiger/sarticles' => ['module_title', 'articles'],
+            'seiger/slang' => ['module_title', 'slang'],
+            'seiger/sseo' => ['module_title', 'title'],
+        ];
+
+        $iconKeys = [
+            'dmi3yy/ddocs' => ['module_icon', 'docs_icon'],
+            'dmi3yy/dissues' => ['module_icon', 'issues_icon'],
+            'evolution-cms/evo-ui' => ['module_icon'],
+            'seiger/sarticles' => ['module_icon', 'articles_icon'],
+            'seiger/slang' => ['module_icon', 'slang_icon'],
+            'seiger/sseo' => ['module_icon', 'icon'],
+        ];
+
+        $descriptionKeys = [
+            'dmi3yy/ddocs' => ['module_description', 'file_only_subtitle', 'description'],
+            'dmi3yy/dissues' => ['module_description', 'description'],
+            'dmi3yy/dtui-editor' => ['module_description', 'description'],
+            'evolution-cms/evo-ui' => ['module_description', 'description'],
+            'seiger/sarticles' => ['module_description', 'description'],
+            'seiger/slang' => ['module_description', 'description'],
+            'seiger/sseo' => ['module_description', 'description'],
+        ];
+
+        $packageKeys = match ($kind) {
+            'icon' => $iconKeys[strtolower($package)] ?? [],
+            'description' => $descriptionKeys[strtolower($package)] ?? [],
+            default => $titleKeys[strtolower($package)] ?? [],
+        };
+
+        return array_values(array_unique(array_merge(
+            $genericKeys[$kind] ?? $genericKeys['title'],
+            $packageKeys
+        )));
+    }
+
+    protected function sourceKey(string $package, string $docsPath): string
+    {
+        $base = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $package) ?: basename($docsPath));
+        $hash = substr(sha1((string) $this->paths->normalize($docsPath)), 0, 10);
+
+        return trim($base, '-') . '-' . $hash;
+    }
+
+    protected function packageRoot(): string
+    {
+        return dirname(__DIR__, 2);
+    }
+
+    protected function vendorRoot(): ?string
+    {
+        if (function_exists('base_path')) {
+            $path = base_path('vendor');
+            if (is_dir($path)) {
+                return $path;
+            }
+        }
+
+        $current = $this->packageRoot();
+        while ($current !== dirname($current)) {
+            $candidate = $current . '/vendor';
+            if (is_dir($candidate)) {
+                return $candidate;
+            }
+
+            $current = dirname($current);
+        }
+
+        return null;
+    }
+
+    protected function resolveRelative(string $base, string $path): string
+    {
+        if (str_starts_with($path, DIRECTORY_SEPARATOR)) {
+            return $path;
+        }
+
+        return $base . DIRECTORY_SEPARATOR . $path;
+    }
+
+    protected function uniqueExistingDirectories(array $paths): array
+    {
+        $result = [];
+        foreach ($paths as $path) {
+            if (!is_string($path)) {
+                continue;
+            }
+
+            $real = $this->paths->normalize($path);
+            if ($real !== null && is_dir($real)) {
+                $result[strtolower($real)] = $real;
+            }
+        }
+
+        return array_values($result);
+    }
+}

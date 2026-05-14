@@ -1,0 +1,39 @@
+{
+    "name": "dmi3yy/ddocs",
+    "license": "GPL-3.0-only",
+    "type": "evolutioncms-module",
+    "description": "File-first documentation browser for Evolution CMS manager.",
+    "keywords": ["evocms", "evolution-cms", "docs", "documentation", "markdown"],
+    "authors": [
+        {
+            "name": "Dmytro Lukianenko",
+            "email": "dmi3yy@evo.im"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "dmi3yy/dtui-editor": "*",
+        "evolution-cms/evolution": "^3.5.7",
+        "evolution-cms/evo-ui": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dmi3yy\\dDocs\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "php tests/run.php"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dmi3yy\\dDocs\\dDocsServiceProvider"
+            ],
+            "aliases": {
+                "dDocs": "Dmi3yy\\dDocs\\Facades\\dDocs"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
