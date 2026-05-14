@@ -24,7 +24,7 @@ documentation au niveau du package.
 
 ## Règle de révision
 
-Lorsque du matériel historique ou des meilleures pratiques est utilisé :
+Lorsque du matériel historique ou des meilleures pratiques est utilisé :
 
 1. Vérifiez le chemin du code actuel.
 2. Vérifiez si la fonctionnalité est actuelle, héritée ou obsolète.
@@ -37,7 +37,7 @@ Lorsque du matériel historique ou des meilleures pratiques est utilisé :
 Les premiers candidats sont :
 
 - routes, requêtes Ajax, validation des requêtes, réponses JSON et partielles Blade
-  rendu ;
+  rendu ;
 - Utilisation du modèle `SiteContent`, requêtes TV, parcours de l'arbre de fermeture et ressources
   modèles de sélection.
 

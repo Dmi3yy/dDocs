@@ -6,16 +6,20 @@ use SplFileInfo;
 
 final class DocsIndexer
 {
-    public function __construct(
-        protected ?DocsSourceRegistry $sources = null,
-        protected ?LanguageResolver $languages = null,
-        protected ?DocumentPath $paths = null,
-    ) {
-        $this->paths ??= new DocumentPath();
-        $this->languages ??= new LanguageResolver();
-        $this->sources ??= new DocsSourceRegistry($this->paths);
+    protected DocsSourceRegistry $sources;
+    protected LanguageResolver $languages;
+    protected DocumentPath $paths;
+
+    public function __construct(?DocsSourceRegistry $sources = null, ?LanguageResolver $languages = null, ?DocumentPath $paths = null)
+    {
+        $this->paths = $paths ?? new DocumentPath();
+        $this->languages = $languages ?? new LanguageResolver();
+        $this->sources = $sources ?? new DocsSourceRegistry($this->paths);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     public function index(?string $language = null): array
     {
         $nodes = [];
@@ -72,6 +76,11 @@ final class DocsIndexer
         return $nodes;
     }
 
+    /**
+     * @param array<string, mixed> $source
+     * @param list<array<string, mixed>> $resolvedRoots
+     * @return list<array<string, mixed>>
+     */
     protected function resolvedRootContexts(array $source, array $resolvedRoots): array
     {
         $contexts = [];
@@ -93,6 +102,11 @@ final class DocsIndexer
         return $contexts;
     }
 
+    /**
+     * @param array<string, mixed> $source
+     * @param array<string, mixed> $resolved
+     * @return list<array<string, mixed>>
+     */
     protected function docsRootContexts(array $source, array $resolved, string $docsPath, bool $includeNeutralRoot = true): array
     {
         $contexts = [[
@@ -131,6 +145,11 @@ final class DocsIndexer
         return $contexts;
     }
 
+    /**
+     * @param array<string, mixed> $source
+     * @param array<string, mixed> $resolved
+     * @return array<string, mixed>
+     */
     protected function sourceNode(array $source, array $resolved, string $docsPath): array
     {
         $id = $this->nodeId((string) $source['key'], '', (string) $resolved['language'], 'folder');
@@ -164,6 +183,12 @@ final class DocsIndexer
         ];
     }
 
+    /**
+     * @param array<string, array<string, mixed>> $nodes
+     * @param array<string, string> $folderIds
+     * @param array<string, mixed> $source
+     * @param array<string, mixed> $resolved
+     */
     protected function ensureFolderNodes(array &$nodes, array &$folderIds, array $source, array $resolved, string $docsPath, string $folder): string
     {
         $folder = trim(str_replace('\\', '/', $folder), '/.');
@@ -214,6 +239,11 @@ final class DocsIndexer
         return $folderIds[$folder];
     }
 
+    /**
+     * @param array<string, mixed> $source
+     * @param array<string, mixed> $resolved
+     * @return array<string, mixed>
+     */
     protected function documentNode(array $source, array $resolved, string $docsPath, SplFileInfo $file, string $relative, string $parentId): array
     {
         $path = $file->getPathname();
@@ -245,6 +275,10 @@ final class DocsIndexer
         ];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return list<SplFileInfo>
+     */
     protected function markdownFiles(string $docsPath, array $options = []): array
     {
         $allowed = array_map('strtolower', Settings::list('allowed_extensions', ['md', 'mdx']));
@@ -276,6 +310,10 @@ final class DocsIndexer
         return $files;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return list<string>
+     */
     protected function writableDirectories(string $docsPath, array $options = []): array
     {
         if (($options['root_readme_only'] ?? false) || !is_dir($docsPath)) {
@@ -306,6 +344,9 @@ final class DocsIndexer
         return $directories;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function shouldSkipRelativePath(string $relative, array $options): bool
     {
         $relative = trim(str_replace('\\', '/', $relative), '/');
@@ -395,6 +436,10 @@ final class DocsIndexer
         return substr(sha1($sourceKey . '|' . $language . '|' . $type . '|' . $relative), 0, 20);
     }
 
+    /**
+     * @param array<string, mixed> $left
+     * @param array<string, mixed> $right
+     */
     protected function compareNodes(array $left, array $right): int
     {
         $source = $this->sourcePriority($left) <=> $this->sourcePriority($right);
@@ -415,6 +460,9 @@ final class DocsIndexer
         return $this->comparePath((string) $left['relative_path'], (string) $right['relative_path'], (string) $left['type'], (string) $right['type']);
     }
 
+    /**
+     * @param array<string, mixed> $node
+     */
     protected function sourcePriority(array $node): int
     {
         if (($node['source_key'] ?? '') === 'ddocs-projectdocs') {

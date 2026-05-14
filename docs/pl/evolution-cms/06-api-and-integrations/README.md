@@ -21,8 +21,8 @@ polecenia, granice pakietów i warstwy kompatybilności.
 | [Blade i odniesienie do renderowania szablonów](../10-reference/blade-and-template-rendering.md) | Renderowanie Blade, widoki menedżera, dyrektywy i dyrektywy dotyczące ikon. |
 | [Odniesienie do tagów parsera](../10-reference/parser-tags.md) | Tagi klasycznego parsera Evolution i kolejność parsera. |
 | [Działania Artisan i Manager](../10-reference/artisan-and-manager-actions.md) | Bieżąca powierzchnia wyszukiwania poleceń i akcji menedżera. |
-| [Utwórz pakiet](../05-extras-and-packages/create-package.md) | Nowoczesna package structure, service provider wiring, manager module pattern, EvoUI/Livewire surfaces, docs i release checks. |
-| [Utwórz preset](../05-extras-and-packages/create-preset.md) | Ready-site scaffold structure dla installer presets, required Extras, theme assets, custom project code i validation checks. |
+| [Utwórz paczkę](../05-extras-and-packages/create-package.md) | Nowoczesna struktura pakietu, okablowanie dostawcy usług, wzorzec modułu menedżera, powierzchnie EvoUI/Livewire, dokumentacja i kontrola wersji. |
+| [Utwórz ustawienie wstępne](../05-extras-and-packages/create-preset.md) | Gotowa struktura rusztowania dla ustawień wstępnych instalatora, wymaganego Extras, zasobów motywu, niestandardowego kodu projektu i kontroli walidacyjnych. |
 | [Struktura projektu](../04-development/project-structure.md) | Układ źródłowy za stronami referencyjnymi. |
 
 ## Zakres

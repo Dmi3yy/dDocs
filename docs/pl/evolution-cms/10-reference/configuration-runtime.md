@@ -35,9 +35,7 @@ Plik pamięci podręcznej środowiska to:
 
 ```text
 core/storage/cache/env.php
-```
-
-Pamięć podręczna jest ważna, gdy czas jej modyfikacji jest nowszy lub równy
+```Pamięć podręczna jest ważna, gdy czas jej modyfikacji jest nowszy lub równy
 wybrany plik `.env`. Jeśli jest nieaktualny, moduł ładujący analizuje `.env`, stosuje wartości,
 i zapisuje atomowo nową pamięć podręczną tablicy PHP.
 

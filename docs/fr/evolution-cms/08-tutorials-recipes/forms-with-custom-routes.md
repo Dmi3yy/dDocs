@@ -9,7 +9,7 @@ charge les itinéraires de projet lisibles à partir de `core/custom/routes.php`
 
 ## Ajouter un itinéraire
 
-Créez ou mettez à jour `core/custom/routes.php` :
+Créez ou mettez à jour `core/custom/routes.php` :
 
 ```php
 <?php

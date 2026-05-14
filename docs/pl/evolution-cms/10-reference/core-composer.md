@@ -59,9 +59,7 @@ Podstawowa konfiguracja Composer wykorzystuje `wikimedia/composer-merge-plugin`,
 
 ```text
 custom/composer.json
-```
-
-Zachowanie scalania:
+```Zachowanie scalania:
 
 | Opcja | Wartość |
 | --- | --- |

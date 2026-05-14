@@ -34,19 +34,19 @@ Documentation du produit CMS.
 
 ## Carnet de couverture de la documentation
 
-La baseline actuelle couvre les exigences, l'installation installer-first,
-l'installer CLI reference, les concepts de base, les workflows du Manager, la
-structure projet, les developer reference maps, le configuration/runtime
-bootstrap, Core Composer, legacy compatibility, les commandes Artisan du projet
-installe, system settings/defaults, roles and permissions, Blade/template
-rendering, classic parser tags, deux recettes validées, source policy,
-navigation rules et first-line troubleshooting.
+La ligne de base en anglais couvre les exigences, l'installation par l'installateur en premier,
+référence du programme d'installation CLI, concepts de base, flux de travail du gestionnaire principal, projet
+structure, cartes de référence des développeurs, démarrage de la configuration/de l'exécution, noyau
+Composer, compatibilité héritée, commandes Artisan du projet installé, système
+paramètres/valeurs par défaut, rôles et autorisations, Blade/rendu de modèle, classique
+balises d'analyseur, deux recettes validées, politique source, règles de navigation et
+dépannage de première ligne.
 
 | Écart | Page publique prévue |
 | --- | --- |
 | API et DB API classiques complets | `06-api-and-integrations/` et `10-reference/` après validation au niveau de la méthode |
-| Aide de l'interface utilisateur des paramètres champ par champ | Étendez la [Référence des paramètres système](system-settings.md) après avoir vérifié chaque étiquette d'onglet du gestionnaire et enregistré le processeur |
+| Aide de l'interface utilisateur des paramètres champ par champ | Étendez la [Référence des paramètres système] (system-settings.md) après avoir vérifié chaque étiquette d'onglet du gestionnaire et enregistré le processeur |
 | Contrats de charge utile d'événement | Étendre la [Référence des événements](events.md) après avoir validé chaque site d'appel `invokeEvent` |
 | Navigation dans la documentation | [Navigation dans la documentation](documentation-navigation.md) |
 | Plus de recettes de bonnes pratiques | `08-tutorials-recipes/` après validation du code actuel |
-| Localisations | Garder les copies localisées synchronisées avec la baseline EN validée |
+| Traductions locales | Gardez les miroirs localisés synchronisés avec la ligne de base anglaise révisée |

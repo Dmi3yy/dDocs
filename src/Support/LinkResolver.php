@@ -5,12 +5,17 @@ use DOMElement;
 
 final class LinkResolver
 {
-    public function __construct(
-        protected ?DocumentPath $paths = null,
-    ) {
-        $this->paths ??= new DocumentPath();
+    protected DocumentPath $paths;
+
+    public function __construct(?DocumentPath $paths = null)
+    {
+        $this->paths = $paths ?? new DocumentPath();
     }
 
+    /**
+     * @param array<string, mixed> $document
+     * @param list<array<string, mixed>> $nodes
+     */
     public function rewriteHtml(string $html, array $document, array $nodes): string
     {
         if ($html === '' || !class_exists(DOMDocument::class)) {
@@ -90,10 +95,6 @@ final class LinkResolver
         }
 
         foreach ($codeBlocks as $pre) {
-            if (!$pre instanceof DOMElement) {
-                continue;
-            }
-
             $code = $pre->getElementsByTagName('code')->item(0);
             if (!$code instanceof DOMElement) {
                 continue;
@@ -337,6 +338,11 @@ final class LinkResolver
         return preg_match('/<\/?(?:x[-:\w.]*|livewire:[-:\w.]+)\b/i', $sample) === 1;
     }
 
+    /**
+     * @param array<string, mixed> $document
+     * @param list<array<string, mixed>> $nodes
+     * @return array<string, mixed>|null
+     */
     public function resolve(string $href, array $document, array $nodes): ?array
     {
         if (!$this->isRelativeDocumentLink($href)) {
@@ -386,6 +392,9 @@ final class LinkResolver
         return $extension === '' || in_array($extension, ['md', 'mdx'], true);
     }
 
+    /**
+     * @return list<string>
+     */
     protected function candidates(string $target): array
     {
         $target = trim($target, '/');
@@ -511,6 +520,9 @@ final class LinkResolver
         $parent->removeChild($element);
     }
 
+    /**
+     * @param array<string, mixed> $document
+     */
     protected function imageDataUri(string $src, array $document): ?string
     {
         if ($src === '' || preg_match('/^[a-z][a-z0-9+.-]*:/i', $src) === 1 || str_starts_with($src, '//')) {
@@ -551,11 +563,17 @@ final class LinkResolver
         return 'data:' . $mime . ';base64,' . base64_encode($content);
     }
 
+    /**
+     * @param array<string, mixed> $document
+     */
     public function imageDataUriFor(string $src, array $document): ?string
     {
         return $this->imageDataUri($src, $document);
     }
 
+    /**
+     * @param array<string, mixed> $document
+     */
     protected function localImagePath(string $src, array $document): ?string
     {
         $docsPath = (string) ($document['docs_path'] ?? '');

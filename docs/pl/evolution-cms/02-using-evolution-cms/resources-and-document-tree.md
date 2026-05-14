@@ -67,4 +67,4 @@ zasady. Jeśli zapisany alias nie działa:
 5. Upewnij się, że zasób docelowy został opublikowany i nie został usunięty.
 
 Aby zapoznać się z głębszymi kontrolami operacyjnymi, zobacz
-[Rozwiązywanie problemów](../07-security-updates-operations/troubleshooting.md).
+[Rozwiązywanie problemów] (../07-security-updates-operations/troubleshooting.md).

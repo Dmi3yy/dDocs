@@ -8,6 +8,9 @@ $GLOBALS['ddocs_test_base_path'] = dirname($root);
 $GLOBALS['ddocs_test_storage_path'] = sys_get_temp_dir() . '/ddocs-test-storage';
 $GLOBALS['ddocs_test_cleanup'] = [];
 
+/**
+ * @return array<string, mixed>
+ */
 function ddocs_default_config(): array
 {
     return [
@@ -215,6 +218,9 @@ function write_file(string $path, string $content): void
     file_put_contents($path, $content);
 }
 
+/**
+ * @return array<string, mixed>
+ */
 function require_file(string $path): array
 {
     $payload = include $path;
@@ -227,6 +233,14 @@ register_shutdown_function(static function (): void {
         remove_tree($path);
     }
 });
+
+/**
+ * @param array{failures?: int} $stats
+ */
+function test_exit_code(array $stats): int
+{
+    return ((int) ($stats['failures'] ?? 0)) > 0 ? 1 : 0;
+}
 
 test('composer metadata exposes dDocs as an Evolution module with a test script', function () use ($root): void {
     $composer = json_decode((string) file_get_contents($root . '/composer.json'), true, flags: JSON_THROW_ON_ERROR);
@@ -497,4 +511,4 @@ test('public docs do not contain a docs/ua locale folder', function () use ($roo
 echo "\n";
 echo 'Tests: ' . $stats['tests'] . ', Assertions: ' . $stats['assertions'] . ', Skips: ' . $stats['skips'] . ', Failures: ' . $stats['failures'] . "\n";
 
-exit($stats['failures'] > 0 ? 1 : 0);
+exit(test_exit_code($stats));

@@ -15,7 +15,7 @@ La documentation Evolution CMS utilise une petite grammaire de navigation pour q
 
 ## Liens structurels
 
-Utilisez cette forme en haut des sections de plusieurs pages :
+Utilisez cette forme en haut des sections de plusieurs pages :
 
 ```text
 # Page Title
@@ -38,9 +38,9 @@ cible.
 
 ## Pages de destination des sections
 
-Les pages de la section `README.md` doivent être de petits portails. Ils devraient inclure :
+Les pages de la section `README.md` doivent être de petits portails. Ils devraient inclure :
 
-- un court paragraphe sur la section ;
+- un court paragraphe sur la section ;
 - un tableau des pages enfants ;
 - la portée actuelle de la section ;
 - des liens vers des sections connexes uniquement en cas de besoin.

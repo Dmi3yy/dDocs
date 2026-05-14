@@ -23,7 +23,7 @@ pour le flux d’installation guidée.
 | `-f`, `--force` | Installez même lorsque le répertoire cible existe déjà ou ressemble à un projet existant. |
 | `--branch=<name>` | Installez Evolution CMS à partir d'une branche Git spécifique au lieu de la dernière version compatible. |
 | `--preset=<spec>` | Appliquez un préréglage de couche de projet après l'installation principale. |
-| `--db-type=<driver>` | Pilote de base de données : `mysql`, `pgsql`, `sqlite` ou `sqlsrv`. |
+| `--db-type=<driver>` | Pilote de base de données : `mysql`, `pgsql`, `sqlite` ou `sqlsrv`. |
 | `--db-host=<host>` | Hôte de base de données pour les installations non SQLite. |
 | `--db-port=<port>` | Port de base de données. En cas d'omission, le programme d'installation utilise la valeur par défaut du pilote lorsque cela est possible. |
 | `--db-name=<name>` | Nom de la base de données ou nom du fichier de base de données SQLite. |
@@ -54,9 +54,7 @@ evo install demo \
   --db-name=database.sqlite \
   --admin-email=admin@example.com \
   --admin-password=change-me
-```
-
-En cas d'omission en mode CLI, le programme d'installation par défaut :
+```En cas d'omission en mode CLI, le programme d'installation par défaut :
 
 | Valeur | Par défaut |
 | --- | --- |
@@ -71,7 +69,7 @@ En cas d'omission en mode CLI, le programme d'installation par défaut :
 
 | Spécification | Résolution |
 | --- | --- |
-| `evolution` | Installation de base uniquement ; pas de préréglage de couche de projet. |
+| `evolution` | Installation de base uniquement ; pas de préréglage de couche de projet. |
 | `default` | Dépôt de préréglages public par défaut. |
 | `evolution-cms-presets/default` | Dépôt GitHub sous l'organisation publique des préréglages. |
 | `owner/repository` | Dépôt GitHub. |
@@ -93,14 +91,14 @@ la documentation du système de fichiers de chaque package et affichez-la dans l
 ## Champs d'état du système
 
 `evo system-status` renvoie JSON avec un statut global et des contrôles individuels.
-Les contrôles actuels comprennent :
+Les contrôles actuels comprennent :
 
 - le système d'exploitation ;
--Version PHP ;
-- Disponibilité Composer ;
-- PDO et pilotes de base de données ;
-- JSON, MySQLi, mbstring, cURL ;
-- Prise en charge des images GD ou Imagick ;
+-Version PHP ;
+- Disponibilité Composer ;
+- PDO et pilotes de base de données ;
+- JSON, MySQLi, mbstring, cURL ;
+- Prise en charge des images GD ou Imagick ;
 - l'espace disque ;
 - limite de mémoire.
 

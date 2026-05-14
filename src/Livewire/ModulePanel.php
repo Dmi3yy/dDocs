@@ -10,8 +10,11 @@ use Livewire\Component;
 
 class ModulePanel extends Component
 {
+    /** @var array<string, mixed> */
     public array $context = [];
+    /** @var list<array<string, mixed>> */
     public array $rawTabs = [];
+    /** @var array<string, bool> */
     public array $expanded = [];
     public ?string $selectedDocumentId = null;
     public ?string $selectedNodeId = null;
@@ -22,6 +25,10 @@ class ModulePanel extends Component
     public string $editingMarkdown = '';
     public ?string $cacheMessage = null;
 
+    /**
+     * @param list<array<string, mixed>> $tabs
+     * @param array<string, mixed> $context
+     */
     public function mount(array $tabs = [], string $activeTab = 'docs', array $context = []): void
     {
         $this->rawTabs = $tabs;
@@ -231,6 +238,9 @@ class ModulePanel extends Component
         unset($this->expanded[$id]);
     }
 
+    /**
+     * @param array<string, mixed> $target
+     */
     protected function createFolderUnder(array $target, string $name): void
     {
         $slug = $this->safeBasename($name, 'new-folder');
@@ -247,6 +257,9 @@ class ModulePanel extends Component
         $this->selectPath($folderPath, 'folder');
     }
 
+    /**
+     * @param array<string, mixed> $target
+     */
     protected function createDocumentUnder(array $target, string $name): void
     {
         $title = $this->titleFromInput($name, ManagerText::get('new_document_title') ?: 'New document');
@@ -265,7 +278,7 @@ class ModulePanel extends Component
         $this->selectPath($documentPath, 'document');
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $allNodes = app(FileIndexCache::class)->index();
         $nodes = app(FileSearch::class)->filter($allNodes, $this->search);
@@ -300,6 +313,10 @@ class ModulePanel extends Component
         ]);
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     * @return list<array<string, mixed>>
+     */
     protected function tree(array $nodes): array
     {
         $byParent = [];
@@ -310,6 +327,7 @@ class ModulePanel extends Component
 
         $searching = trim($this->search) !== '';
 
+        /** @var \Closure(string|null): list<array<string, mixed>> $build */
         $build = function (?string $parentId) use (&$build, &$byParent, $searching): array {
             $items = $byParent[$parentId ?? 'root'] ?? [];
 
@@ -332,9 +350,12 @@ class ModulePanel extends Component
         return $build(null);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function navigationTabs(): array
     {
-        return collect($this->rawTabs)
+        return array_values(collect($this->rawTabs)
             ->map(function (array $tab) {
                 $key = (string) ($tab['key'] ?? '');
                 $tab['active'] = $key === $this->activeTab;
@@ -345,7 +366,7 @@ class ModulePanel extends Component
                 return $tab;
             })
             ->values()
-            ->all();
+            ->all());
     }
 
     protected function normalizeTab(string $tab): string
@@ -355,6 +376,9 @@ class ModulePanel extends Component
         return in_array($tab, $allowed, true) ? $tab : ($allowed[0] ?? 'docs');
     }
 
+    /**
+     * @param array<string, mixed> $node
+     */
     protected function documentCount(array $node): int
     {
         $count = ($node['type'] ?? '') === 'document' ? 1 : 0;
@@ -366,6 +390,11 @@ class ModulePanel extends Component
         return $count;
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     * @param list<array<string, mixed>>|null $linkNodes
+     * @return array<string, mixed>|null
+     */
     protected function selectedDocument(array $nodes, ?array $linkNodes = null): ?array
     {
         if ($this->selectedDocumentId === null) {
@@ -404,6 +433,11 @@ class ModulePanel extends Component
         return ltrim($markdown);
     }
 
+    /**
+     * @param array<string, mixed> $document
+     * @param list<array<string, mixed>> $nodes
+     * @return list<array{href: string, target_id: string}>
+     */
     protected function documentLinkMap(string $markdown, array $document, array $nodes): array
     {
         $resolver = app(LinkResolver::class);
@@ -423,6 +457,10 @@ class ModulePanel extends Component
         return $items;
     }
 
+    /**
+     * @param array<string, mixed> $document
+     * @return list<array{src: string, data_uri: string}>
+     */
     protected function documentImageMap(string $markdown, array $document): array
     {
         $resolver = app(LinkResolver::class);
@@ -442,13 +480,16 @@ class ModulePanel extends Component
         return $items;
     }
 
+    /**
+     * @return list<array{source: string, src: string}>
+     */
     protected function documentUmlMap(string $markdown): array
     {
         preg_match_all('/(^|\R)\$\$uml[ \t]*\R([\s\S]*?)\R\$\$[ \t]*(?=\R|$)/i', $markdown, $matches);
 
         $resolver = app(LinkResolver::class);
         $items = [];
-        foreach ($matches[2] ?? [] as $source) {
+        foreach ($matches[2] as $source) {
             $normalized = $resolver->normalizeUmlSource($source);
             if ($normalized === '') {
                 continue;
@@ -468,6 +509,9 @@ class ModulePanel extends Component
         return $items;
     }
 
+    /**
+     * @return list<string>
+     */
     protected function markdownUrls(string $markdown, bool $images): array
     {
         $pattern = $images
@@ -478,10 +522,14 @@ class ModulePanel extends Component
 
         return array_values(array_unique(array_map(
             static fn (string $value): string => trim($value),
-            $matches[1] ?? []
+            $matches[1]
         )));
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     * @return array<string, mixed>|null
+     */
     protected function selectedNode(array $nodes): ?array
     {
         if ($this->selectedNodeId === null) {
@@ -497,6 +545,11 @@ class ModulePanel extends Component
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $folder
+     * @param list<array<string, mixed>> $nodes
+     * @return array<string, mixed>
+     */
     protected function folderListing(array $folder, array $nodes): array
     {
         $folderId = (string) ($folder['id'] ?? '');
@@ -523,6 +576,10 @@ class ModulePanel extends Component
         ];
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     * @return array<string, mixed>
+     */
     protected function homeListing(array $nodes): array
     {
         $sources = [];
@@ -549,6 +606,11 @@ class ModulePanel extends Component
         ];
     }
 
+    /**
+     * @param array<string, mixed> $node
+     * @param list<array<string, mixed>> $nodes
+     * @return list<array{id: string, label: string, type: string, current: bool, clickable: bool}>
+     */
     protected function breadcrumbsForNode(array $node, array $nodes): array
     {
         $byId = [];
@@ -595,6 +657,9 @@ class ModulePanel extends Component
         }, $trail, array_keys($trail));
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     */
     protected function countDocumentsUnder(string $folderId, array $nodes): int
     {
         $count = 0;
@@ -616,6 +681,9 @@ class ModulePanel extends Component
         return $count;
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     */
     protected function countChildrenUnder(string $folderId, array $nodes): int
     {
         $count = 0;
@@ -628,6 +696,9 @@ class ModulePanel extends Component
         return $count;
     }
 
+    /**
+     * @param array<string, mixed> $node
+     */
     protected function documentExcerpt(array $node): string
     {
         $markdown = app(FileDocumentRepository::class)->read($node);
@@ -658,6 +729,9 @@ class ModulePanel extends Component
         return '';
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     protected function currentWritableRootFolder(): ?array
     {
         $nodes = app(FileIndexCache::class)->index();
@@ -670,6 +744,9 @@ class ModulePanel extends Component
         return null;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     protected function userDocsWritableRoot(): ?array
     {
         $path = app(DocsSourceRegistry::class)->userDocsPath();
@@ -706,6 +783,9 @@ class ModulePanel extends Component
         ];
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     protected function writableFolderById(string $folderId): ?array
     {
         $nodes = app(FileIndexCache::class)->index();
@@ -718,6 +798,9 @@ class ModulePanel extends Component
         return null;
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     protected function nodeById(string $id): ?array
     {
         $nodes = app(FileIndexCache::class)->index();
@@ -730,6 +813,11 @@ class ModulePanel extends Component
         return null;
     }
 
+    /**
+     * @param array<string, mixed>|null $node
+     * @param list<array<string, mixed>> $nodes
+     * @return array<string, mixed>|null
+     */
     protected function writableFolderFor(?array $node, array $nodes): ?array
     {
         if ($node !== null && ($node['type'] ?? '') === 'folder' && $this->isWritableNode($node)) {
@@ -756,6 +844,9 @@ class ModulePanel extends Component
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $node
+     */
     protected function isEmptyProjectDocsSource(array $node): bool
     {
         return ($node['source_key'] ?? '') === 'ddocs-projectdocs'
@@ -764,6 +855,9 @@ class ModulePanel extends Component
             && (int) ($node['child_count'] ?? count($node['children'] ?? [])) === 0;
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     */
     protected function shouldSelectParentAfterDelete(string $parentId, array $nodes): bool
     {
         if ($parentId === '') {
@@ -871,6 +965,10 @@ class ModulePanel extends Component
         }
     }
 
+    /**
+     * @param array<string, mixed> $node
+     * @param list<array<string, mixed>> $nodes
+     */
     protected function expandAncestors(array $node, array $nodes): void
     {
         $parentId = (string) ($node['parent_id'] ?? '');
@@ -892,6 +990,9 @@ class ModulePanel extends Component
         }
     }
 
+    /**
+     * @param array<string, mixed>|null $node
+     */
     protected function isWritableNode(?array $node): bool
     {
         if ($node === null) {
@@ -905,6 +1006,9 @@ class ModulePanel extends Component
         return $this->pathIsInside((string) ($node['absolute_path'] ?? ''), (string) ($node['docs_path'] ?? ''));
     }
 
+    /**
+     * @param array<string, mixed>|null $node
+     */
     protected function isDeletableNode(?array $node): bool
     {
         return $this->isWritableNode($node) && ($node['parent_id'] ?? null) !== null;

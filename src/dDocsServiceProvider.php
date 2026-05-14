@@ -51,6 +51,9 @@ class dDocsServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * @return list<string>
+     */
     protected function moduleAliases(string $currentTitle): array
     {
         return array_values(array_diff(array_filter(array_unique([

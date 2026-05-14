@@ -20,7 +20,7 @@ Evolution CMS зберігає параметри часу виконання т
 | Шаблони пошти | Відправник, транспортування пошти, налаштування SMTP, шаблони реєстрації та нагадування пароля. |
 
 Plugins може додати HTML до вкладок налаштувань через рендер системних налаштувань
-events listed in [Events Reference](events.md).
+події, перелічені в [Довідкові відомості про події] (events.md).
 
 ## Критичні значення за замовчуванням
 
@@ -42,33 +42,33 @@ events listed in [Events Reference](events.md).
 | Налаштування | За замовчуванням | Значення |
 | --- | --- | --- |
 | `default_template` | `0` | Стандартний шаблон для нових ресурсів. |
-| `publish_default` | `0` | Whether new resources are published by default. |
+| `publish_default` | `0` | Чи публікуються нові ресурси за замовчуванням. |
 | `cache_default` | `1` | Чи кешуються нові ресурси за замовчуванням. |
 | `search_default` | `1` | Чи можна шукати нові ресурси за умовчанням. |
-| `auto_menuindex` | `1` | Automatically assign menu index values. |
+| `auto_menuindex` | `1` | Автоматично призначати значення індексу меню. |
 | `resource_tree_node_name` | `pagetitle` | Поле Resource використовується як мітка вузла дерева. |
 | `tree_page_click` | `27` | Дія Manager відкривається під час натискання вузла дерева ресурсів. |
 | `tree_show_protected` | `0` | Чи відображаються захищені ресурси в дереві. |
-| `show_meta` | `0` | Whether metadata fields are shown by default. |
+| `show_meta` | `0` | Чи відображаються поля метаданих за умовчанням. |
 | `show_newresource_btn` | `1` | Чи відображається кнопка нового ресурсу. |
 
 ## Дружні URL-адреси за замовчуванням
 
 | Налаштування | За замовчуванням | Значення |
 | --- | --- | --- |
-| `friendly_urls` | `0` | Friendly URLs are disabled by default. |
+| `friendly_urls` | `0` | Дружні URL-адреси вимкнено за умовчанням. |
 | `friendly_url_prefix` | порожній | До дружніх URL-адрес додано префікс. |
-| `friendly_url_suffix` | `/` | Suffix added to friendly URLs. |
-| `friendly_alias_urls` | `1` | Alias-based URLs are enabled. |
-| `use_alias_path` | `1` | Parent aliases are included in generated paths. |
-| `make_folders` | `0` | Folder-like URL behavior is disabled by default. |
-| `seostrict` | `0` | Strict SEO URL handling is disabled by default. |
+| `friendly_url_suffix` | `/` | До дружніх URL-адрес додано суфікс. |
+| `friendly_alias_urls` | `1` | URL-адреси на основі псевдонімів увімкнено. |
+| `use_alias_path` | `1` | Батьківські псевдоніми включені до згенерованих шляхів. |
+| `make_folders` | `0` | Поведінку URL-адреси, подібну до папки, вимкнено за умовчанням. |
+| `seostrict` | `0` | Строгу обробку URL-адрес SEO вимкнено за замовчуванням. |
 | `aliaslistingfolder` | `0` | Поведінку теки зі списком псевдонімів вимкнено за замовчуванням. |
-| `allow_duplicate_alias` | `0` | Duplicate aliases are blocked by default. |
-| `automatic_alias` | `1` | Automatic alias generation is enabled. |
-| `xhtml_urls` | `1` | XHTML-style escaped URLs are enabled. |
+| `allow_duplicate_alias` | `0` | Дублікати псевдонімів блокуються за замовчуванням. |
+| `automatic_alias` | `1` | Увімкнено автоматичне створення псевдонімів. |
+| `xhtml_urls` | `1` | Увімкнено екрановані URL-адреси у стилі XHTML. |
 
-## Parser And Cache Defaults| Налаштування | За замовчуванням | Значення |
+## Параметри аналізатора та кешу за замовчуванням| Налаштування | За замовчуванням | Значення |
 | --- | --- | --- |
 | `enable_cache` | `1` | Кеш виконання ввімкнено за замовчуванням. |
 | `cache_type` | `1` | Режим кешу за умовчанням. |

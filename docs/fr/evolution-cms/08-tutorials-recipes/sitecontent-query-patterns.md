@@ -16,11 +16,7 @@ $resources = SiteContent::query()
     ->where('parent', 0)
     ->orderBy('menuindex')
     ->get();
-`
-
-```
-
-active()` filtre les ressources publiées et non supprimées.
+````active()` filtre les ressources publiées et non supprimées.
 
 ## Sélectionnez les valeurs Template Variable
 
@@ -31,11 +27,7 @@ $resources = SiteContent::query()
     ->where('parent', 0)
     ->orderBy('pagetitle')
     ->get();
-`
-
-```
-
-withTVs()` rejoint les valeurs TV par le nom TV et les sélectionne dans le résultat. Utilisez ceci
+````withTVs()` rejoint les valeurs TV par le nom TV et les sélectionne dans le résultat. Utilisez ceci
 pour les ensembles de résultats petits et moyens où les champs joints sont utiles directement dans
 la requête.
 
@@ -48,17 +40,13 @@ $resources = SiteContent::query()
     ->tvFilter('tv:price:>:150:UNSIGNED;tv:brand:!null;')
     ->tvOrderBy('price asc UNSIGNED, brand asc')
     ->get();
-```
-
-Les filtres TV prennent en charge les opérateurs tels que l'égalité, la comparaison, `in`, `not_in`,
+```Les filtres TV prennent en charge les opérateurs tels que l'égalité, la comparaison, `in`, `not_in`,
 `like`, `like-r`, `like-l`, `null` et `!null`. Les conversions numériques peuvent être utilisées pour
 comparaisons numériques. Les conversions numériques SQLite sont normalisées en `INTEGER`.
 
 ## Inclure les valeurs par défaut de TV
 
-Utilisez le marqueur `:d` lorsqu'une requête doit revenir à la valeur TV `default_text`.
-
-```php
+Utilisez le marqueur `:d` lorsqu'une requête doit revenir à la valeur TV `default_text`.```php
 $resources = SiteContent::query()
     ->withTVs(['price:d', 'brand'])
     ->active()
@@ -69,7 +57,7 @@ $resources = SiteContent::query()
 
 ## Charger les listes TV après une requête
 
-Pour des ensembles de résultats plus volumineux, interrogez d'abord les ressources, puis attachez les valeurs TV sélectionnées :
+Pour des ensembles de résultats plus volumineux, interrogez d'abord les ressources, puis attachez les valeurs TV sélectionnées :
 
 ```php
 $resources = SiteContent::query()
@@ -78,11 +66,7 @@ $resources = SiteContent::query()
     ->get();
 
 $rows = SiteContent::tvList($resources, ['price', 'brand']);
-`
-
-```
-
-tvList()` renvoie les lignes du tableau avec une entrée `tvs`. Les valeurs manquantes sont remplies à partir de
+````tvList()` renvoie les lignes du tableau avec une entrée `tvs`. Les valeurs manquantes sont remplies à partir de
 TV est la valeur par défaut lorsqu'elle est disponible.
 
 ## Données de l'arbre de requête
@@ -94,9 +78,7 @@ $tree = SiteContent::query()
     ->get()
     ->toTree()
     ->toArray();
-```
-
-Pour une branche spécifique :
+```Pour une branche spécifique :
 
 ```php
 $branch = SiteContent::descendantsOf(2)
@@ -104,9 +86,7 @@ $branch = SiteContent::descendantsOf(2)
     ->get()
     ->toTree()
     ->toArray();
-```
-
-Utilisez des requêtes arborescentes lorsque la hiérarchie est importante. Utilisez des requêtes plates lorsque vous en avez seulement besoin
+```Utilisez des requêtes arborescentes lorsque la hiérarchie est importante. Utilisez des requêtes plates lorsque vous en avez seulement besoin
 lignes filtrées.
 
 ## Tags et commande par date
@@ -118,11 +98,7 @@ $resources = SiteContent::query()
     ->tagsData('17:5,7,8')
     ->orderByDate()
     ->get();
-`
-
-```
-
-orderByDate()` trie par date de publication lorsqu'il est disponible et revient à la création
+````orderByDate()` trie par date de publication lorsqu'il est disponible et revient à la création
 date. `tagsData()` joint les données de balise pour un ensemble TV/tag sélectionné.
 
 ## Liste de contrôle de validation

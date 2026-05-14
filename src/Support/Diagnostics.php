@@ -2,18 +2,22 @@
 
 final class Diagnostics
 {
-    public function __construct(
-        protected ?DocsSourceRegistry $sources = null,
-        protected ?DocsIndexer $indexer = null,
-        protected ?FileIndexCache $cache = null,
-        protected ?DocumentPath $paths = null,
-    ) {
-        $this->paths ??= new DocumentPath();
-        $this->sources ??= new DocsSourceRegistry($this->paths);
-        $this->indexer ??= new DocsIndexer(paths: $this->paths);
-        $this->cache ??= new FileIndexCache(paths: $this->paths);
+    protected DocsSourceRegistry $sources;
+    protected DocsIndexer $indexer;
+    protected FileIndexCache $cache;
+    protected DocumentPath $paths;
+
+    public function __construct(?DocsSourceRegistry $sources = null, ?DocsIndexer $indexer = null, ?FileIndexCache $cache = null, ?DocumentPath $paths = null)
+    {
+        $this->paths = $paths ?? new DocumentPath();
+        $this->sources = $sources ?? new DocsSourceRegistry($this->paths);
+        $this->indexer = $indexer ?? new DocsIndexer(paths: $this->paths);
+        $this->cache = $cache ?? new FileIndexCache(paths: $this->paths);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function report(): array
     {
         $sources = $this->sources->sources();
@@ -39,6 +43,10 @@ final class Diagnostics
         ];
     }
 
+    /**
+     * @param list<array<string, mixed>> $documents
+     * @return array<string, int>
+     */
     protected function languages(array $documents): array
     {
         $languages = [];
@@ -52,6 +60,10 @@ final class Diagnostics
         return $languages;
     }
 
+    /**
+     * @param array<string, mixed>|null $document
+     * @return array<string, bool>
+     */
     protected function pathSafety(?array $document): array
     {
         if ($document === null) {

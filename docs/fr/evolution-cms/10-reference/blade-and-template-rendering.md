@@ -81,7 +81,7 @@ ce chemin est obsolète et ne doit pas être utilisé pour la documentation des 
 ## Aides aux directives de support
 
 La classe d'assistance de support définit également les rappels de directives hérités utilisés par les anciens
-Enregistrement de directive piloté par la configuration :
+Enregistrement de directive piloté par la configuration :
 
 | Aide | Signification |
 | --- | --- |
@@ -100,10 +100,10 @@ d'ajouter de nouvelles directives basées sur la configuration.
 
 Evolution CMS est livré avec un adaptateur pour les icônes Blade. L'adaptateur :
 
-- fusionne la configuration principale de `blade-icons` ;
-- enregistre la fabrique d'icônes et le manifeste ;
+- fusionne la configuration principale de `blade-icons` ;
+- enregistre la fabrique d'icônes et le manifeste ;
 - enregistre la directive `@svg` ;
-- enregistre les composants d'icône lorsque le manifeste d'icône existe ;
+- enregistre les composants d'icône lorsque le manifeste d'icône existe ;
 - publie la configuration `blade-icons.php` en mode console.
 
 Utilisez les icônes via les jeux d'icônes configurés et maintenez les noms des icônes de l'interface utilisateur du gestionnaire stables.

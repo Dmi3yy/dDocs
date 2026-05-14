@@ -16,7 +16,7 @@ dokumentacja pakietu w dDocs.
 
 ## Zakres
 
-Te strony dokumentują wbudowane workflow Managera, które są wystarczająco
-stabilne dla bieżącego baseline. Zrzuty ekranu, role-specific walkthroughs i
-field-level help dla ustawień powinny trafić do kolejnych stron po sprawdzeniu
-każdego Manager screen względem aktualnego kodu.
+Strony te dokumentują wbudowane przepływy pracy menedżera, które są wystarczająco stabilne
+podstawowa wersja angielska. Zrzuty ekranu, instrukcje dotyczące poszczególnych ról i ustawienia
+pomoc terenowa będzie umieszczana na kolejnych stronach po zatwierdzeniu każdego ekranu menedżera
+względem obowiązującego kodeksu.

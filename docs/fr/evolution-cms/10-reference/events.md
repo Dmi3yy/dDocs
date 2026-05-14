@@ -11,7 +11,7 @@ vide.
 ## Services événementiels
 
 | Numéro de service | Zone |
-| --- : | --- |
+| --- : | --- |
 | `1` | Analyseur, documents, éléments, paramètres, navigateur de fichiers et événements généraux du système. |
 | `2` | Manager événements d'authentification du shell et du gestionnaire. |
 | `3` | Authentification des utilisateurs Web et événements du cycle de vie des utilisateurs Web. |
@@ -165,5 +165,5 @@ vide.
 ## Règle de documentation
 
 Les documents d'événement doivent inclure la source d'appel et la charge utile uniquement après vérification
-le site d'appel actuel. Cette page nomme la surface d'événement ; charge utile détaillée
+le site d'appel actuel. Cette page nomme la surface d'événement ; charge utile détaillée
 les contrats appartiennent aux pages de référence de suivi.

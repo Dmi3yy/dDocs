@@ -26,6 +26,9 @@ final class DocumentPath
         return $path === $root || str_starts_with($path, $root . DIRECTORY_SEPARATOR);
     }
 
+    /**
+     * @param list<string> $roots
+     */
     public function isInsideAny(string $path, array $roots): bool
     {
         foreach ($roots as $root) {

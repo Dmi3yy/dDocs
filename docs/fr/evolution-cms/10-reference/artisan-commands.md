@@ -4,15 +4,15 @@
 
 Cette page documente la surface de commande Artisan du projet installé enregistrée par
 le noyau Evolution CMS actuel. Il est distinct du programme d'installation autonome
-Commande `evo` documentée dans [Référence CLI](cli-reference.md).
+Commande `evo` documentée dans [Référence CLI] (cli-reference.md).
 
 ## Exécution de la console
 
-Evolution CMS utilise une application console personnalisée qui :
+Evolution CMS utilise une application console personnalisée qui :
 
-- utilise les données de version Evolution CMS comme nom d'application console ;
-- désactive la sortie automatique et la capture d'exceptions ;
-- crée un objet de requête à partir de l'URL du site configuré pour le contexte de la console ;
+- utilise les données de version Evolution CMS comme nom d'application console ;
+- désactive la sortie automatique et la capture d'exceptions ;
+- crée un objet de requête à partir de l'URL du site configuré pour le contexte de la console ;
 - distribue l'événement de départ Artisan ;
 - charge les fournisseurs différés et les commandes d'amorçage.
 
@@ -122,12 +122,12 @@ documentés comme des outils de développement/maintenance, et non comme des flu
 
 ## Règle de documentation
 
-Lorsque vous documentez une commande, incluez :
+Lorsque vous documentez une commande, incluez :
 
-- nom/signature de la commande ;
-- contexte d'exécution ;
-- s'il lit ou mute l'état du projet ;
-- s'il est sans danger pour la production ;
+- nom/signature de la commande ;
+- contexte d'exécution ;
+- s'il lit ou mute l'état du projet ;
+- s'il est sans danger pour la production ;
 - configuration associée ou limite Composer.
 
 Ne documentez pas le comportement des commandes spécifiques au package dans cette référence de produit.

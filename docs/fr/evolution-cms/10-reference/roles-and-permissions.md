@@ -86,10 +86,10 @@ N'utilisez pas les rôles de gestionnaire comme modèle d'autorisation front-end
 ## Serrures
 
 Evolution CMS suit les éléments verrouillés pour empêcher toute modification simultanée dangereuse.
-Les types verrouillables incluent :
+Les types verrouillables incluent :
 
 | Identifiant du type | Élément |
-| --- : | --- |
+| --- : | --- |
 | `1` | Modèle |
 | `2` | Template Variable |
 | `3` | Chunk |
@@ -104,7 +104,7 @@ Les contrôleurs et les modèles exposent l'état du verrouillage via des métho
 
 ## Autorisations de fichiers
 
-Le comportement de création de fichiers est contrôlé par les paramètres système :
+Le comportement de création de fichiers est contrôlé par les paramètres système :
 
 | Paramètre | Par défaut | Signification |
 | --- | --- | --- |

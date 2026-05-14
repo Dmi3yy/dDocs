@@ -2,6 +2,10 @@
 
 final class Settings
 {
+    /**
+     * @param list<mixed> $default
+     * @return list<string>
+     */
     public static function list(string $key, array $default = []): array
     {
         $value = config('dmi3yy.settings.dDocs.' . $key, $default);

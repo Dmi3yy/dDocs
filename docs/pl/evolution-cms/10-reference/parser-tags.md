@@ -26,19 +26,13 @@ kod szablonu w Markdown.
 ## Pola Resource i TVs
 
 Tagi Resource najpierw odczytują bieżący obiekt dokumentu. Potrafią też czytać
-Template Variables, gdy dla zasobu ładowane są wartości TV.
-
-```html
+Template Variables, gdy dla zasobu ładowane są wartości TV.```html
 <h1>[*pagetitle*]</h1>
 <p>[*introtext*]</p>
 <img src="[*hero_image*]" alt="">
-```
-
-Parser obsługuje także wyszukiwanie kontekstu za pomocą `@` w znacznikach zasobów. Aktualny
+```Parser obsługuje także wyszukiwanie kontekstu za pomocą `@` w znacznikach zasobów. Aktualny
 obsługa kontekstu obejmuje element nadrzędny, ostateczny element nadrzędny, wyszukiwanie aliasów, poprzedni/następny
-wyszukiwanie rodzeństwa i bezpośrednie wyszukiwanie identyfikatora zasobu.
-
-```html
+wyszukiwanie rodzeństwa i bezpośrednie wyszukiwanie identyfikatora zasobu.```html
 [*pagetitle@parent*]
 [*pagetitle@uparent(0)*]
 [*pagetitle@alias(home)*]
@@ -46,66 +40,46 @@ wyszukiwanie rodzeństwa i bezpośrednie wyszukiwanie identyfikatora zasobu.
 
 ## Ustawienia systemowe
 
-Tagi ustawień odczytują konfigurację środowiska wykonawczego i znane wartości ścieżki/adresu URL.
-
-```html
+Tagi ustawień odczytują konfigurację środowiska wykonawczego i znane wartości ścieżki/adresu URL.```html
 <title>[(site_name)]</title>
 <base href="[(site_url)]">
-```
-
-Często generowane wartości obejmują `base_url`, `base_path`, `site_url`,
+```Często generowane wartości obejmują `base_url`, `base_path`, `site_url`,
 `valid_hostnames`, `site_manager_url` i `site_manager_path`.
 
-## Chunks
+##Chunks
 
 Chunks to szablony wielokrotnego użytku. Parametry przekazywane do fragmentu są dostępne jako
-lokalne symbole zastępcze podczas analizowania fragmentów.
-
-```html
+lokalne symbole zastępcze podczas analizowania fragmentów.```html
 {{button?&label=`Read more`&url=`[~12~]`}}
-```
-
-Dane wyjściowe Chunk mogą zawierać elementy zastępcze, znaczniki zasobów, ustawienia, inne fragmenty,
+```Dane wyjściowe Chunk mogą zawierać elementy zastępcze, znaczniki zasobów, ustawienia, inne fragmenty,
 i tagi warunkowe. Parser rekurencyjnie rozwiązuje zagnieżdżoną treść, aż do momentu
 osiągnięto skonfigurowane limity przepustowości analizatora składni.
 
-## Snippets
+##Snippets
 
 Fragmenty kodu w pamięci podręcznej korzystają z `[[...]]`. Fragmenty kodu niezapisane w pamięci podręcznej korzystają z `[!...!]` i są konwertowane
-do znaczników fragmentów podczas przetwarzania danych wyjściowych po analizie.
-
-```html
+do znaczników fragmentów podczas przetwarzania danych wyjściowych po analizie.```html
 [[menuBuilder?&startId=`0`]]
 [!contactForm?&redirectTo=`15`!]
-```
-
-Parametry Snippet są analizowane przed wykonaniem. Zachowaj jawne wartości parametrów
+```Parametry Snippet są analizowane przed wykonaniem. Zachowaj jawne wartości parametrów
 i unikaj polegania na nieudokumentowanym stanie globalnym.
 
 ## Elementy zastępcze
 
 Symbole zastępcze są rozpoznawane na podstawie bieżącego zakresu symboli zastępczych analizatora lub lokalnego
-dane przekazywane do wywołania fragmentu/parsera.
-
-```html
+dane przekazywane do wywołania fragmentu/parsera.```html
 <article>
   <h2>[+title+]</h2>
   <p>[+summary+]</p>
 </article>
-```
-
-Symbole zastępcze mogą używać modyfikatorów. Modyfikatory są częścią klasycznego parsera
+```Symbole zastępcze mogą używać modyfikatorów. Modyfikatory są częścią klasycznego parsera
 powierzchni i powinny być udokumentowane cechą od nich zależną.
 
 ## Tagi URL
 
-Tagi URL są przepisywane podczas przetwarzania danych wyjściowych.
-
-```html
+Tagi URL są przepisywane podczas przetwarzania danych wyjściowych.```html
 <a href="[~1~]">Home</a>
-```
-
-Wyjście adresu URL zależy od stanu publikacji zasobu, ustawień przyjaznego adresu URL,
+```Wyjście adresu URL zależy od stanu publikacji zasobu, ustawień przyjaznego adresu URL,
 aliasy, sufiksy, podstawowy adres URL i procesor adresu URL.
 
 ## Tagi warunkowe
@@ -119,9 +93,7 @@ podstawowa składnia wykorzystuje wielkie litery:
 <@ELSE>
   Draft
 <@ENDIF>
-```
-
-Parser normalizuje również stare formularze komentarzy HTML, takie jak `<!--@IF ...-->`,
+```Parser normalizuje również stare formularze komentarzy HTML, takie jak `<!--@IF ...-->`,
 `<!--@ELSE-->` i `<!--@ENDIF-->`.
 
 ## Powiązania i tryby szablonów wbudowanych

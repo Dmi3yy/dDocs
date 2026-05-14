@@ -2,11 +2,17 @@
 
 final class ManagerText
 {
+    /**
+     * @return array<string, mixed>
+     */
     public static function all(): array
     {
         return self::labels(self::language());
     }
 
+    /**
+     * @param array<string, scalar> $replace
+     */
     public static function get(string $key, array $replace = []): string
     {
         $value = self::all()[$key] ?? self::labels('en')[$key] ?? $key;
@@ -34,6 +40,9 @@ final class ManagerText
         return self::cleanChoice(end($parts) ?: $value, $count);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected static function labels(string $language): array
     {
         $path = dirname(__DIR__, 2) . '/lang/' . $language . '/global.php';
@@ -90,6 +99,9 @@ final class ManagerText
         return 'en';
     }
 
+    /**
+     * @return list<string>
+     */
     public static function languageCandidates(): array
     {
         $language = self::language();

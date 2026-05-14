@@ -25,7 +25,7 @@ final class LanguageResolver
         }
 
         if (function_exists('evo') && is_file(evo()->getSiteCacheFilePath())) {
-            $siteCache = file_get_contents(evo()->getSiteCacheFilePath());
+            $siteCache = (string) file_get_contents(evo()->getSiteCacheFilePath());
             preg_match('@\$c\[\'manager_language\'\]="\w+@i', $siteCache, $matches);
 
             if (count($matches)) {
@@ -57,6 +57,9 @@ final class LanguageResolver
         return $this->normalize((string) config('dmi3yy.settings.dDocs.language_fallback', 'en'));
     }
 
+    /**
+     * @return list<string>
+     */
     public function candidates(?string $language = null): array
     {
         $language = $this->normalize($language ?: $this->managerLanguage());
@@ -69,6 +72,9 @@ final class LanguageResolver
         return array_values(array_unique(array_filter($candidates)));
     }
 
+    /**
+     * @return array{path: string, language: string, fallback_language: string|null, available_languages: list<string>}
+     */
     public function resolveDocsPath(string $docsPath, ?string $language = null): array
     {
         return $this->resolveDocsPaths($docsPath, $language)[0] ?? [
@@ -79,6 +85,9 @@ final class LanguageResolver
         ];
     }
 
+    /**
+     * @return list<array{path: string, language: string, fallback_language: string|null, available_languages: list<string>}>
+     */
     public function resolveDocsPaths(string $docsPath, ?string $language = null): array
     {
         $available = $this->availableLanguages($docsPath);
@@ -119,6 +128,9 @@ final class LanguageResolver
         ]];
     }
 
+    /**
+     * @return array{localized: array<string, string>, neutral: string|null}
+     */
     public function availableLanguages(string $docsPath): array
     {
         $localized = [];

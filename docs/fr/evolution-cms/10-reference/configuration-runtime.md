@@ -2,7 +2,7 @@
 
 [Retour](source-inventory.md) / [Haut](../README.md) / [Suivant](core-composer.md)
 
-Evolution CMS comporte deux couches de configuration : fichiers de projet/d'exécution et base de données
+Evolution CMS comporte deux couches de configuration : fichiers de projet/d'exécution et base de données
 paramètres du système. La configuration d'exécution démarre d'abord, puis les paramètres système sont
 chargé par les flux principaux et gestionnaires.
 
@@ -26,18 +26,16 @@ le runtime revient au chargement direct de Dotenv.
 
 ## Fichiers d'environnement
 
-Ordre de recherche d'environnement :
+Ordre de recherche d'environnement :
 
 1. `core/custom/.env`
 2. `.env` à la racine du projet
 
-Le fichier de cache d'environnement est :
+Le fichier de cache d'environnement est :
 
 ```text
 core/storage/cache/env.php
-```
-
-Le cache est valide lorsque son heure de modification est plus récente ou égale à celle
+```Le cache est valide lorsque son heure de modification est plus récente ou égale à celle
 fichier `.env` sélectionné. S'il est obsolète, le chargeur analyse `.env`, applique les valeurs,
 et écrit un nouveau cache de tableau PHP de manière atomique.
 
@@ -74,7 +72,7 @@ par le projet.
 
 ## Couche de projet personnalisée
 
-Les remplacements de projet sont disponibles sous `core/custom/`. Les exemples actuels incluent :
+Les remplacements de projet sont disponibles sous `core/custom/`. Les exemples actuels incluent :
 
 | Fichier | Objectif |
 | --- | --- |
@@ -117,6 +115,6 @@ Les fichiers de configuration d'exécution définissent le comportement du frame
 les paramètres définissent le comportement du site stocké dans la base de données, comme les URL conviviales,
 modèles, chemins d'accès au gestionnaire de fichiers, valeurs par défaut du cache et préférences de l'interface utilisateur du gestionnaire.
 
-Utilisez [Référence des paramètres système](system-settings.md) pour le CMS basé sur une base de données
+Utilisez [Référence des paramètres système] (system-settings.md) pour le CMS basé sur une base de données
 paramètres et cette page pour les fichiers de configuration d'exécution, l'environnement, les fournisseurs, les alias,
 et middleware.

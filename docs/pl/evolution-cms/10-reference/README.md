@@ -22,8 +22,8 @@ Extras.
 | [Odniesienie do wydarzeń](events.md) | Rozstawione nazwy zdarzeń i bieżące powierzchnie zdarzeń pogrupowane według obszaru wykonawczego. |
 | [Działania Artisan i Manager](artisan-and-manager-actions.md) | Krótka mapa akcji i poleceń menedżera. |
 | [Odniesienie CLI](cli-reference.md) | Polecenia samodzielnego instalatora `evo`. |
-| [Utwórz pakiet](../05-extras-and-packages/create-package.md) | Wspólny package creation contract dla nowoczesnych Extras. |
-| [Utwórz preset](../05-extras-and-packages/create-preset.md) | Wspólny preset creation contract dla ready-site installer scaffolds. |
+| [Utwórz paczkę](../05-extras-and-packages/create-package.md) | Umowa dotycząca wspólnego tworzenia pakietów dla nowoczesnego Extras. |
+| [Utwórz ustawienie wstępne](../05-extras-and-packages/create-preset.md) | Umowa dotycząca wspólnego tworzenia gotowych gotowych rusztowań dla instalatorów. |
 | [Zapasy źródłowe](source-inventory.md) | Powierzchnie źródłowe, które zasilają dokumentację produktu. |
 | [Nawigacja w dokumentacji](documentation-navigation.md) | Zasady łączenia i nawigacji dokumentacji publicznej. |
 | [Zasady dotyczące źródeł dokumentacji](documentation-source-policy.md) | Które źródła są dozwolone w dokumentacji publicznej. |

@@ -4,13 +4,15 @@
  */
 
 use Dmi3yy\dDocs\Support\ManagerText;
+use Illuminate\Support\Facades\View;
 
 if (!defined('IN_MANAGER_MODE') || IN_MANAGER_MODE != 'true') {
     die('No access');
 }
 
 $moduleUrl = (string) ($_SERVER['REQUEST_URI'] ?? '');
-$activeTab = request()->get('get', 'docs');
+$requestedTab = request('get', 'docs');
+$activeTab = is_scalar($requestedTab) ? (string) $requestedTab : 'docs';
 $labels = ManagerText::all();
 
 $tabs = [
@@ -32,7 +34,7 @@ if (evo()->hasPermission('settings')) {
 $_SESSION['itemaction'] = 'Viewing documentation';
 $_SESSION['itemname'] = $labels['module_title'] ?? $labels['docs'] ?? 'Documentation';
 
-echo view('dDocs::docs.shell', [
+echo View::make('dDocs::docs.shell', [
     'tabs' => $tabs,
     'moduleUrl' => $moduleUrl,
     'activeTab' => $activeTab,

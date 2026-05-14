@@ -1,4 +1,4 @@
-# Дії  Artisan і Manager
+# Дії Artisan і Manager
 
 [Назад](events.md) / [Вгору](../README.md) / [Далі](source-inventory.md)
 

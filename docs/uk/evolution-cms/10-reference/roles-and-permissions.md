@@ -3,27 +3,27 @@
 [Назад](system-settings.md) / [Вгору](../README.md) / [Далі](blade-and-template-rendering.md)
 
 Evolution CMS розділяє дозволи менеджера, доступ до групи документів, веб-користувача
-access, element locks, and file permissions. This page documents the current
-основні поверхні дозволів для документації продукту. Package-specific permission
+доступ, блокування елементів і дозволи на файли. Ця сторінка документує поточний
+основні поверхні дозволів для документації продукту. Дозвіл для конкретного пакета
 екрани належать до власного джерела dDocs кожного пакета.
 
 ## Manager Модель для наслідування
 
 Ролі Manager представлені моделлю `UserRole`. Користувачі Manager отримують a
 роль через атрибути користувача та перевірки дозволів на читання активного сеансу
-permission array for the current context.
+масив дозволів для поточного контексту.
 
 | Поверхня | Призначення |
 | --- | --- |
 | `UserRole` | Назва ролі, опис і прапорці дозволу менеджера. |
-| `UserAttribute.role` | Role assigned to a manager or web user account. |
-| `RolePermissions` | Additional permission records linked by role. |
-| `Permissions` and `PermissionsGroups` | Permission definitions and grouping. |
-| `UserRoleVar` | Template Variable access/rank by role. |
+| `UserAttribute.role` | Роль, призначена обліковому запису менеджера або веб-користувача. |
+| `RolePermissions` | Додаткові записи дозволів, пов’язані за роллю. |
+| `Permissions` і `PermissionsGroups` | Визначення дозволів і групування. |
+| `UserRoleVar` | Template Variable доступ/ранг за роллю. |
 | `ActiveUserLock` | Стан блокування для елементів і ресурсів, які зараз редагуються. |
 
 Основним помічником дозволів є `hasPermission($permission, $context = '')`.
-`hasAnyPermissions([...], $context = '')` returns true when any listed
+`hasAnyPermissions([...], $context = '')` повертає істину, якщо будь-який з них у списку
 доступний дозвіл.
 
 ## Прапорці дозволу ролі
@@ -43,8 +43,8 @@ permission array for the current context.
 | Дозволи | `access_permissions`, `web_access_permissions` |
 | Файли | `file_manager`, `assets_files`, `assets_images`, `bk_manager` |
 | Колоди та замки | `logs`, `view_eventlog`, `delete_eventlog`, `remove_locks`, `display_locks` |
-| Static import/export | `import_static`, `export_static` |
-| Web users | `new_web_user`, `edit_web_user`, `save_web_user`, `delete_web_user` |
+| Статичний імпорт/експорт | `import_static`, `export_static` |
+| Веб-користувачі | `new_web_user`, `edit_web_user`, `save_web_user`, `delete_web_user` |
 
 Деякі поточні шляхи коду також перевіряють нові іменовані дозволи, такі як
 `manage_groups`, `manage_document_permissions`, `manage_tv_permissions`,
@@ -52,13 +52,13 @@ permission array for the current context.
 `system_tasks.manage_packages`. Задокументуйте ці дозволи за допомогою функції, яка
 використовує їх, оскільки це назви можливостей, а не стовпці основних ролей.
 
-## Document Access Permissions
+## Права доступу до документів
 
 Дозволи доступу до документів використовують групи документів і групи учасників.
 
-| Model/Table Surface | Призначення |
+| Модель/Поверхня столу | Призначення |
 | --- | --- |
-| `DocumentgroupName` | Named document groups. |
+| `DocumentgroupName` | Іменовані групи документів. |
 | `DocumentGroup` | Зв’язує ресурси з групами документів. |
 | `MemberGroup` | Посилає користувачів на групи учасників. |
 | `membergroup_access` | Зв’язує групи учасників із групами документів. |
@@ -66,19 +66,19 @@ permission array for the current context.
 | `udperms_allowroot` | Контролює поведінку кореневого користувача для дозволів документа. |
 
 Коли `use_udperms` увімкнено, користувачі, які не є адміністраторами, перевіряються на відповідність
-groups they can access. Resource збереження та потоки дерева/запиту повинні зберігати їх
-checks intact.
+групи, до яких вони мають доступ. Resource збереження та потоки дерева/запиту повинні зберігати їх
+чеки цілі.
 
 ## Дозволи веб-доступу
 
 Дозволи веб-доступу захищають інтерфейсні ресурси для автентифікованих веб-користувачів.
 Вони відокремлені від дозволів ролі менеджера.| Поверхня | Призначення |
 | --- | --- |
-| Веб-користувачі | Users who authenticate on the site frontend. |
-| Ролі веб-користувачів | Optional role assignment on user attributes. |
-| Групи веб-користувачів | Groups used for frontend access decisions. |
+| Веб-користувачі | Користувачі, які пройшли автентифікацію на інтерфейсі сайту. |
+| Ролі веб-користувачів | Необов'язкове призначення ролей за атрибутами користувача. |
+| Групи веб-користувачів | Групи, які використовуються для прийняття рішень щодо доступу до інтерфейсу. |
 | Групи документів | Resource групи, які можна підключити до груп учасників. |
-| `web_access_permissions` | Manager permission for web access management. |
+| `web_access_permissions` | Дозвіл Manager для керування веб-доступом. |
 
 Використовуйте цей рівень, коли відвідувачі сайту мають бачити лише вибрані захищені ресурси.
 Не використовуйте ролі менеджера як модель авторизації інтерфейсу.
@@ -100,7 +100,7 @@ Evolution CMS відстежує заблоковані елементи для 
 | `8` | Роль |
 
 Контролери та моделі виявляють стан блокування за допомогою таких методів, як
-`getLockedElements()`, `isAlreadyEdit`, and `alreadyEditInfo`.
+`getLockedElements()`, `isAlreadyEdit` і `alreadyEditInfo`.
 
 ## Права доступу до файлів
 
@@ -110,8 +110,8 @@ Evolution CMS відстежує заблоковані елементи для 
 | --- | --- | --- |
 | `new_file_permissions` | `0644` | Дозволи застосовуються до нових файлів там, де їх встановлює файловий менеджер. |
 | `new_folder_permissions` | `0755` | Дозволи застосовуються до нових папок, де їх встановлює файловий менеджер. |
-| `filemanager_path` | `[(base_path)]` | Root for file manager operations. |
-| `rb_base_dir` | `[(base_path)]assets/` | Resource browser base directory. |
+| `filemanager_path` | `[(base_path)]` | Корінь для операцій файлового менеджера. |
+| `rb_base_dir` | `[(base_path)]assets/` | Resource базовий каталог браузера. |
 
 Дозволи файлів не замінюють дозволи менеджера. Користувач потребує
 можливість керування та доступ до файлової системи для успішного запису.
@@ -121,4 +121,4 @@ Evolution CMS відстежує заблоковані елементи для 
 Документуючи дозвіл, назвіть точний ключ дозволу та менеджера
 поверхню, яка його перевіряє. Якщо функція належить до встановленого пакета, збережіть
 документація дозволів у документах цього пакета та посилання на цю сторінку лише для
-the core permission model.
+основна модель дозволу.

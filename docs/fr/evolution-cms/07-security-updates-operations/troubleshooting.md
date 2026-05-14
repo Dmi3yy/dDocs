@@ -5,9 +5,7 @@
 Utilisez cette page pour les vérifications de première ligne avant d'ouvrir un code plus approfondi ou un hébergement
 diagnostic. Il se concentre sur le Evolution CMS actuel et le comportement de l'installateur.
 
-## Vérifications rapides
-
-| Symptôme | Vérifiez d'abord |
+## Vérifications rapides| Symptôme | Vérifiez d'abord |
 | --- | --- |
 | Le programme d'installation ne démarre pas | Confirmez PHP 8.3 ou version ultérieure, la disponibilité de Composer et un répertoire binaire d'installation inscriptible. Exécutez `evo system-status` lorsqu’il est disponible. |
 | Le programme d'installation ne peut pas télécharger ou mettre à jour le fichier binaire | Vérifiez l'accès réseau aux versions GitHub. En cas de débit limité, définissez `GITHUB_TOKEN` ou transmettez l'option de jeton d'installation GitHub. |
@@ -20,7 +18,7 @@ diagnostic. Il se concentre sur le Evolution CMS actuel et le comportement de l'
 | Le navigateur de fichiers ou les téléchargements échouent | Vérifiez `filemanager_path`, `rb_base_dir`, les paramètres d'extension de téléchargement, la taille de téléchargement maximale et les autorisations du système de fichiers pour les répertoires cibles. |
 | Un utilisateur gestionnaire ne peut pas voir un document | Vérifiez les autorisations du gestionnaire, les groupes de documents, les groupes d'utilisateurs, les indicateurs de confidentialité des ressources et si l'utilisateur a accès à l'action du gestionnaire. |
 | La documentation du package est manquante dans dDocs | Confirmez que le package possède un dossier de système de fichiers `docs/`, que le package est installé dans le projet, que dDocs a été actualisé et que la langue actuelle du gestionnaire correspond à un paramètre régional de documentation disponible. |
-| Une fonctionnalité spécifique à Extra n'est pas documentée ici | Ouvrez ce Extra dans dDocs. La documentation du produit décrit le comportement partagé du Evolution CMS ; Les Extras installés possèdent leurs manuels de fonctionnalités. |
+| Une fonctionnalité spécifique à Extra n'est pas documentée ici | Ouvrez ce Extra dans dDocs. La documentation du produit décrit le comportement partagé du Evolution CMS ; Les Extras installés possèdent leurs manuels de fonctionnalités. |
 
 ## Cache et actualisation
 
@@ -28,11 +26,11 @@ Le chemin d’actualisation complet commun appelle `evo()->clearCache('full')`. 
 L'actualisation publie et dépublie également les ressources planifiées, efface le cache complet,
 supprime le cache d'environnement généré lorsqu'il est présent et appelle l'événement d'actualisation du site.
 
-Utilisez une actualisation du cache après avoir modifié :
+Utilisez une actualisation du cache après avoir modifié :
 
-- modèles, morceaux, extraits de code, plugins, modules ou Template Variables ;
-- les paramètres système qui affectent le routage, les chemins, les téléchargements, le cache ou la sortie du gestionnaire ;
-- les fournisseurs de services de package, les actifs, les vues ou la configuration générée ;
+- modèles, morceaux, extraits de code, plugins, modules ou Template Variables ;
+- les paramètres système qui affectent le routage, les chemins, les téléchargements, le cache ou la sortie du gestionnaire ;
+- les fournisseurs de services de package, les actifs, les vues ou la configuration générée ;
 - Alias ​​de ressources, état de publication, autorisations ou paramètres d'URL conviviaux.
 
 ## Liste de contrôle des URL conviviales
@@ -65,24 +63,24 @@ apparaît dans l'arborescence dDocs avec uniquement un nom de package ou sans pa
 corrigez la source de la documentation du paquet plutôt que de copier son manuel dans
 Documentation du produit Evolution CMS.
 
-Pour les problèmes de documentation du package, vérifiez :
+Pour les problèmes de documentation du package, vérifiez :
 
-- le package contient `docs/en/README.md` ou une autre entrée de paramètres régionaux prise en charge ;
-- Les documents du package ukrainien utilisent le dossier de paramètres régionaux `uk` ; héritage local ukrainien
-  les dossiers doivent être migrés avant la publication ;
+- le package contient `docs/en/README.md` ou une autre entrée de paramètres régionaux prise en charge ;
+- Les documents du package ukrainien utilisent le dossier de paramètres régionaux `uk` ; héritage local ukrainien
+  les dossiers doivent être migrés avant la publication ;
 - les documents du package ont des titres stables et un H1 par page ;
-- les liens relatifs sont résolus à l'intérieur de la racine de la documentation du package ;
+- les liens relatifs sont résolus à l'intérieur de la racine de la documentation du package ;
 - L'index/le cache dDocs a été actualisé après les modifications de fichiers.
 
 ## Données de support à collecter
 
-Lorsqu'un problème nécessite un examen plus approfondi, collectez :
+Lorsqu'un problème nécessite un examen plus approfondi, collectez :
 
-- Version PHP et pilotes de base de données activés ;
+- Version PHP et pilotes de base de données activés ;
 - version ou branche Evolution CMS ;
-- version du programme d'installation et commande utilisée ;
-- le type de base de données et si le problème se produit avant ou après les migrations ;
-- langage du gestionnaire ;
-- modification des paramètres système liés au cache, aux URL, aux chemins, aux téléchargements ou aux autorisations ;
-- l'action exacte du gestionnaire ou l'URL qui échoue ;
+- version du programme d'installation et commande utilisée ;
+- le type de base de données et si le problème se produit avant ou après les migrations ;
+- langage du gestionnaire ;
+- modification des paramètres système liés au cache, aux URL, aux chemins, aux téléchargements ou aux autorisations ;
+- l'action exacte du gestionnaire ou l'URL qui échoue ;
 - installations ou mises à jour récentes du package.

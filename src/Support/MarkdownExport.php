@@ -2,14 +2,18 @@
 
 final class MarkdownExport
 {
-    public function __construct(
-        protected ?FileIndexCache $index = null,
-        protected ?FileDocumentRepository $documents = null,
-    ) {
-        $this->index ??= new FileIndexCache();
-        $this->documents ??= new FileDocumentRepository();
+    protected FileIndexCache $index;
+    protected FileDocumentRepository $documents;
+
+    public function __construct(?FileIndexCache $index = null, ?FileDocumentRepository $documents = null)
+    {
+        $this->index = $index ?? new FileIndexCache();
+        $this->documents = $documents ?? new FileDocumentRepository();
     }
 
+    /**
+     * @return array{content: string, filename: string, document_count: int}
+     */
     public function build(?string $language = null): array
     {
         $nodes = $this->index->index($language);

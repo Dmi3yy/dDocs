@@ -1,4 +1,4 @@
-# Довідка про Core Composer
+# Core Composer Reference
 
 [Назад](configuration-runtime.md) / [Вгору](../README.md) / [Далі](legacy-compatibility.md)
 
@@ -59,9 +59,7 @@ Evolution CMS використовує файл Composer рівня проект
 
 ```text
 custom/composer.json
-```
-
-Поведінка злиття:
+```Поведінка злиття:
 
 | Варіант | Значення |
 | --- | --- |

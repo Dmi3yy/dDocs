@@ -12,9 +12,9 @@
     ],
     "require": {
         "php": "^8.3",
-        "dmi3yy/dtui-editor": "*",
+        "dmi3yy/dtui-editor": "^1.0",
         "evolution-cms/evolution": "^3.5.7",
-        "evolution-cms/evo-ui": "*"
+        "evolution-cms/evo-ui": "^1.0"
     },
     "autoload": {
         "psr-4": {

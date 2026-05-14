@@ -1,14 +1,14 @@
 # Centrum dokumentacji
 
-To polskie centrum dokumentacji oddziela dokumentację modułu dDocs od
-dokumentacji produktu Evolution CMS.
+To centrum dokumentacji w języku angielskim oddziela dokumentację modułu dDocs od
+Dokumentacja produktu Evolution CMS.
 
-| Obszar | Otwórz |
+| Powierzchnia | Otwórz |
 | --- | --- |
 | dDocs | [Dokumentacja dDocs](ddocs/README.md) |
 | Evolution CMS | [Dokumentacja Evolution CMS](evolution-cms/README.md) |
 
-Użyj [dokumentacji dDocs](ddocs/README.md) dla modułu, standardów dokumentacji
-pakietów, indeksowania plików, renderowania, authoringu i zasad współtworzenia.
-Użyj [dokumentacji Evolution CMS](evolution-cms/README.md) dla bieżącej
-dokumentacji produktu zbudowanej z kodu Evolution CMS i instalatora.
+Użyj [Dokumentacja dDocs](ddocs/README.md) dla modułu, dokumentacja pakietu
+standardy, indeksowanie plików, renderowanie, tworzenie i zasady wnoszenia wkładu. Użyj
+[Dokumentacja Evolution CMS](evolution-cms/README.md) dla bieżącego produktu
+dokumentacja zbudowana z bazy kodu Evolution CMS i instalatora.

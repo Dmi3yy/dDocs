@@ -16,9 +16,7 @@ $resources = SiteContent::query()
     ->where('parent', 0)
     ->orderBy('menuindex')
     ->get();
-```
-
-Filtry `active()` do opublikowanych i nieusuniętych zasobów.
+```Filtry `active()` do opublikowanych i nieusuniętych zasobów.
 
 ## Wybierz wartości Template Variable
 
@@ -29,11 +27,7 @@ $resources = SiteContent::query()
     ->where('parent', 0)
     ->orderBy('pagetitle')
     ->get();
-`
-
-```
-
-withTVs()` łączy wartości TV według nazwy TV i wybiera je do wyniku. Użyj tego
+````withTVs()` łączy wartości TV według nazwy TV i wybiera je do wyniku. Użyj tego
 dla małych i średnich zestawów wyników, w których połączone pola są bezpośrednio przydatne
 zapytanie.
 
@@ -46,17 +40,13 @@ $resources = SiteContent::query()
     ->tvFilter('tv:price:>:150:UNSIGNED;tv:brand:!null;')
     ->tvOrderBy('price asc UNSIGNED, brand asc')
     ->get();
-```
-
-Filtry TV obsługują operatory takie jak równość, porównanie, `in`, `not_in`,
+```Filtry TV obsługują operatory takie jak równość, porównanie, `in`, `not_in`,
 `like`, `like-r`, `like-l`, `null` i `!null`. Można stosować rzutowania numeryczne
 porównania numeryczne. Rzuty numeryczne SQLite są znormalizowane do `INTEGER`.
 
 ## Dołącz wartości domyślne TV
 
-Użyj znacznika `:d`, gdy zapytanie powinno wracać do wartości TV `default_text`.
-
-```php
+Użyj znacznika `:d`, gdy zapytanie powinno wracać do wartości TV `default_text`.```php
 $resources = SiteContent::query()
     ->withTVs(['price:d', 'brand'])
     ->active()
@@ -76,11 +66,7 @@ $resources = SiteContent::query()
     ->get();
 
 $rows = SiteContent::tvList($resources, ['price', 'brand']);
-`
-
-```
-
-tvList()` zwraca wiersze tablicy z wpisem `tvs`. Brakujące wartości są uzupełniane z
+````tvList()` zwraca wiersze tablicy z wpisem `tvs`. Brakujące wartości są uzupełniane z
 TV jest domyślny, jeśli jest dostępny.
 
 ## Zapytanie o dane drzewa
@@ -92,9 +78,7 @@ $tree = SiteContent::query()
     ->get()
     ->toTree()
     ->toArray();
-```
-
-Dla konkretnego oddziału:
+```Dla konkretnego oddziału:
 
 ```php
 $branch = SiteContent::descendantsOf(2)
@@ -102,9 +86,7 @@ $branch = SiteContent::descendantsOf(2)
     ->get()
     ->toTree()
     ->toArray();
-```
-
-Używaj zapytań do drzewa, gdy hierarchia ma znaczenie. Używaj zapytań płaskich tylko wtedy, gdy potrzebujesz
+```Używaj zapytań do drzewa, gdy hierarchia ma znaczenie. Używaj zapytań płaskich tylko wtedy, gdy potrzebujesz
 filtrowane wiersze.
 
 ## Zamawianie tagów i daty
@@ -116,11 +98,7 @@ $resources = SiteContent::query()
     ->tagsData('17:5,7,8')
     ->orderByDate()
     ->get();
-`
-
-```
-
-orderByDate()` sortuje według daty publikacji, jeśli jest dostępna, i wraca do tworzenia
+````orderByDate()` sortuje według daty publikacji, jeśli jest dostępna, i wraca do tworzenia
 data. `tagsData()` łączy dane znacznika dla wybranego TV/zestawu znaczników.
 
 ## Lista kontrolna walidacji

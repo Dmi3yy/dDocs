@@ -54,9 +54,7 @@ evo install demo \
   --db-name=database.sqlite \
   --admin-email=admin@example.com \
   --admin-password=change-me
-```
-
-W przypadku pominięcia w trybie CLI instalator domyślnie przyjmuje:
+```W przypadku pominięcia w trybie CLI instalator domyślnie przyjmuje:
 
 | Wartość | Domyślne |
 | --- | --- |

@@ -34,13 +34,13 @@ Dokumentacja produktu CMS.
 
 ## Zaległości dotyczące dokumentacji
 
-Aktualny baseline obejmuje wymagania, instalację installer-first, reference
-installer CLI, podstawowe pojęcia, główne przepływy pracy Managera, strukturę
-projektu, mapy reference dla programistów, configuration/runtime bootstrap,
-Core Composer, legacy compatibility, polecenia Artisan zainstalowanego
-projektu, system settings/defaults, roles and permissions, Blade/template
-rendering, classic parser tags, dwa zweryfikowane przepisy, source policy,
-navigation rules i first-line troubleshooting.
+Wersja podstawowa w języku angielskim obejmuje wymagania, instalację od instalatora,
+instalator CLI, podstawowe koncepcje, podstawowe przepływy pracy menedżera, projekt
+struktura, mapy referencyjne dla programistów, bootstrap konfiguracji/środowiska wykonawczego, core
+Composer, zgodność ze starszymi wersjami, polecenia Artisan z zainstalowanego projektu, system
+ustawienia/domyślne, role i uprawnienia, Blade/renderowanie szablonu, klasyczny
+tagi parsera, dwie sprawdzone receptury, zasady źródłowe, reguły nawigacji i
+pierwsza linia rozwiązywania problemów.
 
 | Luka | Planowana strona publiczna |
 | --- | --- |
@@ -49,4 +49,4 @@ navigation rules i first-line troubleshooting.
 | Umowy dotyczące ładunku zdarzeń | Rozszerz [Odniesienie do zdarzeń](events.md) po sprawdzeniu poprawności każdej witryny wywołań `invokeEvent` |
 | Nawigacja w dokumentacji | [Nawigacja w dokumentacji](documentation-navigation.md) |
 | Więcej przepisów na najlepsze praktyki | `08-tutorials-recipes/` po sprawdzeniu poprawności bieżącego kodu |
-| Tłumaczenia lokalne | Utrzymywać lokalne kopie zsynchronizowane ze sprawdzonym EN baseline |
+| Tłumaczenia lokalne | Synchronizuj zlokalizowane serwery lustrzane ze sprawdzoną wersją podstawową w języku angielskim |

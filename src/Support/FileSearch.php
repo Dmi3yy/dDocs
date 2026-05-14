@@ -2,12 +2,17 @@
 
 final class FileSearch
 {
-    public function __construct(
-        protected ?FileDocumentRepository $documents = null,
-    ) {
-        $this->documents ??= new FileDocumentRepository();
+    protected FileDocumentRepository $documents;
+
+    public function __construct(?FileDocumentRepository $documents = null)
+    {
+        $this->documents = $documents ?? new FileDocumentRepository();
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     * @return list<array<string, mixed>>
+     */
     public function filter(array $nodes, string $query): array
     {
         $query = trim(mb_strtolower($query));
@@ -34,6 +39,9 @@ final class FileSearch
         return array_values(array_filter($nodes, fn (array $node): bool => isset($matches[(string) $node['id']])));
     }
 
+    /**
+     * @param array<string, mixed> $node
+     */
     protected function matchesNode(array $node, string $query): bool
     {
         $haystack = mb_strtolower(implode(' ', [

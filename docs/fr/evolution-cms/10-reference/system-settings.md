@@ -20,7 +20,7 @@ L'utilisateur gestionnaire est autorisé à modifier les paramètres.
 | Modèles de courrier | Expéditeur, transport du courrier, paramètres SMTP, modèles d'inscription et de rappel de mot de passe. |
 
 Plugins peut ajouter HTML aux onglets de paramètres via le rendu des paramètres système
-événements répertoriés dans [Référence des événements](events.md).
+événements répertoriés dans [Référence des événements] (events.md).
 
 ## Valeurs par défaut critiques
 

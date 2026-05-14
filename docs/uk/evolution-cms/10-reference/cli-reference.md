@@ -3,7 +3,7 @@
 [Назад](../07-security-updates-operations/troubleshooting.md) / [Вгору](../README.md) / [Далі](source-inventory.md)
 
 Ця сторінка є короткою довідкою для поточного командного рядка Evolution CMS
-монтажні поверхні. Використовуйте [Встановлення](../01-getting-started/installation.md)
+монтажні поверхні. Використовуйте [Встановлення] (../01-getting-started/installation.md)
 для керованого процесу встановлення.
 
 ## Команди інсталятора
@@ -54,9 +54,7 @@ evo install demo \
   --db-name=database.sqlite \
   --admin-email=admin@example.com \
   --admin-password=change-me
-```
-
-Якщо пропущено в режимі CLI, інсталятор за замовчуванням:
+```Якщо пропущено в режимі CLI, інсталятор за замовчуванням:
 
 | Значення | За замовчуванням |
 | --- | --- |

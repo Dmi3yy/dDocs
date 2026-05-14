@@ -12,15 +12,11 @@ Zainstaluj instalator globalnie za pomocą Composer:
 
 ```bash
 composer global require evolution-cms/installer
-```
-
-Upewnij się, że globalny katalog bin Composer jest dostępny w `PATH`, a następnie sprawdź:
+```Upewnij się, że globalny katalog bin Composer jest dostępny w `PATH`, a następnie sprawdź:
 
 ```bash
 evo version
-```
-
-Przy pierwszym uruchomieniu program inicjujący PHP instaluje pasujący plik binarny Go z GitHub
+```Przy pierwszym uruchomieniu program inicjujący PHP instaluje pasujący plik binarny Go z GitHub
 Zwalnia, weryfikuje sumy kontrolne, przechowuje plik binarny obok programu ładującego i
 przekazuje mu polecenie.
 
@@ -28,21 +24,15 @@ Możesz wstępnie zainstalować plik binarny jawnie:
 
 ```bash
 evo self-install
-```
-
-Zaktualizuj plik binarny instalatora za pomocą:
+```Zaktualizuj plik binarny instalatora za pomocą:
 
 ```bash
 evo self-update
-```
-
-Aby sprawdzić środowisko lokalne przed instalacją, uruchom:
+```Aby sprawdzić środowisko lokalne przed instalacją, uruchom:
 
 ```bash
 evo system-status
-```
-
-Komenda status zwraca JSON dla adaptera instalatora. Sprawdza
+```Komenda status zwraca JSON dla adaptera instalatora. Sprawdza
 system operacyjny, wersja PHP, Composer, PDO i sterowniki baz danych, JSON, MySQLi,
 mbstring, cURL, obsługa obrazów, miejsce na dysku i limit pamięci.
 
@@ -82,9 +72,7 @@ evo install demo \
   --admin-directory=manager \
   --language=uk \
   --preset=evolution-cms-presets/default
-```
-
-Tryb CLI wymaga podania typu bazy danych, nazwy bazy danych, adresu e-mail administratora i admina
+```Tryb CLI wymaga podania typu bazy danych, nazwy bazy danych, adresu e-mail administratora i admina
 hasło. Domyślna nazwa użytkownika administratora to `admin`, a katalog menedżera to
 `manager`, język do `en` i ustawienie wstępne do `evolution`, gdy te wartości
 nie są zapewnione.
@@ -127,9 +115,7 @@ Ustawienie wstępne może zawierać sufiks ref, gdy potrzebna jest gałąź lub 
 
 ```bash
 evo install demo --preset=evolution-cms-presets/default@dev
-```
-
-Presety są stosowane poprzez zainstalowany plik `core/Artist
+```Presety są stosowane poprzez zainstalowany plik `core/Artist
 polecenie preset:install` po przygotowaniu rdzenia Evolution CMS, a następnie ustawienie wstępne
 trwają migracje.
 
@@ -139,15 +125,11 @@ Instalator może zainstalować Extras, gdy projekt podstawowy będzie gotowy:
 
 ```bash
 evo install demo --extras=sTask,sSeo
-```
-
-W razie potrzeby pakiety Legacy Store można wybierać według identyfikatora:
+```W razie potrzeby pakiety Legacy Store można wybierać według identyfikatora:
 
 ```bash
 evo install demo --extras=legacy-store:84@1.12.2
-```
-
-Nie dokumentuj instalacji starego komponentu jako domyślnej ścieżki dla bieżącej
+```Nie dokumentuj instalacji starego komponentu jako domyślnej ścieżki dla bieżącej
 projekty. Zachowaj informacje o starszych komponentach w starszym archiwum, chyba że: a
 bieżący pakiet wyraźnie go zastępuje.
 

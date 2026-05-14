@@ -2,12 +2,17 @@
 
 final class FileDocumentRepository
 {
-    public function __construct(
-        protected ?DocumentPath $paths = null,
-    ) {
-        $this->paths ??= new DocumentPath();
+    protected DocumentPath $paths;
+
+    public function __construct(?DocumentPath $paths = null)
+    {
+        $this->paths = $paths ?? new DocumentPath();
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     * @return array<string, mixed>|null
+     */
     public function find(array $nodes, string $id): ?array
     {
         foreach ($nodes as $node) {
@@ -19,6 +24,9 @@ final class FileDocumentRepository
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $node
+     */
     public function read(array $node): ?string
     {
         $path = (string) ($node['absolute_path'] ?? '');

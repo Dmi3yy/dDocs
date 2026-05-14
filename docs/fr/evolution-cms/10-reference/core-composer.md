@@ -55,13 +55,11 @@ Les exigences d'extension de plate-forme incluent les extensions PHP courantes t
 
 ## Composer Fusionner Plugin
 
-La configuration principale de Composer utilise `wikimedia/composer-merge-plugin` pour inclure :
+La configuration principale de Composer utilise `wikimedia/composer-merge-plugin` pour inclure :
 
 ```text
 custom/composer.json
-```
-
-Comportement de fusion :
+```Comportement de fusion :
 
 | Options | Valeur |
 | --- | --- |
@@ -74,7 +72,7 @@ Comportement de fusion :
 Utilisez `core/custom/composer.json` pour les packages au niveau du projet au lieu de les modifier
 directement le fichier d'exécution principal Composer.
 
-## Règles de chargement automatique
+## Règles de chargement automatique
 
 | Type de chargement automatique | Entrées |
 | --- | --- |
@@ -105,7 +103,7 @@ sortie de découverte.
 
 ## Outils de développement
 
-Les dépendances de développement principales incluent :
+Les dépendances de développement principales incluent :
 
 | Forfait | Objectif |
 | --- | --- |
@@ -119,5 +117,5 @@ couche de projet.
 ## Règle de documentation
 
 Lors de la documentation de l'installation du package, des exigences Composer ou du service
-découverte du fournisseur, indiquez quelle limite Composer est utilisée : projet racine,
+découverte du fournisseur, indiquez quelle limite Composer est utilisée : projet racine,
 environnement d'exécution principal, ou `core/custom/composer.json`.

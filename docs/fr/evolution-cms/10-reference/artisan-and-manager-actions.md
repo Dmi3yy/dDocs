@@ -17,7 +17,7 @@ point pour une référence plus approfondie sur les commandes et une documentati
 | Tâches système | Commandes de battement de coeur du planificateur et de travailleur de tâche. |
 | Site/environnement d'exécution | mise à jour du site, mise à jour de l'arborescence, synchronisation des traductions, publication du fournisseur, build Tailwind. |
 
-Utilisez [Référence CLI](cli-reference.md) pour la commande d'installation autonome `evo`
+Utilisez [Référence CLI] (cli-reference.md) pour la commande d'installation autonome `evo`
 surface et [Référence des commandes Artisan](artisan-commands.md) pour l'intégralité
 surface de commande du projet installé. Cette page est une carte compacte qui relie
 commandes avec les surfaces d'action du gestionnaire.
@@ -25,7 +25,7 @@ commandes avec les surfaces d'action du gestionnaire.
 ## Manager Sources d'actions
 
 Les actions Manager ne constituent pas un seul fichier de route moderne. Le comportement actuel du manager est
-résolu à partir de plusieurs surfaces :
+résolu à partir de plusieurs surfaces :
 
 | Surfaces | Responsabilité |
 | --- | --- |
@@ -37,7 +37,7 @@ résolu à partir de plusieurs surfaces :
 | `manager/views/` | Vues Blade et boutons d'action. |
 | Baies modèle `managerActionsMap` | ID d'action courants pour la modification, l'enregistrement, la suppression, la duplication, l'activation, la désactivation, le tri, l'exécution et les actions de modèle associées. |
 
-## Actions de modèle courantes
+## Actions de modèle courantes
 
 | Zone modèle | Actions communes |
 | --- | --- |
@@ -51,10 +51,10 @@ résolu à partir de plusieurs surfaces :
 
 ## Règle de documentation
 
-Lorsque vous documentez une action de responsable, validez les trois niveaux :
+Lorsque vous documentez une action de responsable, validez les trois niveaux :
 
-- l'identifiant de l'action ou la carte d'action du modèle ;
-- le contrôleur/action/processeur qui gère la demande ;
+- l'identifiant de l'action ou la carte d'action du modèle ;
+- le contrôleur/action/processeur qui gère la demande ;
 - la vue gestionnaire qui expose l'action à l'utilisateur.
 
 Ne traitez pas les anciens noms d'action comme un comportement actuel à moins qu'ils ne soient toujours résolus dans

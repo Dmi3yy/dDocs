@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Dmi3yy\dDocs\Support\Diagnostics;
 use Dmi3yy\dDocs\Support\MarkdownExport;
 
@@ -26,38 +28,40 @@ $plantUmlRoute = static function () {
         'https://www.plantuml.com/plantuml/png/'
     ), '/') . '/';
 
-    $encoded = (string) request('uml', '');
+    $requestedUml = request('uml', '');
+    $encoded = is_scalar($requestedUml) ? (string) $requestedUml : '';
     if ($encoded === '' || strlen($encoded) > 10000 || !preg_match('/^[A-Za-z0-9_-]+$/', $encoded)) {
         return response('', 404);
     }
 
-    $format = strtolower((string) request('format', ''));
+    $requestedFormat = request('format', '');
+    $format = strtolower(is_scalar($requestedFormat) ? (string) $requestedFormat : '');
     if (in_array($format, ['svg', 'png'], true)) {
         $rendererUrl = preg_replace('~/plantuml/(?:png|svg)/$~', '/plantuml/' . $format . '/', $rendererUrl) ?: $rendererUrl;
     }
 
-    return redirect()->away($rendererUrl . $encoded);
+    return Redirect::away($rendererUrl . $encoded);
 };
 
 Route::get('dtui-plantuml', $plantUmlRoute)->name('dDocs.plantuml.compat');
 
 Route::prefix('ddocs')->name('dDocs.')->group(function () use ($plantUmlRoute, $managerDiagnosticsAllowed) {
-    Route::get('health', fn () => response()->json(['ok' => true, 'mode' => 'file-only']))->name('health');
+    Route::get('health', fn () => Response::json(['ok' => true, 'mode' => 'file-only']))->name('health');
     Route::get('diagnostics', function (Diagnostics $diagnostics) use ($managerDiagnosticsAllowed) {
         if (!$managerDiagnosticsAllowed()) {
-            return response('', 404);
+            return Response::make('', 404);
         }
 
-        return response()->json($diagnostics->report());
+        return Response::json($diagnostics->report());
     })->name('diagnostics');
     Route::get('export-markdown', function (MarkdownExport $export) use ($managerDiagnosticsAllowed) {
         if (!$managerDiagnosticsAllowed()) {
-            return response('', 404);
+            return Response::make('', 404);
         }
 
         $payload = $export->build();
 
-        return response($payload['content'], 200, [
+        return Response::make($payload['content'], 200, [
             'Content-Type' => 'text/markdown; charset=UTF-8',
             'Content-Disposition' => 'attachment; filename="' . $payload['filename'] . '"',
             'X-dDocs-Document-Count' => (string) $payload['document_count'],

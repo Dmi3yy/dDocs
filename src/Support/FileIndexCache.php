@@ -4,18 +4,23 @@ final class FileIndexCache
 {
     protected const SCHEMA_VERSION = 2;
 
+    /** @var array<string, list<array<string, mixed>>> */
     protected array $memo = [];
 
-    public function __construct(
-        protected ?DocsIndexer $indexer = null,
-        protected ?DocumentPath $paths = null,
-        protected ?LanguageResolver $languages = null,
-    ) {
-        $this->paths ??= new DocumentPath();
-        $this->languages ??= new LanguageResolver();
-        $this->indexer ??= new DocsIndexer(paths: $this->paths);
+    protected DocsIndexer $indexer;
+    protected DocumentPath $paths;
+    protected LanguageResolver $languages;
+
+    public function __construct(?DocsIndexer $indexer = null, ?DocumentPath $paths = null, ?LanguageResolver $languages = null)
+    {
+        $this->paths = $paths ?? new DocumentPath();
+        $this->languages = $languages ?? new LanguageResolver();
+        $this->indexer = $indexer ?? new DocsIndexer(paths: $this->paths);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     public function index(?string $language = null, bool $refresh = false): array
     {
         $languageKey = $this->languageKey($language);
@@ -41,7 +46,9 @@ final class FileIndexCache
                 && ($payload['language'] ?? null) === $languageKey
                 && is_array($payload['nodes'] ?? null)
             ) {
-                return $this->memo[$languageKey] = $payload['nodes'];
+                $nodes = array_values(array_filter($payload['nodes'], 'is_array'));
+
+                return $this->memo[$languageKey] = $nodes;
             }
         }
 
@@ -51,6 +58,9 @@ final class FileIndexCache
         return $this->memo[$languageKey] = $nodes;
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     public function refresh(?string $language = null): array
     {
         return $this->index($language, true);
@@ -78,6 +88,9 @@ final class FileIndexCache
         return $this->isAllowedCachePath($path) ? $path : null;
     }
 
+    /**
+     * @param list<array<string, mixed>> $nodes
+     */
     protected function write(string $path, array $nodes, string $language): void
     {
         $payload = [
@@ -111,11 +124,17 @@ final class FileIndexCache
         return false;
     }
 
+    /**
+     * @return list<string>
+     */
     protected function cacheRoots(): array
     {
-        return array_values(array_filter(array_map(fn ($root) => is_string($root) ? $this->paths->normalize($root) : null, $this->rawCacheRoots())));
+        return array_values(array_filter(array_map(fn (string $root): ?string => $this->paths->normalize($root), $this->rawCacheRoots())));
     }
 
+    /**
+     * @return list<string>
+     */
     protected function rawCacheRoots(): array
     {
         $roots = [];

@@ -2,12 +2,16 @@
 
 final class DocsSourceRegistry
 {
-    public function __construct(
-        protected ?DocumentPath $paths = null,
-    ) {
-        $this->paths ??= new DocumentPath();
+    protected DocumentPath $paths;
+
+    public function __construct(?DocumentPath $paths = null)
+    {
+        $this->paths = $paths ?? new DocumentPath();
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     public function sources(): array
     {
         $sources = [];
@@ -33,6 +37,9 @@ final class DocsSourceRegistry
         return array_values($sources);
     }
 
+    /**
+     * @return list<string>
+     */
     protected function candidatePackageRoots(): array
     {
         $roots = [$this->packageRoot()];
@@ -49,6 +56,9 @@ final class DocsSourceRegistry
         return $this->packageRoot() . DIRECTORY_SEPARATOR . 'ProjectDocs';
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     protected function userDocsSources(): array
     {
         $path = $this->paths->normalize($this->userDocsPath());
@@ -73,6 +83,9 @@ final class DocsSourceRegistry
         ]];
     }
 
+    /**
+     * @return list<string>
+     */
     protected function configuredRoots(): array
     {
         if (!(bool) config('dmi3yy.settings.dDocs.scan_project_docs', true)) {
@@ -87,6 +100,9 @@ final class DocsSourceRegistry
         return $this->uniqueExistingDirectories($roots);
     }
 
+    /**
+     * @return list<string>
+     */
     protected function composerInstalledRoots(): array
     {
         $vendorRoot = $this->vendorRoot();
@@ -129,6 +145,9 @@ final class DocsSourceRegistry
         return $roots;
     }
 
+    /**
+     * @return list<string>
+     */
     protected function vendorPackageRoots(): array
     {
         $vendorRoot = $this->vendorRoot();
@@ -147,6 +166,9 @@ final class DocsSourceRegistry
         return $roots;
     }
 
+    /**
+     * @return list<string>
+     */
     protected function docsPathsForRoot(string $root): array
     {
         $paths = [];
@@ -173,6 +195,9 @@ final class DocsSourceRegistry
         return $this->uniqueExistingDirectories($paths);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function sourceFromPath(string $root, string $docsPath, string $type, bool $vendor): array
     {
         $composer = $this->composerMetadata($root);
@@ -213,6 +238,9 @@ final class DocsSourceRegistry
         return in_array('vendor', $parts, true);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function composerMetadata(string $root): array
     {
         $path = $root . '/composer.json';
@@ -225,6 +253,9 @@ final class DocsSourceRegistry
         return is_array($payload) ? $payload : [];
     }
 
+    /**
+     * @param array<string, mixed> $package
+     */
     protected function isDiscoverablePackage(array $package, string $root): bool
     {
         $name = strtolower((string) ($package['name'] ?? ''));
@@ -257,6 +288,9 @@ final class DocsSourceRegistry
         return false;
     }
 
+    /**
+     * @param array<string, mixed> $composer
+     */
     protected function displayName(string $package, string $root, array $composer): string
     {
         $translated = $this->translatedPackageName($package, $root);
@@ -324,6 +358,9 @@ final class DocsSourceRegistry
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $composer
+     */
     protected function displayIcon(string $package, string $root, array $composer): string
     {
         $translated = $this->translatedMetadata($package, $root, 'icon');
@@ -343,6 +380,9 @@ final class DocsSourceRegistry
         ][strtolower($package)] ?? 'tabler-package';
     }
 
+    /**
+     * @param array<string, mixed> $composer
+     */
     protected function displayDescription(string $package, string $root, array $composer): string
     {
         $translated = $this->translatedMetadata($package, $root, 'description');
@@ -404,6 +444,9 @@ final class DocsSourceRegistry
         return null;
     }
 
+    /**
+     * @return list<string>
+     */
     protected function metadataKeys(string $package, string $kind): array
     {
         $genericKeys = [
@@ -496,6 +539,10 @@ final class DocsSourceRegistry
         return $base . DIRECTORY_SEPARATOR . $path;
     }
 
+    /**
+     * @param list<mixed> $paths
+     * @return list<string>
+     */
     protected function uniqueExistingDirectories(array $paths): array
     {
         $result = [];

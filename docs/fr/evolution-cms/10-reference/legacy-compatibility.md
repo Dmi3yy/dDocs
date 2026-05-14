@@ -38,7 +38,7 @@ services, modèles, contrôleurs et façades.
 ## Legacy inclut et aide
 
 Core Composer charge automatiquement les fichiers d'aide/d'action qui préservent les anciennes fonctions basées sur
-superficies :
+superficies :
 
 | Zone | Fichiers chargés automatiquement |
 | --- | --- |
@@ -52,7 +52,7 @@ reconnaître que ces surfaces fonctionnelles existent toujours.
 
 ## Actions Manager héritées
 
-Le gestionnaire contient toujours des gestionnaires d'actions et des processeurs :
+Le gestionnaire contient toujours des gestionnaires d'actions et des processeurs :
 
 | Surfaces | Objectif |
 | --- | --- |
@@ -67,7 +67,7 @@ fichier, processeur et vue Blade ensemble.
 
 ## Compatibilité de l'analyseur
 
-Les fonctionnalités de l'analyseur classique font toujours partie du runtime actuel :
+Les fonctionnalités de l'analyseur classique font toujours partie du runtime actuel :
 
 | Fonctionnalité | Remarques |
 | --- | --- |
@@ -79,7 +79,7 @@ Les fonctionnalités de l'analyseur classique font toujours partie du runtime ac
 | Balises conditionnelles | `<@IF:...>`, `<@ELSEIF:...>`, `<@ELSE>`, `<@ENDIF>`. |
 | Modes de modèle | `@CODE`, `@FILE`, `@DOCUMENT`, `@B_FILE` et `@B_CODE`. |
 
-Utilisez [Référence des balises Parser](parser-tags.md) pour les détails de la syntaxe.
+Utilisez [Référence des balises Parser] (parser-tags.md) pour les détails de la syntaxe.
 
 ## Ce qu'il ne faut pas migrer aveuglément
 

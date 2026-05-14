@@ -3,7 +3,7 @@
 [Retour](parser-tags.md) / [Haut](../README.md) / [Suivant](events.md)
 
 Cette référence mappe la surface actuelle du modèle Eloquent. Il s'agit d'une page de recherche pour
-auteurs et développeurs de documentation ; ce n'est pas une référence de schéma complète.
+auteurs et développeurs de documentation ; ce n'est pas une référence de schéma complète.
 
 ## Modèles de contenu et d'arborescence
 
@@ -20,7 +20,7 @@ auteurs et développeurs de documentation ; ce n'est pas une référence de sch�
 | Modèle | Responsabilité |
 | --- | --- |
 | `SiteTemplate` | Modèles affectés aux ressources et connectés à Template Variables. |
-| `SiteTmplvar` | Définitions Template Variable : type, nom, légende, catégorie, éléments, affichage, valeurs par défaut et propriétés. |
+| `SiteTmplvar` | Définitions Template Variable : type, nom, légende, catégorie, éléments, affichage, valeurs par défaut et propriétés. |
 | `SiteTmplvarTemplate` | Relation et classement entre le modèle et TV. |
 | `SiteTmplvarContentvalue` | Valeurs TV enregistrées pour des ressources individuelles. |
 | `SiteTmplvarAccess` | Règles d'accès TV. |

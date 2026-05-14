@@ -179,15 +179,6 @@
                 return Promise.resolve();
             }
 
-            function currentBaseUrl() {
-                return @js($managerBaseUrl);
-            }
-
-            function isDarkThemeMode() {
-                var mode = document.documentElement.dataset.themeMode || document.body.dataset.themeMode || 'light';
-                return ['dark', 'darkness'].indexOf(String(mode)) !== -1;
-            }
-
             function ddocsViewerPlugins() {
                 var registry = window.toastui && window.toastui.Editor && window.toastui.Editor.plugin;
                 var plugins = [];
@@ -443,26 +434,6 @@
                 return figure;
             }
 
-            function renderMappedUmlBlocks(markdown, payload) {
-                var blockIndex = 0;
-
-                return String(markdown || '').replace(/(^|\n)\$\$uml[ \t]*\n([\s\S]*?)\n\$\$[ \t]*(?=\n|$)/gi, function (match, prefix, source) {
-                    var ordinal = blockIndex;
-                    var normalized = normalizeUmlSource(source);
-                    var umlItems = (payload || {}).uml || [];
-                    var item;
-
-                    blockIndex += 1;
-                    item = umlItemFor(umlItems, normalized, ordinal);
-
-                    if (!item || !item.src) {
-                        return prefix + preprocessUmlBlocks('$$uml\n' + normalized + '\n$$');
-                    }
-
-                    return prefix + '\n\n' + umlFigureHtml(item.source || normalized, item.src) + '\n\n';
-                });
-            }
-
             function replaceUmlBlocksWithPlaceholders(markdown, payload, placeholderItems) {
                 var blockIndex = 0;
                 var items = placeholderItems || ddocsUmlPlaceholderItems;
@@ -566,7 +537,7 @@
 
                 if (footnotes.length > 0) {
                     text += '\n\n<section class="ddocs-footnotes"><ol>';
-                    footnotes.forEach(function (item, index) {
+                    footnotes.forEach(function (item) {
                         text += '<li id="fn-' + escapeHtml(item.id) + '">' + item.body + ' <a href="#fnref-' + escapeHtml(item.id) + '" class="ddocs-footnote-backref">↩</a></li>';
                     });
                     text += '</ol></section>';
@@ -1424,7 +1395,7 @@
             document.addEventListener('livewire:initialized', function () {
                 if (window.Livewire && typeof window.Livewire.hook === 'function') {
                     try {
-                        window.Livewire.hook('morph.updated', function (payload) {
+                        window.Livewire.hook('morph.updated', function () {
                             scheduleHighlight(document);
                         });
                     } catch (e) {}

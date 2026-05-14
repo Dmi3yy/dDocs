@@ -86,7 +86,7 @@ foreach ($markdownFiles as $path) {
     $linkText = $textWithoutFences;
     preg_match_all('/(?<!!)\[[^\]]+]\(([^)\s]+)(?:\s+[^)]*)?\)|!\[[^\]]*]\(([^)\s]+)(?:\s+[^)]*)?\)/', $linkText, $matches, PREG_SET_ORDER);
     foreach ($matches as $match) {
-        $href = $match[1] ?: $match[2];
+        $href = trim((string) ($match[1] ?? $match[2] ?? ''));
         if ($href === '' || str_starts_with($href, '#') || preg_match('/^[a-z][a-z0-9+.-]*:/i', $href) || str_starts_with($href, '//')) {
             continue;
         }
