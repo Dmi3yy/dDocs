@@ -6,7 +6,7 @@ rendering. Це internal frontend runtime, not a public frontend API.
 ## Runtime Boundary
 
 - `views/docs/shell.blade.php` відповідає за manager iframe document, локальні
-  dTui assets, Prism assets і viewer boot code.
+  dTui assets, Prism assets, manager viewport request і viewer boot code.
 - `views/livewire/module-panel.blade.php` відповідає за workspace, tree, folder
   listing, document header і JSON payload для viewer.
 - `views/partials/tree-node.blade.php` відповідає за recursive tree rows.
@@ -28,6 +28,19 @@ top tabs у dDocs, поки в модулі немає кількох рівно
 
 Settings доступні, але вони працюють як compact document workspace action, а не
 як верхня module tab.
+
+## Manager Viewport
+
+dDocs займає повний manager workspace і просить manager приховати дерево
+ресурсів через системний helper:
+
+```html
+<script>window.parent?.evo?.moduleViewport?.requestHiddenTree(window);</script>
+```
+
+Shell тільки повідомляє активний iframe intent. Відновлення дерева при переході
+на інші вкладки або стандартні manager screens має виконувати `evo.moduleViewport`
+у manager runtime.
 
 ## Local evo-ui Styling Exception
 

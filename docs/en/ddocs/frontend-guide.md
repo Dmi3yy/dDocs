@@ -7,7 +7,7 @@ packages.
 ## Runtime Boundary
 
 - `views/docs/shell.blade.php` owns the manager iframe document, local dTui
-  assets, Prism assets, and viewer boot code.
+  assets, Prism assets, the manager viewport request, and viewer boot code.
 - `views/livewire/module-panel.blade.php` owns the dDocs workspace, tree, folder
   listing, document header, and JSON payload for the viewer.
 - `views/partials/tree-node.blade.php` owns recursive tree rows.
@@ -32,6 +32,19 @@ tab navigation.
 
 Settings are still available, but they are treated as a compact document
 workspace action rather than a top-level module tab.
+
+## Manager Viewport
+
+dDocs occupies the full manager workspace and asks the manager to hide the
+resource tree through the system helper:
+
+```html
+<script>window.parent?.evo?.moduleViewport?.requestHiddenTree(window);</script>
+```
+
+The shell only communicates the active iframe intent. Restoring the tree when
+switching to other tabs or standard manager screens is handled by
+`evo.moduleViewport` in the manager runtime.
 
 ## Local evo-ui Styling Exception
 
