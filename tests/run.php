@@ -252,6 +252,16 @@ test('composer metadata exposes dDocs as an Evolution module with a test script'
     assert_same('php tests/run.php', $composer['scripts']['test'] ?? null);
 });
 
+test('manager provider moves the dDocs module item after Help in the utility menu', function () use ($root): void {
+    $provider = (string) file_get_contents($root . '/src/dDocsServiceProvider.php');
+
+    assert_contains("Event::listen('evolution.OnManagerTopPrerender'", $provider);
+    assert_contains('document.getElementById({$encodedModuleItemId})', $provider);
+    assert_contains("document.querySelector('#system > .dropdown-menu')", $provider);
+    assert_contains("a[href=\"index.php?a=9\"]", $provider);
+    assert_contains('helpItem.after(moduleItem)', $provider);
+});
+
 test('all manager language files keep the English key contract', function () use ($root): void {
     $english = require_file($root . '/lang/en/global.php');
     $englishKeys = array_keys($english);
