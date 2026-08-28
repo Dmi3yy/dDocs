@@ -18,8 +18,8 @@ class dDocsServiceProvider extends ServiceProvider
      * Register manager assets, translations, Livewire components, and menu placement.
      *
      * The manager frame builds its utility menu outside the regular module menu.
-     * Once that frame is ready, the hook moves the existing dDocs module item after
-     * Help, retaining Evolution's generated URL, CSRF token, icon, and target.
+     * Once that frame is ready, the hook replaces Help with the existing dDocs
+     * module item, retaining Evolution's generated URL, CSRF token, icon, and target.
      */
     public function boot(): void
     {
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const versionItem = systemMenu.querySelector('.dropdown-item')?.closest('li');
 
     if (helpItem) {
-        helpItem.after(moduleItem);
+        helpItem.replaceWith(moduleItem);
     } else if (versionItem) {
         versionItem.before(moduleItem);
     } else {

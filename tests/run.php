@@ -252,14 +252,30 @@ test('composer metadata exposes dDocs as an Evolution module with a test script'
     assert_same('php tests/run.php', $composer['scripts']['test'] ?? null);
 });
 
-test('manager provider moves the dDocs module item after Help in the utility menu', function () use ($root): void {
+test('manager provider replaces Help with dDocs in the utility menu', function () use ($root): void {
     $provider = (string) file_get_contents($root . '/src/dDocsServiceProvider.php');
 
     assert_contains("Event::listen('evolution.OnManagerTopPrerender'", $provider);
     assert_contains('document.getElementById({$encodedModuleItemId})', $provider);
     assert_contains("document.querySelector('#system > .dropdown-menu')", $provider);
     assert_contains("a[href=\"index.php?a=9\"]", $provider);
-    assert_contains('helpItem.after(moduleItem)', $provider);
+    assert_contains('helpItem.replaceWith(moduleItem)', $provider);
+});
+
+test('localized documentation hubs retain the essential Evolution Help links', function () use ($root): void {
+    foreach (['de', 'en', 'fr', 'pl', 'uk'] as $locale) {
+        $hub = (string) file_get_contents($root . '/docs/' . $locale . '/README.md');
+
+        assert_contains('https://forum.evo.im/', $hub, $locale . ' hub must link to the community forum.');
+        assert_contains('https://evo.im/', $hub, $locale . ' hub must link to the official website.');
+        assert_contains('https://github.com/evolution-cms/evolution/releases', $hub, $locale . ' hub must link to releases.');
+        assert_contains('https://github.com/extras-evolution', $hub, $locale . ' hub must link to Extras.');
+        assert_contains('https://ko-fi.com/evolutioncms', $hub, $locale . ' hub must link to developer support.');
+
+        $evolution = strpos($hub, '| Evolution CMS |');
+        $ddocs = strpos($hub, '| dDocs');
+        assert_true($evolution !== false && $ddocs !== false && $evolution < $ddocs, $locale . ' hub must list Evolution CMS before dDocs.');
+    }
 });
 
 test('all manager language files keep the English key contract', function () use ($root): void {
@@ -320,6 +336,19 @@ test('language resolver exposes uk as the docs locale even for a legacy ua folde
     assert_true(isset($available['localized']['uk']), 'Legacy ua folder must be surfaced as uk.');
     assert_false(isset($available['localized']['ua']), 'ua must not be exposed as a documentation locale.');
     assert_same($docs . '/ua', $available['localized']['uk']);
+});
+
+test('language resolver uses Ukrainian documentation as the Russian fallback', function (): void {
+    $docs = temp_dir();
+    write_file($docs . '/uk/README.md', '# Ukrainian source');
+    write_file($docs . '/en/README.md', '# English source');
+
+    $resolver = new Dmi3yy\dDocs\Support\LanguageResolver();
+    $resolved = $resolver->resolveDocsPaths($docs, 'ru');
+
+    assert_same(['ru', 'uk', 'en', 'neutral'], $resolver->candidates('ru'));
+    assert_same(['uk', 'en'], array_column($resolved, 'language'));
+    assert_false(is_dir($docs . '/ru'), 'Russian must use Ukrainian fallback without a duplicated docs locale.');
 });
 
 test('document path safety rejects escapes and computes safe relative paths', function (): void {
@@ -564,8 +593,9 @@ test('diagnostics reports file-only mode, documents, languages, and path safety'
     assert_true(($report['path_safety']['escape_blocked'] ?? false) === true, 'Diagnostics should verify path escape blocking.');
 });
 
-test('public docs do not contain a docs/ua locale folder', function () use ($root): void {
+test('public docs keep Ukrainian canonical without ua or ru duplicates', function () use ($root): void {
     assert_false(is_dir($root . '/docs/ua'), 'dDocs public documentation must not expose docs/ua.');
+    assert_false(is_dir($root . '/docs/ru'), 'dDocs public documentation must use uk as the Russian fallback.');
 });
 
 echo "\n";

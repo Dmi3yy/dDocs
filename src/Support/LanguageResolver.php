@@ -58,6 +58,11 @@ final class LanguageResolver
     }
 
     /**
+     * Build the documentation locale chain for a manager language.
+     *
+     * Russian requests prefer Ukrainian documentation when a package does not
+     * provide its own Russian locale, then continue to the configured fallback.
+     *
      * @return list<string>
      */
     public function candidates(?string $language = null): array
@@ -65,7 +70,13 @@ final class LanguageResolver
         $language = $this->normalize($language ?: $this->managerLanguage());
         $fallback = $this->normalize((string) config('dmi3yy.settings.dDocs.language_fallback', 'en'));
 
-        $candidates = [$language, $fallback];
+        $candidates = [$language];
+
+        if ($language === 'ru') {
+            $candidates[] = 'uk';
+        }
+
+        $candidates[] = $fallback;
 
         $candidates[] = 'neutral';
 
