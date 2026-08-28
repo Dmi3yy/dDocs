@@ -70,7 +70,7 @@ final class DocsIndexer
             }
         }
 
-        $nodes = array_values($nodes);
+        $nodes = $this->organizeDocumentationSources(array_values($nodes));
         usort($nodes, fn (array $left, array $right): int => $this->compareNodes($left, $right));
 
         return $nodes;
@@ -437,11 +437,62 @@ final class DocsIndexer
     }
 
     /**
+     * Place selected package documentation inside the main dDocs source.
+     *
+     * The source keeps its own package metadata and descendants; only its
+     * navigation parent changes, so documents are not copied or duplicated.
+     *
+     * @param list<array<string, mixed>> $nodes
+     * @return list<array<string, mixed>>
+     * @since 1.1.0
+     */
+    protected function organizeDocumentationSources(array $nodes): array
+    {
+        $documentationRootId = null;
+        foreach ($nodes as $node) {
+            if (
+                ($node['parent_id'] ?? null) === null
+                && strtolower((string) ($node['package_name'] ?? '')) === 'dmi3yy/ddocs'
+            ) {
+                $documentationRootId = (string) ($node['id'] ?? '');
+                break;
+            }
+        }
+
+        if ($documentationRootId === '') {
+            return $nodes;
+        }
+
+        foreach ($nodes as &$node) {
+            if (
+                ($node['parent_id'] ?? null) === null
+                && strtolower((string) ($node['package_name'] ?? '')) === 'evolution-cms/evo-ui'
+            ) {
+                $node['parent_id'] = $documentationRootId;
+            }
+        }
+        unset($node);
+
+        return $nodes;
+    }
+
+    /**
+     * Compare indexed nodes for stable source and navigation ordering.
+     *
      * @param array<string, mixed> $left
      * @param array<string, mixed> $right
      */
     protected function compareNodes(array $left, array $right): int
     {
+        $sameParent = ($left['parent_id'] ?? null) !== null
+            && ($left['parent_id'] ?? null) === ($right['parent_id'] ?? null);
+        if ($sameParent && ($left['type'] ?? '') === 'folder' && ($right['type'] ?? '') === 'folder') {
+            $navigation = $this->documentationFolderPriority($left) <=> $this->documentationFolderPriority($right);
+            if ($navigation !== 0) {
+                return $navigation;
+            }
+        }
+
         $source = $this->sourcePriority($left) <=> $this->sourcePriority($right);
         if ($source !== 0) {
             return $source;
@@ -461,6 +512,25 @@ final class DocsIndexer
     }
 
     /**
+     * Return the product documentation folder position in the dDocs source.
+     *
+     * @param array<string, mixed> $node
+     * @since 1.1.0
+     */
+    protected function documentationFolderPriority(array $node): int
+    {
+        $package = strtolower((string) ($node['package_name'] ?? ''));
+        $path = strtolower(trim((string) ($node['relative_path'] ?? ''), '/'));
+
+        return match (true) {
+            $package === 'dmi3yy/ddocs' && $path === 'evolution-cms' => 10,
+            $package === 'evolution-cms/evo-ui' && $path === '' => 20,
+            $package === 'dmi3yy/ddocs' && $path === 'ddocs' => 30,
+            default => 100,
+        };
+    }
+
+    /**
      * @param array<string, mixed> $node
      */
     protected function sourcePriority(array $node): int
@@ -472,6 +542,12 @@ final class DocsIndexer
         return strtolower((string) ($node['package_name'] ?? '')) === 'dmi3yy/ddocs' ? 2 : 10;
     }
 
+    /**
+     * Compare indexed paths for stable navigation order.
+     *
+     * Items are grouped by depth, then documents are placed before sibling
+     * folders, with natural path ordering retained inside each type.
+     */
     protected function comparePath(string $left, string $right, string $leftType = 'document', string $rightType = 'document'): int
     {
         $leftDepth = substr_count(trim($left, '/'), '/');
@@ -481,7 +557,7 @@ final class DocsIndexer
         }
 
         if ($leftType !== $rightType) {
-            return $leftType === 'folder' ? -1 : 1;
+            return $leftType === 'document' ? -1 : 1;
         }
 
         return strnatcasecmp($this->sortOrder($left), $this->sortOrder($right));
