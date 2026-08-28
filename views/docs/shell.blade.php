@@ -33,6 +33,7 @@
     <meta name="robots" content="noindex,nofollow">
     <title>{{ $ui['module_title'] ?? $ui['docs'] ?? 'Documentation' }}</title>
     @include('evo::partials.assets')
+    <script>window.parent?.evo?.moduleViewport?.requestHiddenTree(window);</script>
     @if($href = $dtuiAsset('vendor/toastui-editor.min.css'))
         <link rel="stylesheet" href="{{ $href }}">
     @endif
