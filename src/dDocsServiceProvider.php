@@ -2,11 +2,25 @@
 
 use EvolutionCMS\ServiceProvider;
 use Dmi3yy\dDocs\Support\ManagerText;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Livewire;
 
+/**
+ * Boots the dDocs manager module and its documentation runtime.
+ *
+ * The provider keeps Evolution's standard module registration for routing and
+ * permissions, while manager-only hooks adapt how the module is presented.
+ */
 class dDocsServiceProvider extends ServiceProvider
 {
+    /**
+     * Register manager assets, translations, Livewire components, and menu placement.
+     *
+     * The manager frame builds its utility menu outside the regular module menu.
+     * Once that frame is ready, the hook moves the existing dDocs module item after
+     * Help, retaining Evolution's generated URL, CSRF token, icon, and target.
+     */
     public function boot(): void
     {
         include(__DIR__ . '/Http/routes.php');
@@ -25,6 +39,38 @@ class dDocsServiceProvider extends ServiceProvider
                 dirname(__DIR__) . '/config/dDocsAlias.php' => config_path('app/aliases/dDocs.php', true),
                 dirname(__DIR__) . '/config/dDocsSettings.php' => config_path('dmi3yy/settings/dDocs.php', true),
             ], 'ddocs');
+
+            $labels = ManagerText::all();
+            $moduleTitle = $labels['module_title'] ?? $labels['docs'];
+            $moduleItemId = 'module' . md5($moduleTitle);
+
+            Event::listen('evolution.OnManagerTopPrerender', static function () use ($moduleItemId): string {
+                $encodedModuleItemId = json_encode($moduleItemId, JSON_THROW_ON_ERROR);
+
+                return <<<HTML
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const moduleItem = document.getElementById({$encodedModuleItemId});
+    const systemMenu = document.querySelector('#system > .dropdown-menu');
+
+    if (!moduleItem || !systemMenu) {
+        return;
+    }
+
+    const helpItem = systemMenu.querySelector('a[href="index.php?a=9"]')?.closest('li');
+    const versionItem = systemMenu.querySelector('.dropdown-item')?.closest('li');
+
+    if (helpItem) {
+        helpItem.after(moduleItem);
+    } else if (versionItem) {
+        versionItem.before(moduleItem);
+    } else {
+        systemMenu.append(moduleItem);
+    }
+});
+</script>
+HTML;
+            });
         }
 
         $this->app->singleton(dDocs::class);
