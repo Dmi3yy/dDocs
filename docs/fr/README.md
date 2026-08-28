@@ -1,14 +1,25 @@
 # Centre de documentation
 
-Ce hub de documentation en anglais sépare la documentation du module dDocs de
-Documentation produit Evolution CMS.
+Ce centre de documentation distingue la documentation du module dDocs de la
+documentation produit d’Evolution CMS.
 
-| Zone | Ouvrir |
+| Section | Ouvrir |
 | --- | --- |
-| dDocs | [Documentation dDocs](ddocs/README.md) |
 | Evolution CMS | [Documentation Evolution CMS](evolution-cms/README.md) |
+| dDocs | [Documentation dDocs](ddocs/README.md) |
 
-Utilisez [Documentation dDocs](ddocs/README.md) pour le module, documentation du package
-normes, indexation de fichiers, rendu, création et règles de contribution. Utiliser
-[Documentation Evolution CMS](evolution-cms/README.md) pour le produit actuel
-documentation construite à partir de la base de code et du programme d'installation Evolution CMS.
+Utilisez la [Documentation dDocs](ddocs/README.md) pour le module, les normes de
+documentation des paquets, l’indexation des fichiers, le rendu, la création et les
+règles de contribution. La [Documentation Evolution CMS](evolution-cms/README.md)
+présente la documentation actuelle du produit issue du code et de l’installateur.
+
+## À propos d’Evolution CMS
+
+Evolution CMS est une plateforme professionnelle de développement de sites et de
+gestion de contenu distribuée sous licence [GNU GPL](https://www.gnu.org/licenses/gpl-3.0.html).
+
+- [Site officiel](https://evo.im/)
+- [Forum communautaire](https://forum.evo.im/)
+- [Télécharger Evolution CMS](https://github.com/evolution-cms/evolution/releases)
+- [Paquets Extras](https://github.com/extras-evolution)
+- [Soutenir les développeurs](https://ko-fi.com/evolutioncms) ☕❤️
