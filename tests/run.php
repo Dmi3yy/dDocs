@@ -411,6 +411,56 @@ test('docs indexer builds current dDocs nodes without exposing ua as a node lang
     assert_true(in_array('evolution-cms/README.md', $paths, true), 'Evolution CMS docs must be visible in the current index.');
 });
 
+test('docs indexer and folder view place documents before sibling folders', function () use ($root): void {
+    $indexer = new Dmi3yy\dDocs\Support\DocsIndexer();
+    $comparePath = new ReflectionMethod($indexer, 'comparePath');
+    $comparePath->setAccessible(true);
+
+    assert_true(
+        $comparePath->invoke($indexer, 'overview.md', 'guides', 'document', 'folder') < 0,
+        'A document must sort before a sibling folder.'
+    );
+    assert_true(
+        $comparePath->invoke($indexer, 'guides', 'overview.md', 'folder', 'document') > 0,
+        'A folder must sort after a sibling document.'
+    );
+
+    $view = (string) file_get_contents($root . '/views/livewire/module-panel.blade.php');
+    $documentsSection = strpos($view, "@if(count(\$folder['documents'] ?? []) > 0)");
+    $foldersSection = strpos($view, "@if(count(\$folder['folders'] ?? []) > 0)");
+
+    assert_true($documentsSection !== false, 'Folder view must render its documents section.');
+    assert_true($foldersSection !== false, 'Folder view must render its folders section.');
+    assert_true($documentsSection < $foldersSection, 'Folder view must render documents before folders.');
+});
+
+test('docs indexer nests evo-ui in the product documentation order', function (): void {
+    $indexer = new Dmi3yy\dDocs\Support\DocsIndexer();
+    $organize = new ReflectionMethod($indexer, 'organizeDocumentationSources');
+    $organize->setAccessible(true);
+    $compare = new ReflectionMethod($indexer, 'compareNodes');
+    $compare->setAccessible(true);
+
+    $nodes = [
+        ['id' => 'documentation', 'source_key' => 'ddocs', 'source_name' => 'Documentation', 'package_name' => 'dmi3yy/ddocs', 'relative_path' => '', 'parent_id' => null, 'type' => 'folder'],
+        ['id' => 'ddocs', 'source_key' => 'ddocs', 'source_name' => 'Documentation', 'package_name' => 'dmi3yy/ddocs', 'relative_path' => 'ddocs', 'parent_id' => 'documentation', 'type' => 'folder'],
+        ['id' => 'evolution-cms', 'source_key' => 'ddocs', 'source_name' => 'Documentation', 'package_name' => 'dmi3yy/ddocs', 'relative_path' => 'evolution-cms', 'parent_id' => 'documentation', 'type' => 'folder'],
+        ['id' => 'evo-ui', 'source_key' => 'evo-ui', 'source_name' => 'evo-ui', 'package_name' => 'evolution-cms/evo-ui', 'relative_path' => '', 'parent_id' => null, 'type' => 'folder'],
+    ];
+
+    $organized = $organize->invoke($indexer, $nodes);
+    $byId = array_column($organized, null, 'id');
+    assert_same('documentation', $byId['evo-ui']['parent_id']);
+
+    $children = array_values(array_filter(
+        $organized,
+        static fn (array $node): bool => ($node['parent_id'] ?? null) === 'documentation'
+    ));
+    usort($children, static fn (array $left, array $right): int => $compare->invoke($indexer, $left, $right));
+
+    assert_same(['evolution-cms', 'evo-ui', 'ddocs'], array_column($children, 'id'));
+});
+
 test('file search matches metadata, reads document content, and preserves parent folders', function (): void {
     $root = temp_dir();
     write_file($root . '/docs/guides/install.md', '# Install' . "\n\n" . 'The body contains a hidden needle.');

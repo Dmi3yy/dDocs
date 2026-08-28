@@ -326,21 +326,6 @@
                                 <p>{{ $ui['folder_empty_help'] ?? 'This folder has no visible documents for the current language.' }}</p>
                             </div>
                         @else
-                            @if(count($folder['folders'] ?? []) > 0)
-                                <section class="ddocs-folder-section" aria-label="{{ $ui['folder_subfolders'] ?? 'Folders' }}">
-                                    <h3>{{ $ui['folder_subfolders'] ?? 'Folders' }}</h3>
-                                    <div class="ddocs-folder-grid">
-                                        @foreach($folder['folders'] as $childFolder)
-                                            <button type="button" class="ddocs-folder-card" x-on:click.stop="openFolder(@js($childFolder['id']))">
-                                                <x-evo::icon name="folder" />
-                                                <span>{{ $childFolder['title'] }}</span>
-                                                <small>{{ \Dmi3yy\dDocs\Support\ManagerText::choice('search_results', (int) ($childFolder['document_count'] ?? 0)) }}</small>
-                                            </button>
-                                        @endforeach
-                                    </div>
-                                </section>
-                            @endif
-
                             @if(count($folder['documents'] ?? []) > 0)
                                 <section class="ddocs-folder-section" aria-label="{{ $ui['folder_documents'] ?? 'Documents' }}">
                                     <h3>{{ $ui['folder_documents'] ?? 'Documents' }}</h3>
@@ -355,6 +340,21 @@
                                                 @if(($childDocument['excerpt'] ?? '') !== '')
                                                     <span class="ddocs-document-card__excerpt">{{ $childDocument['excerpt'] }}</span>
                                                 @endif
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                </section>
+                            @endif
+
+                            @if(count($folder['folders'] ?? []) > 0)
+                                <section class="ddocs-folder-section" aria-label="{{ $ui['folder_subfolders'] ?? 'Folders' }}">
+                                    <h3>{{ $ui['folder_subfolders'] ?? 'Folders' }}</h3>
+                                    <div class="ddocs-folder-grid">
+                                        @foreach($folder['folders'] as $childFolder)
+                                            <button type="button" class="ddocs-folder-card" x-on:click.stop="openFolder(@js($childFolder['id']))">
+                                                <x-evo::icon name="folder" />
+                                                <span>{{ $childFolder['title'] }}</span>
+                                                <small>{{ \Dmi3yy\dDocs\Support\ManagerText::choice('search_results', (int) ($childFolder['document_count'] ?? 0)) }}</small>
                                             </button>
                                         @endforeach
                                     </div>
