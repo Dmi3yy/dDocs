@@ -252,6 +252,78 @@ test('composer metadata exposes dDocs as an Evolution module with a test script'
     assert_same('php tests/run.php', $composer['scripts']['test'] ?? null);
 });
 
+test('package icon metadata uses Tabler names and preserves existing fallbacks', function (): void {
+    $root = temp_dir();
+    $registry = new Dmi3yy\dDocs\Support\DocsSourceRegistry();
+    $icon = new ReflectionMethod($registry, 'displayIcon');
+    $icon->setAccessible(true);
+    $metadata = ['extra' => ['ddocs' => ['icon' => 'tabler-building-store']]];
+
+    assert_same('tabler-building-store', $icon->invoke($registry, 'seiger/scommerce', $root, $metadata));
+    foreach ([null, '', [], '<svg onload="alert(1)"></svg>', '../building-store', 'tabler-../../file'] as $invalid) {
+        $metadata['extra']['ddocs']['icon'] = $invalid;
+        assert_same('tabler-package', $icon->invoke($registry, 'fixture/package', $root, $metadata));
+    }
+    assert_same('tabler-book-2', $icon->invoke($registry, 'dmi3yy/ddocs', $root, []));
+    write_file($root . '/lang/en/global.php', "<?php return ['module_icon' => 'tabler-book'];");
+    assert_same('tabler-book', $icon->invoke($registry, 'fixture/package', $root, []));
+    $metadata['extra']['ddocs']['icon'] = ' tabler-building-store ';
+    assert_same('tabler-building-store', $icon->invoke($registry, 'fixture/package', $root, $metadata));
+});
+
+test('custom SVG icons are opt-in package images with a Tabler fallback', function () use ($root): void {
+    $package = temp_dir();
+    $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#0B78FF" d="M0 0h20v20H0z"/></svg>';
+    write_file($package . '/images/brand.svg', $svg);
+    $registry = new Dmi3yy\dDocs\Support\DocsSourceRegistry();
+    $method = new ReflectionMethod($registry, 'displayIcon');
+    $method->setAccessible(true);
+    $metadata = ['extra' => ['ddocs' => ['icon' => 'tabler-building-store']]];
+    assert_same('tabler-building-store', $method->invoke($registry, 'fixture/package', $package, $metadata));
+    $metadata['extra']['ddocs']['icon_svg'] = 'images/brand.svg';
+    assert_same('data:image/svg+xml;base64,' . base64_encode($svg), $method->invoke($registry, 'fixture/package', $package, $metadata));
+    foreach ([null, [], '', '/etc/passwd.svg', 'https://example.test/brand.svg', '../brand.svg', 'images/missing.svg'] as $invalid) {
+        $metadata['extra']['ddocs']['icon_svg'] = $invalid;
+        assert_same('tabler-building-store', $method->invoke($registry, 'fixture/package', $package, $metadata));
+    }
+    $outside = temp_dir();
+    write_file($outside . '/outside.svg', $svg);
+    if (symlink($outside . '/outside.svg', $package . '/images/link.svg')) {
+        $metadata['extra']['ddocs']['icon_svg'] = 'images/link.svg';
+        assert_same('tabler-building-store', $method->invoke($registry, 'fixture/package', $package, $metadata));
+        unlink($package . '/images/link.svg');
+    }
+    foreach (['', '<html/>', '<svg/>', '<svg', '<!DOCTYPE svg><svg xmlns="http://www.w3.org/2000/svg"/>', str_repeat(' ', 65537)] as $invalid) {
+        write_file($package . '/images/invalid.svg', $invalid);
+        $metadata['extra']['ddocs']['icon_svg'] = 'images/invalid.svg';
+        assert_same('tabler-building-store', $method->invoke($registry, 'fixture/package', $package, $metadata));
+    }
+    $view = (string) file_get_contents($root . '/views/partials/source-icon.blade.php');
+    assert_contains('<img class="ddocs-source-icon" src="{{ $sourceIcon }}"', $view);
+    assert_contains('<x-evo::icon :name="$sourceIcon"', $view);
+    assert_false(str_contains($view, '{!!'), 'Custom SVG must not be inserted as raw manager markup.');
+    foreach (['partials/tree-node.blade.php', 'livewire/module-panel.blade.php'] as $viewPath) {
+        assert_contains("@include('dDocs::partials.source-icon'", (string) file_get_contents($root . '/views/' . $viewPath));
+    }
+});
+
+test('canonical Composer names override translations and retain fallback compatibility', function () use ($root): void {
+    $registry = new Dmi3yy\dDocs\Support\DocsSourceRegistry();
+    $displayName = new ReflectionMethod($registry, 'displayName');
+    foreach (['uk', 'en', 'de', 'fr', 'pl', 'ru'] as $language) {
+        $_SESSION['mgrUsrConfigSet']['manager_language'] = $language;
+        foreach (['sCommerce', 'sCommerceApi', 'sPricing'] as $name) {
+            $composer = ['extra' => ['ddocs' => ['name' => '  ' . $name . '  ']]];
+            assert_same($name, $displayName->invoke($registry, 'dmi3yy/ddocs', $root, $composer));
+        }
+        foreach (['', '  ', [], null, false, 123] as $name) {
+            $composer = ['extra' => ['ddocs' => ['name' => $name], 'laravel' => ['aliases' => ['FallbackName' => 'Fixture']]]];
+            assert_same('FallbackName', $displayName->invoke($registry, 'fixture/package', __DIR__, $composer));
+        }
+    }
+    assert_same('Fixture Package', $displayName->invoke($registry, 'fixture/fixture-package', __DIR__, []));
+});
+
 test('manager provider replaces Help with dDocs in the utility menu', function () use ($root): void {
     $provider = (string) file_get_contents($root . '/src/dDocsServiceProvider.php');
 

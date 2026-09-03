@@ -3,6 +3,31 @@
 This guide explains how dDocs is wired, how it discovers documentation, and how
 developers should extend it safely.
 
+## Canonical Package Names
+
+Declare a locale-independent display name in the package's `composer.json`:
+
+```json
+{"name": "seiger/scommerce-api", "extra": {"ddocs": {"name": "sCommerceApi"}}}
+```
+
+`extra.ddocs.name` takes precedence over translated module titles, Laravel aliases,
+and generated names. Empty or non-string values use the existing fallbacks.
+Keep Composer's technical `name` lowercase. After changing metadata or adding
+package documentation, refresh the dDocs index when index caching is enabled.
+
+Set the card and tree icon with `extra.ddocs.icon`, for example
+`"icon": "tabler-building-store"` for sCommerce. Use a name from the installed
+Tabler set. It overrides translated icons; empty or invalid values keep the
+existing fallbacks. SVG markup and file paths are not accepted in `icon`.
+
+Tabler remains the default. A package can explicitly opt into its own icon with
+`extra.ddocs.icon_svg`, e.g. `"icon_svg": "images/scommerce.svg"`. This package-relative
+SVG path (up to 64 KiB) takes precedence over `icon`. Paths outside the package,
+remote URLs and invalid files fall back to Tabler. The SVG is rendered as an image,
+not inline markup, preserving its shape and colors. Other packages are unchanged
+when `icon_svg` is absent.
+
 ## Runtime Model
 
 ```text

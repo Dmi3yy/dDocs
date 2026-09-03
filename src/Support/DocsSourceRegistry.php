@@ -1,5 +1,10 @@
 <?php namespace Dmi3yy\dDocs\Support;
 
+/**
+ * Discover documentation roots and resolve package metadata for manager navigation.
+ * Package branding is optional; existing localized names and Tabler icons remain fallbacks.
+ */
+
 final class DocsSourceRegistry
 {
     protected DocumentPath $paths;
@@ -289,10 +294,22 @@ final class DocsSourceRegistry
     }
 
     /**
-     * @param array<string, mixed> $composer
+     * Resolve the catalog label without altering the Composer package identifier.
+     *
+     * Explicit Composer branding is language-independent; packages without it keep
+     * their localized metadata, aliases, and generated-name fallbacks.
+     *
+     * @param array<string, mixed> $composer Package composer.json metadata.
+     * @return string Display label shared by source cards and navigation nodes.
      */
     protected function displayName(string $package, string $root, array $composer): string
     {
+        // An explicit package brand is locale-independent and must retain its spelling.
+        $name = $composer['extra']['ddocs']['name'] ?? null;
+        if (is_string($name) && trim($name) !== '') {
+            return trim($name);
+        }
+
         $translated = $this->translatedPackageName($package, $root);
         if ($translated !== null) {
             return $translated;
@@ -359,10 +376,25 @@ final class DocsSourceRegistry
     }
 
     /**
-     * @param array<string, mixed> $composer
+     * Resolve an opt-in package image or the existing Tabler icon for cards and tree nodes.
+     * Invalid custom metadata falls back without changing other packages or exposing files.
+     *
+     * @param array<string, mixed> $composer Installed package metadata.
+     * @return string Tabler identifier or a package-local SVG encoded as an image data URI.
      */
     protected function displayIcon(string $package, string $root, array $composer): string
     {
+        $custom = $this->packageIconSvg($root, $composer['extra']['ddocs']['icon_svg'] ?? null);
+        if ($custom !== null) {
+            return $custom;
+        }
+
+        // Packages may declare a Tabler name, never raw SVG or a filesystem path.
+        $icon = $composer['extra']['ddocs']['icon'] ?? null;
+        if (is_string($icon) && preg_match('/\Atabler-[a-z0-9]+(?:-[a-z0-9]+)*\z/', trim($icon))) {
+            return trim($icon);
+        }
+
         $translated = $this->translatedMetadata($package, $root, 'icon');
         if ($translated !== null) {
             return $translated;
@@ -405,6 +437,47 @@ final class DocsSourceRegistry
             'seiger/slang' => 'Multilingual content and language tools for Evolution CMS.',
             'seiger/sseo' => 'SEO tools and metadata management for Evolution CMS.',
         ][strtolower($package)] ?? '');
+    }
+
+    /**
+     * Read an explicitly declared SVG inside its package, or keep the Tabler fallback.
+     *
+     * Return an image data URI, not inline markup: SVG scripts cannot execute in
+     * the manager document. Resolve symlinks before checking the package boundary.
+     *
+     * @param string $root Installed package directory.
+     * @param mixed $relative Optional package-relative extra.ddocs.icon_svg value.
+     * @return string|null SVG image data URI, or null for an invalid/unreadable asset.
+     * @since 1.2.0
+     */
+    protected function packageIconSvg(string $root, mixed $relative): ?string
+    {
+        if (!is_string($relative) || !preg_match('/\A[a-zA-Z0-9_-][a-zA-Z0-9_\/.\-]*\.svg\z/i', $relative)) {
+            return null;
+        }
+        $base = realpath($root);
+        $path = $base === false ? false : realpath($base . '/' . $relative);
+        if ($path === false || !str_starts_with($path, $base . DIRECTORY_SEPARATOR)
+            || !is_file($path) || !is_readable($path)) {
+            return null;
+        }
+        $svg = file_get_contents($path, false, null, 0, 65537);
+        if ($svg === false || trim($svg) === '' || strlen($svg) > 65536 || stripos($svg, '<!DOCTYPE') !== false) {
+            return null;
+        }
+        $previous = libxml_use_internal_errors(true);
+        try {
+            $document = new \DOMDocument();
+            if (!$document->loadXML($svg, LIBXML_NONET) || $document->documentElement?->localName !== 'svg'
+                || $document->documentElement?->namespaceURI !== 'http://www.w3.org/2000/svg') {
+                return null;
+            }
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors($previous);
+        }
+
+        return 'data:image/svg+xml;base64,' . base64_encode($svg);
     }
 
     protected function cleanDescription(string $description): string

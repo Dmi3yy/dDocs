@@ -390,7 +390,7 @@
                                             $sourceIcon = preg_replace('/^tabler-/', '', (string) ($sourceNode['source_icon'] ?? $sourceNode['icon'] ?? 'package'));
                                         @endphp
                                         <button type="button" class="ddocs-folder-card ddocs-source-card" x-on:click.prevent.stop="openFolder(@js($sourceNode['id']))">
-                                            <x-evo::icon :name="$sourceIcon" />
+                                            @include('dDocs::partials.source-icon', ['sourceIcon' => $sourceIcon])
                                             <span class="ddocs-source-card__title">{{ $sourceNode['title'] }}</span>
                                             @if(trim((string) ($sourceNode['description'] ?? $sourceNode['source_description'] ?? '')) !== '')
                                                 <span class="ddocs-source-card__description">{{ $sourceNode['description'] ?? $sourceNode['source_description'] }}</span>
@@ -892,6 +892,14 @@
         color: var(--evo-ui-muted);
     }
 
+    .ddocs-source-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        flex: 0 0 1.25rem;
+        object-fit: contain;
+        display: block;
+    }
+
     .ddocs-tree__twisty svg,
     .ddocs-tree__row > svg {
         width: 1.25rem;
@@ -1170,7 +1178,8 @@
         transition: border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
     }
 
-    .ddocs-folder-card svg {
+    .ddocs-folder-card svg,
+    .ddocs-folder-card > .ddocs-source-icon {
         width: 1.15rem;
         height: 1.15rem;
     }
@@ -1219,6 +1228,12 @@
         min-height: 5.25rem;
         grid-template-rows: auto auto auto;
         align-items: start;
+    }
+
+    .ddocs-source-card > svg,
+    .ddocs-source-card > .ddocs-source-icon,
+    .ddocs-source-card__title {
+        align-self: center;
     }
 
     .ddocs-source-card__title {

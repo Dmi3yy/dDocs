@@ -25,7 +25,7 @@
                 <x-evo::icon :name="$expanded ? 'chevron-down' : 'chevron-right'" />
             @endif
         </span>
-        <x-evo::icon :name="$isFolder ? ($source ? $sourceIcon : 'folder') : 'file-text'" />
+        @include('dDocs::partials.source-icon', ['sourceIcon' => $isFolder ? ($source ? $sourceIcon : 'folder') : 'file-text'])
         <span class="ddocs-tree__title" title="{{ $node['title'] }}">{{ $node['title'] }}</span>
         @if($isFolder && ($node['document_count'] ?? 0) > 0)
             <span class="ddocs-tree__badge">{{ $node['document_count'] }}</span>
