@@ -110,26 +110,32 @@ HTML;
         ]), fn (string $alias): bool => trim($alias) !== ''), [$currentTitle]));
     }
 
+    /**
+     * Attach path validation on first validator use, or to the existing factory.
+     * Requests without validation do not need to construct its dependencies.
+     */
     protected function registerValidationRules(): void
     {
         if (!class_exists(Validator::class)) {
             return;
         }
 
-        Validator::extend('ddocs_path_list', function (string $attribute, mixed $value): bool {
-            foreach (preg_split('/[\r\n,]+/', (string) $value) ?: [] as $path) {
-                $path = trim($path);
-                if ($path === '') {
-                    continue;
+        $this->callAfterResolving('validator', static function ($validator): void {
+            $validator->extend('ddocs_path_list', function (string $attribute, mixed $value): bool {
+                foreach (preg_split('/[\r\n,]+/', (string) $value) ?: [] as $path) {
+                    $path = trim($path);
+                    if ($path === '') {
+                        continue;
+                    }
+
+                    $real = realpath($path);
+                    if ($real === false || !is_dir($real)) {
+                        return false;
+                    }
                 }
 
-                $real = realpath($path);
-                if ($real === false || !is_dir($real)) {
-                    return false;
-                }
-            }
-
-            return true;
-        }, 'dDocs path lists may only contain existing directories.');
+                return true;
+            }, 'dDocs path lists may only contain existing directories.');
+        });
     }
 }
