@@ -1,5 +1,11 @@
 <?php namespace Dmi3yy\dDocs\Support;
 
+/**
+ * Cache documentation nodes without making generated cache corruption fatal.
+ *
+ * Published cache files are replaced atomically so concurrent manager requests
+ * never include a partially written PHP payload.
+ */
 final class FileIndexCache
 {
     protected const SCHEMA_VERSION = 2;
@@ -19,6 +25,13 @@ final class FileIndexCache
     }
 
     /**
+     * Return cached nodes or rebuild an invalid, truncated, or outdated index.
+     *
+     * A parse error in the generated cache is treated as a cache miss. Fresh
+     * nodes remain available even when publishing the cache cannot complete.
+     *
+     * @param string|null $language Requested documentation locale.
+     * @param bool $refresh Bypass both the request memo and persisted cache.
      * @return list<array<string, mixed>>
      */
     public function index(?string $language = null, bool $refresh = false): array
@@ -39,7 +52,12 @@ final class FileIndexCache
         }
 
         if (!$refresh && is_file($path)) {
-            $payload = include $path;
+            try {
+                $payload = include $path;
+            } catch (\ParseError) {
+                // A truncated generated cache must not prevent rebuilding the index.
+                $payload = null;
+            }
             if (
                 is_array($payload)
                 && (int) ($payload['schema'] ?? 1) === self::SCHEMA_VERSION
@@ -89,7 +107,15 @@ final class FileIndexCache
     }
 
     /**
+     * Publish a complete PHP payload through a temporary file in the same directory.
+     *
+     * Preserve existing permissions, clean up failed writes, and invalidate
+     * OPcache after replacement so readers receive the newly generated index.
+     *
+     * @param string $path Validated cache destination.
      * @param list<array<string, mixed>> $nodes
+     * @param string $language Normalized cache locale.
+     * @return void
      */
     protected function write(string $path, array $nodes, string $language): void
     {
@@ -100,7 +126,27 @@ final class FileIndexCache
             'nodes' => $nodes,
         ];
 
-        file_put_contents($path, "<?php\n\nreturn " . var_export($payload, true) . ";\n");
+        $contents = "<?php\n\nreturn " . var_export($payload, true) . ";\n";
+        $temporary = tempnam(dirname($path), '.ddocs-index-');
+        if ($temporary === false) {
+            return;
+        }
+
+        try {
+            if (file_put_contents($temporary, $contents, LOCK_EX) !== strlen($contents)) {
+                return;
+            }
+            $permissions = is_file($path) ? fileperms($path) : false;
+            chmod($temporary, $permissions !== false ? ($permissions & 0777) : (0664 & ~umask()));
+            // Readers see either the complete old file or the complete new file.
+            if (rename($temporary, $path) && function_exists('opcache_invalidate')) {
+                opcache_invalidate($path, true);
+            }
+        } finally {
+            if (is_file($temporary)) {
+                unlink($temporary);
+            }
+        }
     }
 
     protected function defaultCachePath(): ?string

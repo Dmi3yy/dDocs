@@ -643,6 +643,19 @@ test('file index cache writes and reuses a generated PHP cache inside safe roots
 
     $cached = (new Dmi3yy\dDocs\Support\FileIndexCache())->index('en');
     assert_same(count($fresh), count($cached), 'Cached index should have the same node count as the refreshed index.');
+
+    file_put_contents($cachePath, "<?php\nreturn ['source_description' =");
+    $recovered = (new Dmi3yy\dDocs\Support\FileIndexCache())->index('en');
+    assert_same(count($fresh), count($recovered), 'A truncated PHP cache should rebuild without a parse error.');
+    $payload = require_file($cachePath);
+    assert_same(count($fresh), count($payload['nodes']), 'The rebuilt cache should contain a complete payload.');
+    assert_same([], glob(dirname($cachePath) . '/.ddocs-index-*'), 'Atomic writes should leave no temporary files.');
+
+    chmod($cachePath, 0640);
+    (new Dmi3yy\dDocs\Support\FileIndexCache())->refresh('en');
+    clearstatcache(true, $cachePath);
+    assert_same(0640, fileperms($cachePath) & 0777, 'Replacing an index should preserve existing permissions.');
+
 });
 
 test('markdown export builds one Markdown payload from readable indexed documents', function (): void {

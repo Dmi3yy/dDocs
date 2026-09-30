@@ -110,3 +110,15 @@ permission or enable debug mode in a local environment.
 3. Check filesystem permissions.
 4. Rename the file or folder if filename normalization removed unsafe
    characters.
+
+## Damaged Index Cache
+
+A truncated `ddocs-index.php` can contain an incomplete PHP expression. dDocs
+treats that cache as a miss and rebuilds the index from documentation files.
+New indexes are written to a temporary file in the same directory and replace
+the previous cache only after the full payload has been written. Source
+documents are unchanged.
+
+If corruption recurs, check free disk space, cache directory write permissions,
+and whether deployment transfers complete files. Use Refresh index in the
+dDocs settings panel to rebuild the cache manually.
