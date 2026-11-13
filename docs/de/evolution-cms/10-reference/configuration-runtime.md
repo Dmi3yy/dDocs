@@ -72,22 +72,57 @@ durch das Projekt.
 | `core/config/blade-icons.php` | Blade-Symbolkonfiguration. |
 | `core/config/cms/observers.php` | Modellbeobachterverkabelung. |
 
-## Benutzerdefinierte Projektebene
+## Projektkonfiguration
 
-Projektüberschreibungen live unter `core/custom/`. Aktuelle Beispiele sind:
+Die sechs Beispiele unten finden Sie im Quellcode von Evolution CMS im Branch `3.6.x`. Das Installationspaket enthält sie nicht. Öffnen Sie das passende Beispiel, kopieren Sie den Inhalt in die angegebene Datei relativ zum Projektstamm und ersetzen Sie die Beispielwerte. Wenn die Datei schon vorhanden ist, ergänzen Sie nur die benötigten Einstellungen oder den benötigten Code.
 
-| Datei | Zweck |
-| --- | --- |
-| `.env.example` | Projektumgebungsvorlage. |
-| `.env.docker.example` | Docker-orientierte Umgebungsvorlage. |
-| `define.php.example` | Benutzerdefinierte Konstantendefinitionen werden vor den Kerndefinitionen geladen. |
-| `composer.json.example` | Der Erweiterungspunkt des Projekts Composer wurde durch das Kern-Setup Composer zusammengeführt. |
-| `config/cms/settings.php.example` | Beispiel: Projekt-CMS-Einstellungen überschreiben. |
-| `config/middleware.php.sample` | Beispiel für benutzerdefinierte Middleware-Aliase/Gruppen. |
-| `routes.php.example` | Beispiel für die Registrierung einer Projektroute. |
+| Beispiel im Branch `3.6.x` | Datei im Projekt | Was Sie ändern |
+| --- | --- | --- |
+| [`.env.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/.env.example) | `core/custom/.env` | Tragen Sie die Verbindungsdaten Ihrer Datenbank ein. Ergänzen Sie bei Bedarf Einstellungen für die Domain oder den Manager. Wenn Ihr Projekt bereits eine `.env` im Projektstamm verwendet, ergänzen Sie die Einstellungen dort. |
+| [`.env.docker.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/.env.docker.example) | Zum Beispiel `core/custom/.env.docker` | Ersetzen Sie die Beispielwerte für `DB_USERNAME`, `DB_PASSWORD` und `DB_DATABASE`. Binden Sie die Datei in Docker Compose über `env_file` in den CMS-Dienst ein. Läuft die Datenbank in einem eigenen Dienst, verwenden Sie dessen Namen als `DB_HOST`. Das CMS lädt `.env.docker` nicht automatisch. |
+| [`define.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/define.php.example) | `core/custom/define.php` | Ein Kommentar im Beispiel listet die verfügbaren Konstanten auf. Überschreiben Sie die benötigten Konstanten mit `define()`, zum Beispiel `define('EVO_SITE_HOSTNAMES', 'example.com,www.example.com');`, und setzen Sie die Domains Ihrer Website ein. |
+| [`routes.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/routes.php.example) | `core/custom/routes.php` | Ersetzen Sie die Beispielroute `/helloworld` durch Ihren eigenen Pfad und Handler. Die Anleitung zeigt, wie Sie eine Route für ein Formular anlegen. [Formulare mit eigenen Routen](../08-tutorials-recipes/forms-with-custom-routes.md) |
+| [`ControllerNamespace.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/config/cms/settings/ControllerNamespace.php.example) | `core/custom/config/cms/settings/ControllerNamespace.php` | Geben Sie den Namespace Ihrer Controller als Zeichenkette mit einem abschließenden Backslash zurück. Verwenden Sie den Namespace, in dem Ihr `BaseController` automatisch geladen wird. |
+| [`settings.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/config/cms/settings.php.example) | `core/custom/config/cms/settings.php` | Geben Sie ein Array zurück, das nur die zu überschreibenden Einstellungen enthält. Setzen Sie beispielsweise `site_name` auf den Namen Ihrer Website. |
 
-Bearbeiten Sie keine Kernkonfigurationsdateien für ein reines Projektverhalten, wenn ein `core/custom`
-Überschreibung vorhanden.
+Speichern Sie echte Passwörter in lokalen Umgebungsdateien oder übergeben Sie sie über die Laufzeitumgebung. Nehmen Sie sie nicht in Git auf.
+
+Weitere Beispiele unter `core/custom/` sind `composer.json.example` für Projektabhängigkeiten und `config/middleware.php.sample` für eigene Middleware-Aliase und -Gruppen.
+
+### Dateien über die Konsole anlegen
+
+Führen Sie diesen Block in Bash im Projektstamm aus. Lassen Sie am Ende nur die Befehle für die benötigten Beispiele stehen. Jeder Befehl überspringt eine vorhandene Zieldatei. Passen Sie anschließend die Beispielwerte anhand der Tabelle an.
+
+```bash
+copy_evo_file() (
+    source_path=$1
+    target=$2
+    [ ! -e "$target" ] && [ ! -L "$target" ] || exit 0
+    mkdir -p "$(dirname "$target")" || exit 1
+    sample=$(mktemp) || exit 1
+    trap 'rm -f "$sample"' EXIT
+    curl -fsSL "https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/$source_path" -o "$sample" || exit 1
+    set -o noclobber
+    cat "$sample" > "$target"
+)
+
+install_example() {
+    copy_evo_file "core/custom/$1.example" "core/custom/$1"
+}
+
+install_example .env
+install_example .env.docker
+install_example define.php
+install_example routes.php
+install_example config/cms/settings/ControllerNamespace.php
+install_example config/cms/settings.php
+```
+
+Für die Arbeit mit einem Agenten können Sie auch `AGENTS.md` in den Projektstamm herunterladen und Ihre eigenen Projektregeln ergänzen. Die PHP-Modelle des Kerns sind bereits im Installationspaket unter `core/src/Models/` enthalten. [Modellreferenz](models.md) · [Quellcode der Modelle](https://github.com/evolution-cms/evolution/tree/3.6.x/core/src/Models)
+
+```bash
+copy_evo_file AGENTS.md AGENTS.md
+```
 
 ## Anbieter und Aliase
 

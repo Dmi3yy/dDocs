@@ -21,7 +21,7 @@ Evolution CMS працює в dDocs. Спочатку документує по�
 | Діагностувати типові проблеми проекту | [Усунення несправностей] (07-security-updates-operations/troubleshooting.md) |
 | Перегляньте основні параметри за замовчуванням | [Довідка про параметри системи] (10-reference/system-settings.md) |
 | Перегляд ролей і дозволів | [Довідка про ролі та дозволи] (10-reference/roles-and-permissions.md) |
-| Зрозумійте конфігурацію та завантаження `.env` | [Довідка про виконання конфігурації] (10-reference/configuration-runtime.md) |
+| Зрозумійте конфігурацію та завантаження `.env` | [Довідка про виконання конфігурації](10-reference/configuration-runtime.md) |
 | Зрозумійте електропроводку сердечника Composer | [Довідка про ядро ​​Composer] (10-reference/core-composer.md) |
 | Зрозумійте сумісність зі старими версіями | [Довідка про сумісність із застарілими версіями] (10-reference/legacy-compatibility.md) |
 | Використовуйте шаблони та директиви Blade | [Blade і довідка про візуалізацію шаблонів](10-reference/blade-and-template-rendering.md) |
