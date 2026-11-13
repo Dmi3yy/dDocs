@@ -1,4 +1,4 @@
-# Gaid użytkownika
+# Przewodnik użytkownika
 
 Ten przewodnik pokazuje użytkownikom managera, jak czytać i utrzymywać
 dokumentację w dDocs. Skupia się na zadaniach wykonywanych wewnątrz managera
@@ -33,7 +33,7 @@ w repozytorium pakietu.
 dDocs pomija pliki większe niż `max_file_size_kb`, aby nawigacja w managerze
 pozostawała responsywna.
 
-## Zrozum fallback języka
+## Jak działa język zastępczy
 
 dDocs zaczyna od bieżącego języka managera. Jeśli ta lokalizacja nie istnieje,
 wraca do angielskiego, a potem do dokumentów neutralnych.

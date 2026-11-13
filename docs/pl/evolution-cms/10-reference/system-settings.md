@@ -7,7 +7,7 @@ Wartości domyślne dla nowej instalacji są zdefiniowane w fabryce ustawień po
 i można je zmienić na ekranie ustawień systemowych menedżera, gdy bieżący
 użytkownik menedżer ma uprawnienia do edycji ustawień.
 
-## Karty Manager
+## Karty panelu administracyjnego
 
 | Zakładka | Obszar ustawień |
 | --- | --- |
@@ -83,7 +83,7 @@ zdarzenia wymienione w [Odnośnik zdarzeń](events.md).
 Zobacz [Odniesienie do tagów parsera](parser-tags.md) przed udokumentowaniem składni szablonu
 lub zachowanie parsera.
 
-## Domyślne ustawienia interfejsu Manager
+## Domyślne ustawienia panelu administracyjnego
 
 | Ustawienie | Domyślne | Znaczenie |
 | --- | --- | --- |

@@ -45,7 +45,7 @@ core володіє CMS data/actions/permissions; theme володіє screen ma
 без нового compatibility runtime. Fallback тут означає лише ще не перенесений
 core view; Font Awesome aliases або старі extras adapters не повертаються.
 
-## Коли повертатися до package extraction
+## Коли знову розглянути виділення в пакет
 
 Після переведення достатньої кількості screens і явного реєстру залишкових
 legacy endpoints можна окремим issue оцінити пакет **view/theme assets**. Навіть

@@ -1,4 +1,4 @@
-# Preset Erstellen
+# Vorlage erstellen
 
 [Extras Und Pakete](README.md) / Preset Erstellen
 
@@ -9,7 +9,7 @@ project selbst.
 Nutze ein preset fuer wiederholbare site baselines: views, theme assets,
 controllers, starter config, required Extras und optional seeders.
 
-## Preset Oder Package
+## Vorlage oder Paket
 
 | Bedarf | Nutze |
 | --- | --- |
@@ -22,7 +22,7 @@ Ein preset kann ein kleines custom package fuer site-specific controllers,
 routes, seeders oder service provider wiring enthalten. Es bleibt trotzdem ein
 project-layer scaffold.
 
-## Preset Installieren
+## Vorlage installieren
 
 Presets werden vom standalone installer waehrend der project creation
 angewendet.
@@ -57,7 +57,7 @@ evo install preset-check \
   --preset=path/to/preset
 ```
 
-## Preset Layout
+## Aufbau der Vorlage
 
 Ein modern preset enthaelt nur den project layer, den der installer kopiert.
 
@@ -94,7 +94,7 @@ preset-name/
 Committe keine Evolution core files, manager files, runtime cache, local
 databases, local secrets oder IDE workspace files in ein preset.
 
-## Project Composer
+## Composer im Projekt
 
 `core/custom/composer.json` beschreibt project-layer autoloading und required
 Composer Extras.
@@ -117,7 +117,7 @@ Composer Extras.
 Required Extras nur verwenden, wenn der starter site ohne sie nicht funktioniert.
 Optional Extras bleiben optional im installer.
 
-## Custom Package Layer
+## Projektspezifisches Paket
 
 Ein kleines custom package in `core/custom/packages` ist fuer site-layer PHP:
 
@@ -130,7 +130,7 @@ Ein kleines custom package in `core/custom/packages` ist fuer site-layer PHP:
 Generic manager modules, reusable APIs, tables und integration logic gehoeren in
 separate packages.
 
-## Service Provider
+## Dienstanbieter
 
 Der preset service provider sollte klein bleiben.
 
@@ -158,7 +158,7 @@ final class BlogPresetServiceProvider extends ServiceProvider
 }
 ```
 
-## Views And Controllers
+## Ansichten und Controller
 
 Views definieren das starter frontend:
 
@@ -172,7 +172,7 @@ Controllers sollten nah am starter use case bleiben. Ein default preset braucht
 normalerweise nur `HomeController`. Ein blog preset kann blog, post und contact
 controllers ergaenzen, weil sie Teil der site baseline sind.
 
-## Theme Assets
+## Ressourcen des Designs
 
 Theme assets liegen in `themes/<preset-name>/`. Das preset sollte direkt nach
 install funktionieren; ein Node build darf nicht fuer den ersten Render noetig
@@ -182,13 +182,13 @@ DaisyUI presets koennen CDN-loaded DaisyUI/Tailwind browser assets und ein
 kleines theme controller script fuer light/dark/theme switching nutzen. Custom
 DaisyUI theme tokens gehoeren in eine preset theme CSS file.
 
-## Preset Config
+## Konfiguration der Vorlage
 
 Preset-specific settings gehoeren in `core/custom/config/presets/<preset>.php`.
 Nutze sie fuer theme defaults, visible theme lists, feature flags und starter
 route defaults. Secrets gehoeren nicht in preset config.
 
-## Seeders
+## Datenbank-Seeder
 
 Seeders erzeugen nur starter state:
 
@@ -199,7 +199,7 @@ Seeders erzeugen nur starter state:
 
 Keine grossen demo records hinzufuegen, die jede reale site loeschen muss.
 
-## README Contract
+## Anforderungen an die README
 
 Das README beschreibt:
 
@@ -211,7 +211,7 @@ Das README beschreibt:
 - Orte fuer views/theme/config/PHP site logic;
 - next project step.
 
-## Validation
+## Überprüfung
 
 Vor release ein fresh project aus dem preset erstellen.
 
@@ -233,7 +233,7 @@ Danach first page, manager login, required Extras, Composer autoload,
 routes/controllers, theme assets, idempotent seeders und generated project
 `.gitignore` pruefen.
 
-## Release Checklist
+## Checkliste für die Veröffentlichung
 
 Pruefen:
 

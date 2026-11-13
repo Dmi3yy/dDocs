@@ -44,7 +44,7 @@ UI описаний у `config/settings/form.php` і відкривається 
 `safe_roots` і `extra_docs_roots` не мають бути заповнені в package defaults.
 Це налаштування конкретного проєкту.
 
-## Cache
+## Кеш
 
 | Ключ | Тип | Дефолт | Для чого |
 | --- | --- | --- | --- |
@@ -54,7 +54,7 @@ UI описаний у `config/settings/form.php` і відкривається 
 Індекс містить metadata: source nodes, folder nodes, document paths, language
 metadata, timestamps і checksums. Він не переносить canonical content у DB.
 
-## Search Behavior
+## Поведінка пошуку
 
 Search-related behavior зараз є runtime behavior, а не повністю configurable
 surface.
@@ -76,7 +76,7 @@ vendor-doc inclusion, active-source-only search, debounce delay і generated
 `FileSearchIndexCache`. Поки цих keys немає в runtime code, це roadmap, не
 available configuration.
 
-## Discovery Rules
+## Правила виявлення джерел
 
 dDocs читає тільки trusted package/project roots. Він не сканує весь диск.
 
@@ -91,7 +91,7 @@ index.md      fallback для packages без docs/
 
 Бажаний стандарт - lowercase `docs/`.
 
-## Language Rules
+## Правила вибору мови
 
 dDocs показує одну effective language version для поточного manager user.
 

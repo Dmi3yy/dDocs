@@ -10,7 +10,7 @@ Minimalny reference package pokazuje najmniejszą użyteczną strukturę. Pakiet
 produkcyjne mogą dodać EvoUI presets, Livewire manager panels, settings forms,
 builder blocks, published assets i localized filesystem docs.
 
-## Utwórz Scaffold Pakietu
+## Utwórz szkielet pakietu
 
 Dla nowego local package zacznij od package generator w zainstalowanym projekcie:
 
@@ -97,7 +97,7 @@ package/
 
 Zostaw tylko foldery, których package naprawdę używa.
 
-## Composer Contract
+## Wymagania Composera
 
 `composer.json` jest discovery contract pakietu. Powinien zawierać package
 name, package type, version constraints, PSR-4 namespace oraz service provider w
@@ -130,7 +130,7 @@ name, package type, version constraints, PSR-4 namespace oraz service provider w
 Dodaj `evolution-cms/evo-ui` tylko wtedy, gdy package używa EvoUI manager
 surfaces.
 
-## Service Provider
+## Dostawca usług
 
 Service provider jest entrypoint pakietu. Rejestruje config defaults,
 migrations, views, translations, routes, commands, publish tags, services i
@@ -148,13 +148,13 @@ Manager-only surfaces rejestruj tylko w manager mode:
 Provider powinien być declarative. Business logic należy do services,
 controllers, table providers, models albo support classes.
 
-## Manager Module
+## Moduł panelu administracyjnego
 
 Manager module powinien blokować direct access poza manager mode, czytać request
 state defensively, budować mały context array i przekazywać query/save/delete
 logic do controllers, services, models albo EvoUI providers.
 
-## EvoUI Pattern
+## Użycie EvoUI
 
 Używaj EvoUI dla tables, filters, row actions, modals, confirmation dialogs,
 settings forms, choices fields i builder fields.
@@ -167,13 +167,13 @@ settings forms, choices fields i builder fields.
 | Runtime settings defaults | package config defaults |
 | Project overrides | project custom config |
 
-## Livewire Pattern
+## Użycie Livewire
 
 Livewire component powinien koordynować UI, normalizować active tab przez
 allowlist i zostawiać domain logic w services/provider classes. Use it for
 reactive tabs, stateful UI and partial updates without iframe reloads.
 
-## Routes, Controllers, And Facades
+## Trasy, kontrolery i fasady
 
 Package routes grupuj z package prefix i stable route name.
 
@@ -186,12 +186,12 @@ Route::prefix('package-name')->name('packageName.')->group(function () {
 Controllers obsługują HTTP requests. Services albo facades trzymają operations
 wołane przez templates, snippets, modules albo inne packages.
 
-## Config And Settings
+## Konfiguracja i ustawienia
 
 Oddziel package defaults, project overrides i runtime values. Każdy public config
 key dokumentuj z type, default i effect.
 
-## Assets And Build Output
+## Zasoby i pliki wynikowe
 
 Jeśli package ma browser assets, trzymaj source files w `resources/`, built
 assets w `public/` albo jawnej package asset directory, a publish tags nazywaj
@@ -200,13 +200,13 @@ package-specific.
 Use package-specific publish tags: `package-config`, `package-assets`,
 `package-views`, `package-migrations`, `package-images`.
 
-## Migrations, Seeders, And Commands
+## Migracje, dane początkowe i polecenia
 
 Migrations obsługują package-owned tables. Seeders i install commands muszą być
 idempotent i nie powinny instalować demo data w production bez wyraźnej decyzji
 użytkownika.
 
-## Localization
+## Lokalizacja
 
 Używaj canonical locale folders.
 
@@ -217,7 +217,7 @@ Używaj canonical locale folders.
 | Manager labels | Czytaj labels z translations. |
 | Documentation status | Niepełne locale oznaczaj jako partial. |
 
-## Package Documentation
+## Dokumentacja pakietu
 
 Każdy package widoczny w dDocs powinien mieć filesystem documentation:
 
@@ -240,7 +240,7 @@ docs/
 `frontend-guide.md` twórz tylko dla package z UI, Blade, JavaScript, CSS, assets
 albo browser runtime.
 
-## Tests And Verification
+## Testy i weryfikacja
 
 Minimum:
 
@@ -256,7 +256,7 @@ For manager UI verify module opening, localized menu label/icon, EvoUI
 tables/forms, Livewire tabs, published assets, dDocs visibility and internal
 Markdown links.
 
-## Release Checklist
+## Lista kontrolna wydania
 
 Przed release sprawdź:
 

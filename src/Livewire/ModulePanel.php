@@ -1,5 +1,6 @@
 <?php namespace Dmi3yy\dDocs\Livewire;
 
+use Dmi3yy\dDocs\Support\CoreComposerMetadata;
 use Dmi3yy\dDocs\Support\FileDocumentRepository;
 use Dmi3yy\dDocs\Support\FileIndexCache;
 use Dmi3yy\dDocs\Support\FileSearch;
@@ -412,6 +413,9 @@ class ModulePanel extends Component
             return $node + ['markdown' => '', 'readable' => false];
         }
 
+        if (defined('EVO_CORE_PATH')) {
+            $markdown = app(CoreComposerMetadata::class)->render($markdown, $node, EVO_CORE_PATH);
+        }
         $markdown = $this->prepareMarkdownForClient($markdown);
 
         return $node + [

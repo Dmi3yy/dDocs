@@ -33,7 +33,7 @@ fichiers dans le dépôt du paquet.
 dDocs ignore les fichiers plus grands que `max_file_size_kb` pour garder la
 navigation manager réactive.
 
-## Comprendre le fallback de langue
+## Comprendre le choix de la langue de secours
 
 dDocs commence par la langue actuelle du manager. Si cette locale manque, il
 revient à l'anglais puis aux docs neutres.

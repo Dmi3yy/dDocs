@@ -109,7 +109,7 @@ $branch = SiteContent::descendantsOf(2)
 Verwenden Sie Baumabfragen, wenn die Hierarchie wichtig ist. Verwenden Sie flache Abfragen, wenn Sie sie nur benötigen
 gefilterte Zeilen.
 
-## Tags und Datumsbestellung
+## Tags und Sortierung nach Datum
 
 ```php
 $resources = SiteContent::query()

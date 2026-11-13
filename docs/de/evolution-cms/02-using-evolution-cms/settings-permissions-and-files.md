@@ -49,7 +49,7 @@ Dateisystemberechtigungen.
 - PHP- und Webserver-Upload-Limits;
 - Lese-/Schreibberechtigungen für Verzeichnisse.
 
-## Rollen und Manager Berechtigungen
+## Rollen und Berechtigungen im Manager
 
 Manager-Rollen und -Berechtigungen steuern, worauf Managerbenutzer zugreifen können. Wenn ein Benutzer
 Ein Bildschirm kann nicht geöffnet werden. Überprüfen Sie Folgendes:

@@ -1,4 +1,4 @@
-# CLI Довідка
+# Довідка з CLI
 
 [Назад](../07-security-updates-operations/troubleshooting.md) / [Вгору](../README.md) / [Далі](source-inventory.md)
 

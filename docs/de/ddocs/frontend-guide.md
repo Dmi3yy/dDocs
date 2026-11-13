@@ -1,10 +1,10 @@
-# Frontend guide
+# Leitfaden zur Benutzeroberfläche
 
 dDocs nutzt evo-ui für die Manager-Shell und dTui/TOAST UI für Markdown-Rendering.
 Das ist ein interner Frontend-Runtime, keine öffentliche Frontend-API für
 Consumer-Pakete.
 
-## Runtime-Grenze
+## Aufgaben der Laufzeitumgebung
 
 - `views/docs/shell.blade.php` besitzt das Manager-iframe-Dokument, lokale dTui
   Assets, Prism Assets und den Viewer-Bootcode.
@@ -53,7 +53,7 @@ Style keine globalen evo-ui Primitives außerhalb eines `.ddocs-*` Scopes. Wenn
 ein anderes Paket dasselbe Pattern braucht, erstelle eine evo-ui Aufgabe für ein
 gemeinsames Primitive oder eine Variante, statt dDocs CSS zu kopieren.
 
-## Viewer Payload
+## Daten für die Dokumentansicht
 
 Der Dokument-Viewer erhält:
 
@@ -71,7 +71,7 @@ Livewire besitzt Dokumentauswahl und sichere Dateilesevorgänge. Browser-Code
 besitzt TOAST UI Rendering, Code-Copy Chrome, Abfangen interner Links, sichere
 Ersetzung lokaler Bilder und UML Recovery.
 
-## Breaking Viewer Changes
+## Inkompatible Änderungen der Dokumentansicht
 
 Behandle diese Änderungen als breaking changes für den dDocs Viewer:
 

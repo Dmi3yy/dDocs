@@ -7,7 +7,7 @@ accès, verrouillages d'éléments et autorisations de fichiers. Cette page docu
 Surfaces d'autorisation principales pour la documentation produit. Autorisation spécifique au package
 les écrans appartiennent à la source dDocs de chaque package.
 
-## Manager Modèle de rôle
+## Modèle de rôles de l’administration
 
 Les rôles Manager sont représentés par le modèle `UserRole`. Les utilisateurs du Manager reçoivent un
 rôle via les attributs utilisateur et les contrôles d'autorisation lisent la session active

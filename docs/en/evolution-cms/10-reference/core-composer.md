@@ -17,18 +17,20 @@ Evolution CMS project.
 The root Composer file describes the project package. The runtime dependency
 graph lives under `core/composer.json`.
 
-## Runtime Package Metadata
+## Core Package Metadata
 
-| Field | Current Value |
+In the Manager, dDocs shows values from this installation’s `core/composer.json`. Outside the Manager or when a value is unavailable, the table shows the Composer key.
+
+| Field | Value or Composer key |
 | --- | --- |
-| Package | `evolution-cms/evolution` |
-| Type | `project` |
-| Version | `3.5.7` |
-| License | `GPL-3.0-or-later` |
-| PHP baseline | `^8.3` |
-| Vendor directory | `vendor` inside `core/` |
-| Minimum stability | `dev` |
-| Prefer stable | `true` |
+| Package | `name`<!-- core-composer --> |
+| Type | `type`<!-- core-composer --> |
+| Composer version | `version`<!-- core-composer --> |
+| License | `license`<!-- core-composer --> |
+| PHP requirement | `require.php`<!-- core-composer --> |
+| Vendor directory | `config.vendor-dir`<!-- core-composer --> |
+| Minimum stability | `minimum-stability`<!-- core-composer --> |
+| Prefer stable | `prefer-stable`<!-- core-composer --> |
 
 ## Runtime Dependency Groups
 

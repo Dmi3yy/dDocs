@@ -22,7 +22,7 @@ Oberfläche und [Artisan Befehlsreferenz](artisan-commands.md) für die vollstä
 Befehlsoberfläche für installiertes Projekt. Diese Seite ist eine kompakte Karte, die verbindet
 Befehle mit Manager-Aktionsoberflächen.
 
-## Manager Aktionsquellen
+## Quellen der Manager-Aktionen
 
 Manager-Aktionen sind keine einzelne moderne Routendatei. Aktuelles Managerverhalten ist
 aus mehreren Oberflächen gelöst:

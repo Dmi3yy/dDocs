@@ -108,7 +108,7 @@ Standalone CLI harness scripts виконувалися, а не були вик
 а не доказ сумісності з майбутньою GA-версією. Ці результати отримано локально до публікації PR. GitHub Actions і Docker
 build не є джерелом наведеної матриці; їхній статус перевіряється окремо в PR.
 
-## CI та release bootstrap
+## CI та підготовка випуску
 
 - Analysis job тепер встановлює core dependencies перед root PHPStan.
 - Install/upgrade jobs готують production vendor із lock до installer/update.

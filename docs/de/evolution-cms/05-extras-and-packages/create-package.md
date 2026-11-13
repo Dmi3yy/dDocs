@@ -10,7 +10,7 @@ Ein minimales reference package zeigt die kleinste sinnvolle Struktur.
 Production packages koennen EvoUI presets, Livewire manager panels, settings
 forms, builder blocks, published assets und localized filesystem docs ergaenzen.
 
-## Package Scaffold Erstellen
+## Paketgerüst erstellen
 
 Fuer ein neues local package beginne mit dem package generator im installierten
 Projekt:
@@ -31,7 +31,7 @@ Nach generation pruefe das package gegen diesen guide:
 - uebernimm keine legacy folders, alten locale aliases oder unused demo files in
   das finale package.
 
-## Paketform Waehlen
+## Paketform wählen
 
 Beginne mit der kleinsten Form, die zur Aufgabe passt.
 
@@ -98,7 +98,7 @@ package/
 
 Behalte nur Ordner, die das package wirklich verwendet.
 
-## Composer Contract
+## Composer-Anforderungen
 
 `composer.json` ist der discovery contract des Pakets. Es braucht package name,
 package type, version constraints, PSR-4 namespace und service provider in
@@ -131,7 +131,7 @@ package type, version constraints, PSR-4 namespace und service provider in
 Fuege `evolution-cms/evo-ui` nur hinzu, wenn das package EvoUI manager surfaces
 nutzt.
 
-## Service Provider
+## Dienstanbieter
 
 Der service provider ist der entrypoint. Er registriert config defaults,
 migrations, views, translations, routes, commands, publish tags, services und
@@ -149,13 +149,13 @@ Manager-only surfaces gehoeren nur in manager mode:
 Der provider sollte declarative bleiben. Business logic gehoert in services,
 controllers, table providers, models oder support classes.
 
-## Manager Module
+## Verwaltungsmodul
 
 Das manager module blockiert direct access ausserhalb des manager mode, liest
 request state defensively, baut einen kleinen context array und delegiert
 query/save/delete logic an controllers, services, models oder EvoUI providers.
 
-## EvoUI Pattern
+## Einsatz von EvoUI
 
 Nutze EvoUI fuer tables, filters, row actions, modals, confirmation dialogs,
 settings forms, choices fields und builder fields.
@@ -168,13 +168,13 @@ settings forms, choices fields und builder fields.
 | Runtime settings defaults | package config defaults |
 | Project overrides | project custom config |
 
-## Livewire Pattern
+## Einsatz von Livewire
 
 Livewire components koordinieren UI, normalisieren active tab ueber eine
 allowlist und lassen domain logic in services/provider classes. Nutze Livewire
 fuer reactive tabs, stateful UI und partial updates ohne iframe reload.
 
-## Routes, Controllers, And Facades
+## Routen, Controller und Fassaden
 
 Package routes mit package prefix und stable route name gruppieren.
 
@@ -187,12 +187,12 @@ Route::prefix('package-name')->name('packageName.')->group(function () {
 Controllers bearbeiten HTTP requests. Services oder facades halten operations,
 die templates, snippets, modules oder andere packages aufrufen.
 
-## Config And Settings
+## Konfiguration und Einstellungen
 
 Trenne package defaults, project overrides und runtime values. Dokumentiere
 jeden public config key mit type, default und effect.
 
-## Assets And Build Output
+## Ressourcen und Build-Ergebnisse
 
 Wenn das package browser assets hat, liegen source files in `resources/`, built
 assets in `public/` oder einem klaren package asset directory. Publish tags
@@ -201,13 +201,13 @@ sollten package-specific sein.
 Use package-specific publish tags: `package-config`, `package-assets`,
 `package-views`, `package-migrations`, `package-images`.
 
-## Migrations, Seeders, And Commands
+## Migrationen, Seeder und Befehle
 
 Migrations gehoeren zu package-owned tables. Seeders und install commands sollen
 idempotent sein und demo data nicht ohne explizite Aktion in production
 installieren.
 
-## Localization
+## Lokalisierung
 
 Nutze canonical locale folders.
 
@@ -218,7 +218,7 @@ Nutze canonical locale folders.
 | Manager labels | Labels kommen aus translations. |
 | Documentation status | Unvollstaendige locales als partial markieren. |
 
-## Package Documentation
+## Paketdokumentation
 
 Jedes package in dDocs sollte filesystem documentation haben:
 
@@ -241,7 +241,7 @@ docs/
 `frontend-guide.md` nur fuer packages mit UI, Blade, JavaScript, CSS, assets
 oder browser runtime erstellen.
 
-## Tests And Verification
+## Tests und Überprüfung
 
 Minimum:
 
@@ -257,7 +257,7 @@ For manager UI verify module opening, localized menu label/icon, EvoUI
 tables/forms, Livewire tabs, published assets, dDocs visibility and internal
 Markdown links.
 
-## Release Checklist
+## Checkliste für die Veröffentlichung
 
 Vor dem release pruefen:
 

@@ -24,10 +24,10 @@ dokumentacji pakietów.
 
 - [Gaid użytkownika](user-guide.md)
 - [Gaid dewelopera](developer-guide.md)
-- [Frontend guide](frontend-guide.md)
+- [Przewodnik po interfejsie](frontend-guide.md)
 - [Konfiguracja](configuration.md)
-- [Referencja](reference.md)
-- [Troubleshooting](troubleshooting.md)
+- [Dokumentacja referencyjna](reference.md)
+- [Rozwiązywanie problemów](troubleshooting.md)
 - [Standardy dokumentacji](documentation-standards.md)
 
 ## Renderowanie Markdown
@@ -43,7 +43,7 @@ dDocs nadal odpowiada za warstwę bezpieczeństwa wokół viewer:
 - lokalne obrazy są konwertowane tylko po przejściu kontroli bezpiecznych katalogów docs;
 - brakujące względne linki dokumentacji pozostają nieaktywne zamiast nawigować iframe managera.
 
-## Model runtime
+## Działanie modułu
 
 ```text
 Pakiety Composer / lokalne pakiety Evolution

@@ -3,7 +3,7 @@
 Ce guide explique comment dDocs est câblé, comment il découvre la documentation
 et comment les développeurs doivent l'étendre en sécurité.
 
-## Modèle runtime
+## Fonctionnement du module
 
 ```text
 DocsSourceRegistry -> DocsIndexer -> FileIndexCache
@@ -33,7 +33,7 @@ base de données pour la documentation des paquets.
 | `MarkdownExport` | Construit un fichier Markdown téléchargeable à partir des documents lisibles de l'index courant. |
 | `Diagnostics` | Rapporte l'état des sources read-only, cache, langue et path-safety pour manager/debug. |
 
-## Lookup runtime
+## Recherche à l’exécution
 
 Gardez les données lookup exactes hors de ce guide afin que la documentation
 reste maintenable.
@@ -49,7 +49,7 @@ Diagnostics inclut des métadonnées du système de fichiers, donc les routes
 diagnostiques doivent rester derrière le guard manager/debug décrit dans la
 [Référence](reference.md).
 
-## Modèle runtime de recherche
+## Fonctionnement de la recherche
 
 dDocs utilise actuellement filesystem live search: un filtre live au-dessus de
 l'index de fichiers, pas un moteur de recherche dédié, un index full-text ou un
@@ -170,7 +170,7 @@ Markdown canonique en base.
 Rafraîchissez l'index après des changements manuels de package docs, changements
 de configuration de roots ou changements de structure de langue.
 
-## Limite frontend
+## Rôle de l’interface
 
 dDocs a une vraie surface frontend: Blade shell, Livewire DOM, viewer dTui/TOAST
 UI, Prism et browser post-processing. Gardez le comportement tree/viewer propre à

@@ -1,4 +1,4 @@
-# Noyau Composer Référence
+# Référence Composer du noyau
 
 [Retour](configuration-runtime.md) / [Haut](../README.md) / [Suivant](legacy-compatibility.md)
 
@@ -17,18 +17,20 @@ Projet Evolution CMS.
 Le fichier racine Composer décrit le package du projet. La dépendance d'exécution
 le graphique se trouve sous `core/composer.json`.
 
-## Métadonnées du package d'exécution
+## Métadonnées du paquet cœur
 
-| Champ | Valeur actuelle |
+Dans l’interface d’administration, dDocs affiche les valeurs du fichier `core/composer.json` de cette installation. En dehors de cette interface ou si une valeur manque, le tableau affiche la clé Composer.
+
+| Champ | Valeur ou clé Composer |
 | --- | --- |
-| Forfait | `evolution-cms/evolution` |
-| Tapez | `project` |
-| Version | `3.5.7` |
-| Licence | `GPL-3.0-or-later` |
-| PHP référence | `^8.3` |
-| Annuaire des fournisseurs | `vendor` à l'intérieur de `core/` |
-| Stabilité minimale | `dev` |
-| Préférez stable | `true` |
+| Paquet | `name`<!-- core-composer --> |
+| Type | `type`<!-- core-composer --> |
+| Version dans Composer | `version`<!-- core-composer --> |
+| Licence | `license`<!-- core-composer --> |
+| Version de PHP requise | `require.php`<!-- core-composer --> |
+| Répertoire des dépendances | `config.vendor-dir`<!-- core-composer --> |
+| Stabilité minimale | `minimum-stability`<!-- core-composer --> |
+| Préférence pour les versions stables | `prefer-stable`<!-- core-composer --> |
 
 ## Groupes de dépendances d'exécution
 

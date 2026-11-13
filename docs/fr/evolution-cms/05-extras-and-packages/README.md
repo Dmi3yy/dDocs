@@ -1,4 +1,4 @@
-# Extras Et Packages
+# Extras et paquets
 
 [Evolution CMS](../README.md) / Extras Et Packages
 

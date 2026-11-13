@@ -133,7 +133,7 @@ Voreinstellungen werden über den „core/artisan“ des installierten Projekts 
 Befehl „preset:install“, nachdem der Evolution CMS-Kern bereit ist, dann voreingestellt
 Migrationen werden ausgeführt.
 
-## Extras Während der Installation
+## Extras bei der Installation
 
 Das Installationsprogramm kann Extras installieren, nachdem das Kernprojekt fertig ist:
 

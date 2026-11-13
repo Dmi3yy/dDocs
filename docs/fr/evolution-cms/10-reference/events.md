@@ -52,7 +52,7 @@ vide.
 | `OnCacheUpdate` | Après reconstruction du cache. |
 | `OnSiteRefresh` | Manager action d'actualisation du site. |
 
-## Manager Événements Shell
+## Événements de l’interface d’administration
 
 | Événement | Zone typique |
 | --- | --- |

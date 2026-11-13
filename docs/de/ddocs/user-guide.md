@@ -32,7 +32,7 @@ Dateien im Paket-Repository.
 dDocs überspringt Dateien größer als `max_file_size_kb`, damit die
 Manager-Navigation responsiv bleibt.
 
-## Sprach-Fallback verstehen
+## Ausweichsprache verstehen
 
 dDocs beginnt mit der aktuellen Manager-Sprache. Wenn diese Locale fehlt, fällt
 es auf Englisch und danach auf neutrale Docs zurück.

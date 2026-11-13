@@ -1,4 +1,4 @@
-# Evolution CMS Documentation
+# Documentation d’Evolution CMS
 
 [Centre de documentation](../README.md) / Evolution CMS
 

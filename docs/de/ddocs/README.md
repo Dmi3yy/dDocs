@@ -20,14 +20,14 @@ für Paketdokumentation.
 - Projekteigene Dokumentation in `ProjectDocs/` halten.
 - Den generierten Dateiindex für schnellere Manager-Navigation cachen.
 
-## Guides
+## Anleitungen
 
 - [Benutzerguide](user-guide.md)
 - [Entwicklerguide](developer-guide.md)
-- [Frontend guide](frontend-guide.md)
+- [Leitfaden zur Benutzeroberfläche](frontend-guide.md)
 - [Konfiguration](configuration.md)
 - [Referenz](reference.md)
-- [Troubleshooting](troubleshooting.md)
+- [Fehlerbehebung](troubleshooting.md)
 - [Dokumentationsstandards](documentation-standards.md)
 
 ## Markdown-Rendering
@@ -43,7 +43,7 @@ dDocs besitzt weiterhin die Sicherheitsschicht rund um den Viewer:
 - lokale Bilder werden nur konvertiert, wenn sie sichere Docs-Root-Prüfungen bestehen;
 - fehlende relative Docs-Links bleiben inert, statt das Manager-iframe zu navigieren.
 
-## Runtime-Modell
+## Funktionsweise des Moduls
 
 ```text
 Composer-Pakete / lokale Evolution-Pakete

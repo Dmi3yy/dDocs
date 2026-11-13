@@ -1,4 +1,4 @@
-# Troubleshooting
+# Усунення несправностей
 
 Цей гайд допомагає, коли dDocs не показує очікувану документацію.
 
@@ -67,7 +67,7 @@ matches можуть читати Markdown files із диска.
 3. Перевірте, що результат не прийшов з іншого indexed package або locale.
 4. Очистіть generated index cache, якщо filesystem metadata stale.
 
-## Folder з'являється в search results
+## Папка з’являється в результатах пошуку
 
 Folders повертаються, коли matched child document лежить всередині них. Сам
 folder може не містити query. dDocs лишає parent folders видимими, щоб filtered
@@ -78,7 +78,7 @@ tree мав context.
 Files вище `max_file_size_kb` пропускаються safe reads. Розбийте файл або
 підніміть project setting тільки для trusted documentation roots.
 
-## Search повертає забагато результатів
+## Пошук повертає забагато результатів
 
 Поточний search ще не має scoring, snippets або query syntax. Звужуйте query
 через title/path terms. Filters `source:`, `path:`, `type:` і `lang:` належать

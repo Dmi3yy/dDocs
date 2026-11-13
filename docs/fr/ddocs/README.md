@@ -25,10 +25,10 @@ base de données pour la documentation des paquets.
 
 - [Guide utilisateur](user-guide.md)
 - [Guide développeur](developer-guide.md)
-- [Frontend guide](frontend-guide.md)
+- [Guide de l’interface](frontend-guide.md)
 - [Configuration](configuration.md)
 - [Référence](reference.md)
-- [Troubleshooting](troubleshooting.md)
+- [Dépannage](troubleshooting.md)
 - [Standards de documentation](documentation-standards.md)
 
 ## Rendu Markdown
@@ -44,7 +44,7 @@ dDocs possède toujours la couche de sécurité autour du viewer:
 - les images locales sont converties seulement si elles passent les contrôles de safe docs root;
 - les liens relatifs manquants restent inertes au lieu de naviguer l'iframe manager.
 
-## Modèle runtime
+## Fonctionnement du module
 
 ```text
 Paquets Composer / paquets Evolution locaux

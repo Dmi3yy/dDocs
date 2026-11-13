@@ -52,7 +52,7 @@ pusty.
 | `OnCacheUpdate` | Po odbudowaniu pamięci podręcznej. |
 | `OnSiteRefresh` | Akcja odświeżania witryny Manager. |
 
-## Zdarzenia powłoki Manager
+## Zdarzenia interfejsu panelu administracyjnego
 
 | Wydarzenie | Typowy obszar |
 | --- | --- |

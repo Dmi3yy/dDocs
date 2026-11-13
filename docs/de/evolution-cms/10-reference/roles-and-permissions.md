@@ -7,7 +7,7 @@ Zugriff, Elementsperren und Dateiberechtigungen. Diese Seite dokumentiert den ak
 Kernberechtigungsoberflächen für die Produktdokumentation. Paketspezifische Berechtigung
 Bildschirme gehören zur eigenen dDocs-Quelle jedes Pakets.
 
-## Manager Vorbild
+## Rollenmodell des Managers
 
 Manager-Rollen werden durch das Modell `UserRole` dargestellt. Manager-Benutzer erhalten eine
 Rolle durch Benutzerattribute und Berechtigungsprüfungen lesen die aktive Sitzung

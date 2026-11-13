@@ -49,7 +49,7 @@ Sprawdź:
 - Limity przesyłania PHP i serwera WWW;
 - uprawnienia do odczytu/zapisu katalogów.
 
-## Role i uprawnienia Manager
+## Role i uprawnienia w panelu administracyjnym
 
 Role i uprawnienia Manager kontrolują dostęp użytkowników menedżerów. Kiedy użytkownik
 nie można otworzyć ekranu, sprawdź:
