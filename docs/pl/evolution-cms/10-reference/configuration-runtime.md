@@ -89,37 +89,111 @@ W `core/custom/` znajdziesz też `composer.json.example` dla zależności projek
 
 ### Tworzenie plików w konsoli
 
-Uruchom ten blok w Bashu z katalogu głównego projektu. Na końcu zostaw tylko polecenia dla potrzebnych przykładów. Każde polecenie pomija istniejący plik docelowy. Następnie zmień przykładowe wartości zgodnie z tabelą.
+Uruchom wybrane polecenie w Bashu z katalogu głównego projektu. Każdy blok działa samodzielnie i pomija istniejący plik. Po pobraniu zmień przykładowe wartości zgodnie z tabelą. Jeśli projekt korzysta już z pliku `.env` w katalogu głównym, dodaj potrzebne zmienne właśnie tam.
+
+`.env`
 
 ```bash
-copy_evo_file() (
-    source_path=$1
-    target=$2
-    [ ! -e "$target" ] && [ ! -L "$target" ] || exit 0
-    mkdir -p "$(dirname "$target")" || exit 1
-    sample=$(mktemp) || exit 1
-    trap 'rm -f "$sample"' EXIT
-    curl -fsSL "https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/$source_path" -o "$sample" || exit 1
-    set -o noclobber
-    cat "$sample" > "$target"
+(
+  target=core/custom/.env
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/.env.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
 )
+```
 
-install_example() {
-    copy_evo_file "core/custom/$1.example" "core/custom/$1"
-}
+`.env.docker`
 
-install_example .env
-install_example .env.docker
-install_example define.php
-install_example routes.php
-install_example config/cms/settings/ControllerNamespace.php
-install_example config/cms/settings.php
+```bash
+(
+  target=core/custom/.env.docker
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/.env.docker.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`define.php`
+
+```bash
+(
+  target=core/custom/define.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/define.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`routes.php`
+
+```bash
+(
+  target=core/custom/routes.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/routes.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`ControllerNamespace.php`
+
+```bash
+(
+  target=core/custom/config/cms/settings/ControllerNamespace.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/config/cms/settings/ControllerNamespace.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`settings.php`
+
+```bash
+(
+  target=core/custom/config/cms/settings.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/config/cms/settings.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
 ```
 
 Do pracy z agentem możesz też pobrać plik `AGENTS.md` do katalogu głównego i dopisać w nim reguły swojego projektu. Modele PHP rdzenia są już w pakiecie instalacyjnym w `core/src/Models/`. [Dokumentacja modeli](models.md) · [Kod źródłowy modeli](https://github.com/evolution-cms/evolution/tree/3.6.x/core/src/Models)
 
 ```bash
-copy_evo_file AGENTS.md AGENTS.md
+(
+  target=AGENTS.md
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/AGENTS.md' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
 ```
 
 ## Dostawcy i aliasy

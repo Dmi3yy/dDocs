@@ -95,37 +95,111 @@ core/storage/cache/env.php
 
 ### Створення файлів через консоль
 
-Запустіть цей блок у Bash з кореня проєкту. Залиште в кінці лише команди для потрібних зразків. Якщо файл призначення вже існує, команда його пропустить. Далі змініть демонстраційні значення за таблицею.
+Запустіть потрібну команду в Bash із кореня проєкту. Кожен блок самостійний і пропускає наявний файл. Після завантаження змініть демонстраційні значення за таблицею. Якщо проєкт уже використовує кореневий `.env`, додайте потрібні змінні до нього.
+
+`.env`
 
 ```bash
-copy_evo_file() (
-    source_path=$1
-    target=$2
-    [ ! -e "$target" ] && [ ! -L "$target" ] || exit 0
-    mkdir -p "$(dirname "$target")" || exit 1
-    sample=$(mktemp) || exit 1
-    trap 'rm -f "$sample"' EXIT
-    curl -fsSL "https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/$source_path" -o "$sample" || exit 1
-    set -o noclobber
-    cat "$sample" > "$target"
+(
+  target=core/custom/.env
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/.env.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
 )
+```
 
-install_example() {
-    copy_evo_file "core/custom/$1.example" "core/custom/$1"
-}
+`.env.docker`
 
-install_example .env
-install_example .env.docker
-install_example define.php
-install_example routes.php
-install_example config/cms/settings/ControllerNamespace.php
-install_example config/cms/settings.php
+```bash
+(
+  target=core/custom/.env.docker
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/.env.docker.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`define.php`
+
+```bash
+(
+  target=core/custom/define.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/define.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`routes.php`
+
+```bash
+(
+  target=core/custom/routes.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/routes.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`ControllerNamespace.php`
+
+```bash
+(
+  target=core/custom/config/cms/settings/ControllerNamespace.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/config/cms/settings/ControllerNamespace.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`settings.php`
+
+```bash
+(
+  target=core/custom/config/cms/settings.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/config/cms/settings.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
 ```
 
 Для роботи з агентом можна окремо завантажити `AGENTS.md` у корінь проєкту. Додайте до нього правила вашого проєкту. PHP-моделі ядра вже входять до інсталяційного пакета в `core/src/Models/`. [Довідка з моделей](models.md) · [Вихідний код моделей](https://github.com/evolution-cms/evolution/tree/3.6.x/core/src/Models)
 
 ```bash
-copy_evo_file AGENTS.md AGENTS.md
+(
+  target=AGENTS.md
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/AGENTS.md' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
 ```
 
 ## Постачальники та псевдоніми
