@@ -70,22 +70,131 @@ par le projet.
 | `core/config/blade-icons.php` | Blade Configuration des icônes. |
 | `core/config/cms/observers.php` | Câblage de l'observateur du modèle. |
 
-## Couche de projet personnalisée
+## Configuration du projet
 
-Les remplacements de projet sont disponibles sous `core/custom/`. Les exemples actuels incluent :
+Les six exemples ci-dessous se trouvent dans le code source d’Evolution CMS sur la branche `3.6.x`. Le paquet d’installation ne les contient pas. Ouvrez l’exemple dont vous avez besoin, copiez son contenu dans le fichier indiqué à partir de la racine du projet et remplacez les valeurs d’exemple. Si le fichier existe déjà, ajoutez uniquement les paramètres ou le code nécessaires en conservant la configuration existante.
 
-| Fichier | Objectif |
-| --- | --- |
-| `.env.example` | Modèle d'environnement de projet. |
-| `.env.docker.example` | Modèle d'environnement orienté Docker. |
-| `define.php.example` | Définitions de constantes personnalisées chargées avant les définitions principales. |
-| `composer.json.example` | Point d'extension du projet Composer fusionné par la configuration principale Composer. |
-| `config/cms/settings.php.example` | Exemple de remplacement des paramètres du projet CMS. |
-| `config/middleware.php.sample` | Exemple d'alias/groupes de middleware personnalisés. |
-| `routes.php.example` | Exemple d'enregistrement d'itinéraire de projet. |
+| Exemple dans la branche `3.6.x` | Fichier du projet | Modifications à apporter |
+| --- | --- | --- |
+| [`.env.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/.env.example) | `core/custom/.env` | Renseignez les paramètres de connexion à votre base de données. Ajoutez au besoin les paramètres du domaine ou du Manager. Si votre projet utilise déjà un fichier `.env` à la racine, ajoutez-y les paramètres. |
+| [`.env.docker.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/.env.docker.example) | Par exemple `core/custom/.env.docker` | Remplacez les valeurs d’exemple de `DB_USERNAME`, `DB_PASSWORD` et `DB_DATABASE`. Dans Docker Compose, rattachez le fichier au service CMS avec `env_file`. Si la base de données tourne dans un autre service, utilisez le nom de ce service comme `DB_HOST`. Le CMS ne charge pas automatiquement `.env.docker`. |
+| [`define.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/define.php.example) | `core/custom/define.php` | Un commentaire dans l’exemple énumère les constantes disponibles. Utilisez `define()` pour redéfinir celles dont vous avez besoin, par exemple `define('EVO_SITE_HOSTNAMES', 'example.com,www.example.com');`, en indiquant les domaines de votre site. |
+| [`routes.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/routes.php.example) | `core/custom/routes.php` | Remplacez la route d’exemple `/helloworld` par votre propre chemin et son gestionnaire. Le guide explique comment ajouter une route pour un formulaire. [Formulaires avec des routes personnalisées](../08-tutorials-recipes/forms-with-custom-routes.md) |
+| [`ControllerNamespace.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/config/cms/settings/ControllerNamespace.php.example) | `core/custom/config/cms/settings/ControllerNamespace.php` | Renvoyez l’espace de noms de vos contrôleurs sous forme de chaîne terminée par une barre oblique inverse. Indiquez l’espace de noms dans lequel votre `BaseController` est chargé automatiquement. |
+| [`settings.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/config/cms/settings.php.example) | `core/custom/config/cms/settings.php` | Renvoyez un tableau contenant uniquement les paramètres à redéfinir. Par exemple, attribuez à `site_name` le nom de votre site. |
 
-Ne modifiez pas les fichiers de configuration principaux pour un comportement de projet uniquement lorsqu'un `core/custom`
-le remplacement existe.
+Conservez les mots de passe réels dans des fichiers d’environnement locaux ou transmettez-les via l’environnement d’exécution. Ne les ajoutez pas à Git.
+
+Dans `core/custom/`, vous trouverez aussi `composer.json.example` pour les dépendances du projet et `config/middleware.php.sample` pour les alias et groupes de middleware personnalisés.
+
+### Créer les fichiers en ligne de commande
+
+Exécutez la commande voulue dans Bash depuis la racine du projet. Chaque bloc est autonome et ignore un fichier déjà présent. Après le téléchargement, adaptez les valeurs d’exemple en suivant le tableau. Si le projet utilise déjà un fichier `.env` à la racine, ajoutez-y les variables nécessaires.
+
+`.env`
+
+```bash
+(
+  target=core/custom/.env
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/.env.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`.env.docker`
+
+```bash
+(
+  target=core/custom/.env.docker
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/.env.docker.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`define.php`
+
+```bash
+(
+  target=core/custom/define.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/define.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`routes.php`
+
+```bash
+(
+  target=core/custom/routes.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/routes.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`ControllerNamespace.php`
+
+```bash
+(
+  target=core/custom/config/cms/settings/ControllerNamespace.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/config/cms/settings/ControllerNamespace.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`settings.php`
+
+```bash
+(
+  target=core/custom/config/cms/settings.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/config/cms/settings.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+Pour travailler avec un agent, vous pouvez aussi télécharger `AGENTS.md` à la racine du projet et y ajouter vos propres règles. Le paquet d’installation contient déjà les modèles PHP du cœur dans `core/src/Models/`. [Référence des modèles](models.md) · [Code source des modèles](https://github.com/evolution-cms/evolution/tree/3.6.x/core/src/Models)
+
+```bash
+(
+  target=AGENTS.md
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/AGENTS.md' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
 
 ## Fournisseurs et alias
 

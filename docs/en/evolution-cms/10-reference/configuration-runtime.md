@@ -72,22 +72,131 @@ by the project.
 | `core/config/blade-icons.php` | Blade Icons configuration. |
 | `core/config/cms/observers.php` | Model observer wiring. |
 
-## Custom Project Layer
+## Project Configuration
 
-Project overrides live under `core/custom/`. Current examples include:
+The six samples below are available in the Evolution CMS `3.6.x` source branch. The installation package omits them. Open the sample you need, copy its contents to the path shown relative to your project root, and replace the sample values. If the file already exists, add only the settings or code you need and keep the existing configuration.
 
-| File | Purpose |
-| --- | --- |
-| `.env.example` | Project environment template. |
-| `.env.docker.example` | Docker-oriented environment template. |
-| `define.php.example` | Custom constant definitions loaded before core definitions. |
-| `composer.json.example` | Project Composer extension point merged by the core Composer setup. |
-| `config/cms/settings.php.example` | Project CMS settings override example. |
-| `config/middleware.php.sample` | Custom middleware aliases/groups example. |
-| `routes.php.example` | Project route registration example. |
+| Sample in `3.6.x` | Project file | What to change |
+| --- | --- | --- |
+| [`.env.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/.env.example) | `core/custom/.env` | Set the connection details for your database. Add domain or Manager settings if needed. If your project already uses a root `.env`, add the settings there. |
+| [`.env.docker.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/.env.docker.example) | For example, `core/custom/.env.docker` | Replace the sample `DB_USERNAME`, `DB_PASSWORD`, and `DB_DATABASE`. In Docker Compose, attach the file to the CMS service with `env_file`. If the database runs in a separate service, use its service name for `DB_HOST`. The CMS does not load `.env.docker` automatically. |
+| [`define.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/define.php.example) | `core/custom/define.php` | The sample lists available constants in a comment. Add `define()` calls for the constants you need to override, for example `define('EVO_SITE_HOSTNAMES', 'example.com,www.example.com');`, using your site's domains. |
+| [`routes.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/routes.php.example) | `core/custom/routes.php` | Replace the sample `/helloworld` route with your own path and handler. The guide shows how to add a route for a form. [Forms with custom routes](../08-tutorials-recipes/forms-with-custom-routes.md) |
+| [`ControllerNamespace.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/config/cms/settings/ControllerNamespace.php.example) | `core/custom/config/cms/settings/ControllerNamespace.php` | Return your controllers' namespace as a string with a trailing backslash. Use the namespace where your `BaseController` is autoloaded. |
+| [`settings.php.example`](https://github.com/evolution-cms/evolution/blob/3.6.x/core/custom/config/cms/settings.php.example) | `core/custom/config/cms/settings.php` | Return an array containing only the settings you want to override. For example, set `site_name` to your site's name. |
 
-Do not edit core config files for project-only behavior when a `core/custom`
-override exists.
+Keep real passwords in local environment files or pass them through the runtime environment. Keep them out of Git.
+
+Other samples under `core/custom/` include `composer.json.example` for project dependencies and `config/middleware.php.sample` for custom middleware aliases and groups.
+
+### Create the files from the command line
+
+Run the command you need in Bash from the project root. Each block runs on its own and skips an existing file. After downloading, replace the sample values as described in the table. If the project already uses a root `.env`, add the variables you need there.
+
+`.env`
+
+```bash
+(
+  target=core/custom/.env
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/.env.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`.env.docker`
+
+```bash
+(
+  target=core/custom/.env.docker
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/.env.docker.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`define.php`
+
+```bash
+(
+  target=core/custom/define.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/define.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`routes.php`
+
+```bash
+(
+  target=core/custom/routes.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/routes.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`ControllerNamespace.php`
+
+```bash
+(
+  target=core/custom/config/cms/settings/ControllerNamespace.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/config/cms/settings/ControllerNamespace.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+`settings.php`
+
+```bash
+(
+  target=core/custom/config/cms/settings.php
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/core/custom/config/cms/settings.php.example' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
+
+To work with an agent, you can also download `AGENTS.md` into your project root and add your own project rules. The installation package already includes the core PHP models in `core/src/Models/`. [Models reference](models.md) · [Model source files](https://github.com/evolution-cms/evolution/tree/3.6.x/core/src/Models)
+
+```bash
+(
+  target=AGENTS.md
+  [[ -e "$target" || -L "$target" ]] && exit 0
+  mkdir -p "$(dirname "$target")" || exit 1
+  sample=$(mktemp) || exit 1
+  trap 'rm -f "$sample"' EXIT
+  curl -fsSL 'https://raw.githubusercontent.com/evolution-cms/evolution/3.6.x/AGENTS.md' -o "$sample" || exit 1
+  set -o noclobber
+  cat "$sample" > "$target"
+)
+```
 
 ## Providers And Aliases
 
