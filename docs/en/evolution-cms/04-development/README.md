@@ -11,6 +11,7 @@ package boundaries, tests, and compatibility layers.
 | Page | Purpose |
 | --- | --- |
 | [Project Structure](project-structure.md) | Map the current repository layout and major runtime responsibilities. |
+| [EvoUI Manager Topbar](evo-ui-topbar.md) | Integrate plugin menu items with the Evolution CMS 3.6 topbar. |
 
 ## Current Scope
 

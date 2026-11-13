@@ -11,6 +11,9 @@
 | Сторінка | Призначення |
 | --- | --- |
 | [Структура проекту] (project-structure.md) | Відобразіть поточний макет сховища та основні обов’язки під час виконання. |
+| [Перехід на SVG-іконки в 3.6](maintenance/3.6-ui-assets/IMPLEMENTATION.md) | Заміна Font Awesome, каталог іконок і перевірки. |
+| [EvoUI System Info](maintenance/evo-ui-system-info/README.md) | Інтеграція EvoUI та вибір теми адмінки в 3.6. |
+| [Перехід на Laravel 13](maintenance/laravel-13/README.md) | Рішення та результати перевірок для Evolution CMS 3.6. |
 
 ## Поточний обсяг
 
