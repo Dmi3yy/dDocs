@@ -1,4 +1,4 @@
-# Troubleshooting
+# Rozwiązywanie problemów
 
 ## Dokument nie jest widoczny
 
@@ -14,7 +14,7 @@
 3. Odśwież index.
 4. Sprawdź `default_language`.
 
-## Search jest wolny
+## Wyszukiwanie działa wolno
 
 Current search is filesystem live search. Metadata matches are fast, but content
 matches can read Markdown files from disk.
@@ -24,7 +24,7 @@ matches can read Markdown files from disk.
 3. Trzymaj generated static-site output poza `docs/`.
 4. Dla dużych docs sets zaplanuj file-based `FileSearchIndexCache`.
 
-## Search nie znajduje document content
+## Wyszukiwanie nie znajduje treści dokumentów
 
 1. Sprawdź `allowed_extensions`.
 2. Sprawdź `max_file_size_kb`.
@@ -32,7 +32,7 @@ matches can read Markdown files from disk.
 4. Sprawdź, czy plik jest inside indexed docs root.
 5. Odśwież index po move albo rename.
 
-## Folder pojawia się w search results
+## Katalog pojawia się w wynikach wyszukiwania
 
 Folder może pojawić się dlatego, że matched child document jest wewnątrz niego.
 Folder nie musi sam zawierać query; dDocs zachowuje parent folders jako tree

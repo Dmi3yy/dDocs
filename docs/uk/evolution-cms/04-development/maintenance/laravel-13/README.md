@@ -115,7 +115,7 @@ Extras, яким потрібен DBAL напряму, мають деклару
 сім тестів перевіряють поточний токен, заміну stale token та read-only/unknown URL.
 CSRF middleware і перевірка прав не послаблювалися.
 
-## Повний diff версій у core lock
+## Повний список змін версій у файлі core/composer.lock
 
 `—` означає додавання або видалення. Незмінені транзитивні пакети не дублюються.
 Для `roave/security-advisories` важливий reference, а не назва `dev-master`.

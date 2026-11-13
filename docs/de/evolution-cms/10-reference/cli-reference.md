@@ -79,7 +79,7 @@ Wenn es im CLI-Modus weggelassen wird, verwendet das Installationsprogramm stand
 | Lokaler Pfad | Verwenden Sie den lokalen voreingestellten Checkout und behalten Sie ihn als Quelle bei. |
 | `spec@ref` oder `spec#ref` | Verwenden Sie einen bestimmten Zweig, ein bestimmtes Tag oder eine bestimmte Referenz. |
 
-## Extras Syntax
+## Syntax für Extras
 
 | Syntax | Bedeutung |
 | --- | --- |

@@ -64,7 +64,7 @@ lub strony operacyjne.
 | `Tracy/` | Integracja panelu debugowania. |
 | `Traits/` | Wspólne cechy modeli i zachowania w czasie wykonywania. |
 
-## Manager Środowisko wykonawcze
+## Działanie panelu administracyjnego
 
 `manager/` to interfejs menedżera i powierzchnia akcji.| Ścieżka | Odpowiedzialność |
 | --- | --- |

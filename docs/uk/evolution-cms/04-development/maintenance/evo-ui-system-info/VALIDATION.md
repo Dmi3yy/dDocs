@@ -1,11 +1,11 @@
-# Validation — core Evo UI / System Info (#2515)
+# Перевірка Evo UI та системної інформації в ядрі (#2515)
 
 Validated locally on 2026-10-23 against the Laravel 13 `3.6.x` base `ee341135a`.
 One installed site, one persistent SQLite database, one Composer lock and vendor
 were reused. PHP runtimes were switched sequentially; no cloned installations,
 parallel PHP legs or ignored platform requirements were used.
 
-## Runtime matrix
+## Перевірені середовища
 
 | Portable PHP (macOS arm64) | Pest | PHPStan | Composer platform/validate | Repeated SQLite update + data smoke |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@ were added. A real standalone Composer `install --no-dev` was followed by CLI,
 HTTP and interactive Livewire checks on all three runtimes before restoring dev
 tools for the full suite.
 
-## UI, actions and security
+## Інтерфейс, дії та безпека
 
 - Both themes were selected and saved through the manager settings UI. `default`
   returns the original System Info; `evo-ui` selects the override and keeps other
@@ -64,7 +64,7 @@ tools for the full suite.
 Core JavaScript tests: **102 passed** (41 manager script + 61 browser script).
 Final `git diff --check`: clean.
 
-## Known upstream SDK failures
+## Відомі помилки SDK
 
 The released Evo UI 1.3.0 standalone source-contract runner was also executed.
 It reports **3 failures / 1,644 assertions**. These are package contracts outside
@@ -79,7 +79,7 @@ The core suite and actual System Info actions pass; this does not establish that
 the entire Evo UI SDK suite is green. Fixing those released form/issue contracts
 belongs in Evo UI, with a new package release and separate scope.
 
-## Limits and local evidence
+## Межі та результати локальної перевірки
 
 This is macOS arm64 + SQLite qualification. It does not claim Windows/Linux,
 MySQL/PostgreSQL, renamed-manager end-to-end or third-party extras coverage.
@@ -90,7 +90,7 @@ Local ignored evidence is in `output/evo-ui-2515/`: runtime result JSON, full Pe
 and PHPStan logs, production CLI checks and screenshots. Disposable credentials,
 SQLite data, vendor and custom diagnostic configuration are not source changes.
 
-## Final UI refinement
+## Остаточні зміни інтерфейсу
 
 The committed presentation places Reset OPcache before a two-line summary. It
 shows success/danger status colors, a rounded hit rate and used/total memory
@@ -107,7 +107,7 @@ complete sequential runtime matrix above. Production dependency installation and
 interactive modal/reset checks were performed earlier with the same locked graph;
 these later presentation changes add no runtime dependencies.
 
-## Copy and tab follow-up
+## Копіювання та вкладки
 
 After the initial integration commit `935371033`, the view was refined to keep
 path prefixes and suffixes, expose compact right-hand copy buttons for every

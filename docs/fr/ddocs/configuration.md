@@ -31,7 +31,7 @@ config/dDocsSettings.php
 | `safe_roots` | multiline paths | empty | Trusted filesystem roots. |
 | `extra_docs_roots` | multiline paths | empty | Docs roots supplémentaires. |
 
-## Search Behavior
+## Comportement de la recherche
 
 Search behavior est surtout un runtime behavior, pas encore une configuration
 surface stable.
@@ -47,7 +47,7 @@ surface stable.
 | Active-source-only search | Not configurable yet. |
 | Search cache | Not implemented yet. |
 
-## Language Rules
+## Règles de sélection de la langue
 
 La documentation ukrainienne utilise uniquement `uk`. Legacy manager value `ua`
 est normalisé vers `uk`; ne créez pas `docs/ua`.

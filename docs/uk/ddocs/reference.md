@@ -1,8 +1,8 @@
-# Reference
+# Довідка dDocs
 
 Ця сторінка містить швидкий lookup для runtime surfaces dDocs.
 
-## Routes
+## Маршрути
 
 | Method | Path | Name | Description |
 | --- | --- | --- | --- |
@@ -12,7 +12,7 @@
 | `GET` | `/ddocs/plantuml` | `dDocs.plantuml` | Redirect encoded UML до configured renderer. |
 | `GET` | `/dtui-plantuml` | `dDocs.plantuml.compat` | Compatibility route для dTui PlantUML rendering. |
 
-## Supported Files
+## Підтримувані файли
 
 | Item | Supported |
 | --- | --- |
@@ -23,11 +23,11 @@
 | Preferred docs folder | `docs/`. |
 | Ukrainian docs folder | `uk` only. Legacy `ua` input is normalized to `uk`. |
 
-## Config Reference
+## Довідка з налаштувань
 
 Configuration keys documented in [Configuration](configuration.md).
 
-## Integration Signals
+## Ознаки інтеграції
 
 | Signal | Runtime surface |
 | --- | --- |
@@ -38,7 +38,7 @@ Configuration keys documented in [Configuration](configuration.md).
 | `ManagerText` | Locale-aware manager label helper для UI text і settings labels. |
 | `MarkdownExport` | File-first exporter для settings action Download Markdown. |
 
-## Source Metadata Reference
+## Метадані джерел
 
 dDocs бере package source labels із `lang/<locale>/global.php`.
 
@@ -52,7 +52,7 @@ Legacy package-specific keys типу `docs`, `issues`, `articles`, `slang`,
 `docs_icon` і `issues_icon` читаються тільки як compatibility aliases. Нові
 packages мають використовувати `module_*` keys.
 
-## Search Reference
+## Довідка з пошуку
 
 Поточний пошук - filesystem live search поверх indexed nodes.
 
@@ -71,7 +71,7 @@ packages мають використовувати `module_*` keys.
 Node metadata містить language і type, але current free-text query ще не має
 окремих filters для цих полів.
 
-## Document Node Metadata
+## Метадані вузла документа
 
 | Field | Meaning |
 | --- | --- |
@@ -91,7 +91,7 @@ Node metadata містить language і type, але current free-text query щ
 | `available_languages` | Available locale folders after normalization. |
 | `readonly` | Whether manager UI write actions are blocked. |
 
-## Markdown Features
+## Можливості Markdown
 
 | Feature | Status |
 | --- | --- |
@@ -105,7 +105,7 @@ Node metadata містить language і type, але current free-text query щ
 | Unsafe HTML | Sanitized or removed. |
 | UML blocks | Supported through `$$uml` blocks. |
 
-## UML Format
+## Формат UML
 
 ```text
 $$uml
@@ -115,7 +115,7 @@ Alice -> Bob: Hello
 $$
 ```
 
-## Writable And Read-Only Roots
+## Каталоги для запису та лише для читання
 
 | Source | Writable | Notes |
 | --- | --- | --- |

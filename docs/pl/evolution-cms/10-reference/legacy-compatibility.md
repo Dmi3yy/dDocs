@@ -50,7 +50,7 @@ powierzchnie:
 Nowy kod powinien preferować obecne usługi i modele, ale dokumentacja musi
 uznać, że te powierzchnie funkcyjne nadal istnieją.
 
-## Starsze akcje Manager
+## Starsze działania panelu administracyjnego
 
 Menedżer nadal zawiera procedury obsługi akcji i procesory:
 

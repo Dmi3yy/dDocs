@@ -6,7 +6,7 @@ Evolution CMS verfügt über zwei Konfigurationsebenen: Projekt-/Laufzeitdateien
 Systemeinstellungen. Zuerst wird die Laufzeitkonfiguration gestartet, dann die Systemeinstellungen
 wird von den Core- und Manager-Flows geladen.
 
-## Bootstrap-Flow
+## Ablauf der Initialisierung
 
 | Schritt | Laufzeitverhalten |
 | --- | --- |

@@ -98,6 +98,7 @@ foreach ([
     'DocsSourceRegistry.php',
     'DocsIndexer.php',
     'FileDocumentRepository.php',
+    'CoreComposerMetadata.php',
     'FileIndexCache.php',
     'FileSearch.php',
     'LinkResolver.php',
@@ -241,6 +242,37 @@ function test_exit_code(array $stats): int
 {
     return ((int) ($stats['failures'] ?? 0)) > 0 ? 1 : 0;
 }
+
+test('the bundled Composer reference shows only supported fields from the installed core manifest', function (): void {
+    $core = temp_dir();
+    $path = $core . '/composer.json';
+    $document = [
+        'package_name' => 'dmi3yy/ddocs',
+        'relative_path' => 'evolution-cms/10-reference/core-composer.md',
+    ];
+    $markdown = '`version`<!-- core-composer --> | `require.php`<!-- core-composer --> | '
+        . '`prefer-stable`<!-- core-composer --> | `config.vendor-dir`<!-- core-composer --> | '
+        . '`extra.private`<!-- core-composer -->';
+    $metadata = new Dmi3yy\dDocs\Support\CoreComposerMetadata();
+
+    file_put_contents($path, json_encode([
+        'version' => '3.6.0',
+        'require' => ['php' => '^8.4 || ^8.5'],
+        'extra' => ['private' => 'not for the docs'],
+    ], JSON_THROW_ON_ERROR));
+    assert_same('`3.6.0` | `^8.4 \\|\\| ^8.5` | `false` | `vendor` | `extra.private`<!-- core-composer -->',
+        $metadata->render($markdown, $document, $core));
+
+    file_put_contents($path, '{"version":"3.6.1","require":{"php":"`<img>`"},"prefer-stable":true}');
+    $updated = $metadata->render($markdown, $document, $core);
+    assert_contains('`3.6.1` | `require.php` | `true`', $updated);
+    assert_not_contains('<img>', $updated);
+    assert_same($markdown, $metadata->render($markdown, ['package_name' => 'project/docs'] + $document, $core));
+
+    unlink($path);
+    assert_contains('`version` | `require.php` | `prefer-stable` | `config.vendor-dir`',
+        $metadata->render($markdown, $document, $core));
+});
 
 test('composer metadata exposes dDocs as an Evolution module with a test script', function () use ($root): void {
     $composer = json_decode((string) file_get_contents($root . '/composer.json'), true, flags: JSON_THROW_ON_ERROR);

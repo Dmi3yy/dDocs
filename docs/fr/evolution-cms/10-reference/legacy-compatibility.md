@@ -50,7 +50,7 @@ superficies :
 Le nouveau code devrait préférer les services et modèles actuels, mais la documentation doit
 reconnaître que ces surfaces fonctionnelles existent toujours.
 
-## Actions Manager héritées
+## Anciennes actions d’administration
 
 Le gestionnaire contient toujours des gestionnaires d'actions et des processeurs :
 

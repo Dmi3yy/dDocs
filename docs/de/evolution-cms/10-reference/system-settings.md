@@ -83,7 +83,7 @@ Ereignisse, die in [Ereignisreferenz](events.md) aufgeführt sind.
 Lesen Sie die [Parser-Tags-Referenz](parser-tags.md), bevor Sie die Vorlagensyntax dokumentieren
 oder Parserverhalten.
 
-## Manager Schnittstellenstandards
+## Standardeinstellungen der Manager-Oberfläche
 
 | Einstellung | Standard | Bedeutung |
 | --- | --- | --- |

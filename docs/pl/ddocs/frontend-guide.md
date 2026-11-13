@@ -1,10 +1,10 @@
-# Frontend guide
+# Przewodnik po interfejsie
 
 dDocs używa evo-ui dla powłoki managera oraz dTui/TOAST UI do renderowania
 Markdown. To wewnętrzny frontend runtime, a nie publiczne frontend API dla
 pakietów konsumenckich.
 
-## Granica runtime
+## Zakres działania środowiska uruchomieniowego
 
 - `views/docs/shell.blade.php` odpowiada za dokument iframe managera, lokalne
   assety dTui, assety Prism i kod startowy viewer.
@@ -22,7 +22,7 @@ drzewa/viewer jest obecnie lokalny dla dDocs, bo jest to specyficzny model
 interakcji dokumentacji. Jeśli stanie się wielokrotnego użytku, należy wypromować
 go przez zadanie evo-ui zamiast kopiować implementację do innego pakietu.
 
-## UX bez górnych tabów
+## Interfejs bez górnych kart
 
 dDocs celowo nie używa standardowego górnego paska tabów modułu dla workspace
 dokumentacji. Główna nawigacja to lewy panel źródeł/drzewa i prawy viewer
@@ -51,7 +51,7 @@ Nie styluj globalnych prymitywów evo-ui poza zakresem `.ddocs-*`. Jeśli inny
 pakiet potrzebuje tego samego wzorca, utwórz zadanie evo-ui dla wspólnego
 prymitywu albo wariantu zamiast kopiować CSS dDocs.
 
-## Payload viewer
+## Dane przekazywane do podglądu
 
 Viewer dokumentu otrzymuje:
 
@@ -70,7 +70,7 @@ przeglądarki odpowiada za renderowanie TOAST UI, chrome kopiowania kodu,
 przechwytywanie linków wewnętrznych, bezpieczną zamianę lokalnych obrazów i
 odzyskiwanie UML.
 
-## Zmiany łamiące viewer
+## Niezgodne zmiany w podglądzie
 
 Traktuj te zmiany jako breaking changes dla viewer dDocs:
 

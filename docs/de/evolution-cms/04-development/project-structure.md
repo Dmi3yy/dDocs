@@ -64,7 +64,7 @@ oder Betriebsseiten.
 | `Tracy/` | Integration des Debug-Panels. |
 | `Traits/` | Gemeinsame Merkmale für Modelle und Laufzeitverhalten. |
 
-## Manager Laufzeit
+## Funktionsweise des Managers
 
 `manager/` ist die Manager-Benutzeroberfläche und Aktionsoberfläche.| Pfad | Verantwortung |
 | --- | --- |

@@ -17,18 +17,20 @@ Projekt Evolution CMS.
 Główny plik Composer opisuje pakiet projektu. Zależność środowiska wykonawczego
 wykres działa pod `core/composer.json`.
 
-## Metadane pakietu wykonawczego
+## Metadane pakietu rdzenia
 
-| Pole | Aktualna wartość |
+W panelu administracyjnym dDocs pokazuje wartości z pliku `core/composer.json` tej instalacji. Poza panelem lub gdy wartość jest niedostępna, tabela pokazuje klucz Composera.
+
+| Pole | Wartość lub klucz Composera |
 | --- | --- |
-| Pakiet | `evolution-cms/evolution` |
-| Wpisz | `project` |
-| Wersja | `3.5.7` |
-| Licencja | `GPL-3.0-or-later` |
-| Wartość bazowa PHP | `^8.3` |
-| Katalog dostawców | `vendor` wewnątrz `core/` |
-| Minimalna stabilność | `dev` |
-| Wolę stabilne | `true` |
+| Pakiet | `name`<!-- core-composer --> |
+| Typ | `type`<!-- core-composer --> |
+| Wersja w Composerze | `version`<!-- core-composer --> |
+| Licencja | `license`<!-- core-composer --> |
+| Wymaganie PHP | `require.php`<!-- core-composer --> |
+| Katalog zależności | `config.vendor-dir`<!-- core-composer --> |
+| Minimalna stabilność | `minimum-stability`<!-- core-composer --> |
+| Preferowanie stabilnych wersji | `prefer-stable`<!-- core-composer --> |
 
 ## Grupy zależności środowiska wykonawczego
 

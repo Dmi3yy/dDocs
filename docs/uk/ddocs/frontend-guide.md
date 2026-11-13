@@ -1,9 +1,9 @@
-# Frontend Guide
+# Посібник із клієнтської частини
 
 dDocs використовує evo-ui для manager shell і dTui/TOAST UI для Markdown
 rendering. Це internal frontend runtime, not a public frontend API.
 
-## Runtime Boundary
+## Межі клієнтської частини
 
 - `views/docs/shell.blade.php` відповідає за manager iframe document, локальні
   dTui assets, Prism assets, manager viewport request і viewer boot code.
@@ -12,14 +12,14 @@ rendering. Це internal frontend runtime, not a public frontend API.
 - `views/partials/tree-node.blade.php` відповідає за recursive tree rows.
 - dDocs рендерить Markdown у браузері з JSON payload, а не серверним HTML.
 
-## evo-ui Boundary
+## Межі використання evo-ui
 
 dDocs має триматися evo-ui conventions для icons, compact manager controls,
 theme tokens, modals і settings forms. Tree/viewer workspace поки локальний для
 dDocs, бо це документаційна модель взаємодії. Якщо вона стане reusable, її
 треба переносити в evo-ui через окрему задачу, а не копіювати в інші пакети.
 
-## No-Top-Tabs UX
+## Інтерфейс без верхніх вкладок
 
 dDocs навмисно не використовує стандартний верхній module tab strip для
 documentation workspace. Основна навігація - left source/tree panel і right
@@ -29,7 +29,7 @@ top tabs у dDocs, поки в модулі немає кількох рівно
 Settings доступні, але вони працюють як compact document workspace action, а не
 як верхня module tab.
 
-## Manager Viewport
+## Область перегляду в адмінці
 
 dDocs займає повний manager workspace і просить manager приховати дерево
 ресурсів через системний helper:
@@ -42,7 +42,7 @@ Shell тільки повідомляє активний iframe intent. Відн
 на інші вкладки або стандартні manager screens має виконувати `evo.moduleViewport`
 у manager runtime.
 
-## Local evo-ui Styling Exception
+## Виняток для локальних стилів evo-ui
 
 dDocs може мати scoped styles для evo-ui form internals тільки всередині
 `.ddocs-settings`, коли settings form вбудована у document workspace. Виняток
@@ -60,7 +60,7 @@ dDocs може мати scoped styles для evo-ui form internals тільки 
 потребує такого самого pattern, створіть evo-ui task для shared primitive або
 variant, а не копіюйте CSS із dDocs.
 
-## Viewer Payload
+## Дані для перегляду документа
 
 Document viewer отримує:
 
@@ -78,7 +78,7 @@ Livewire відповідає за document selection і safe file reads. Browse
 відповідає за TOAST UI rendering, code-copy chrome, internal link interception,
 safe local image replacement і UML recovery.
 
-## Breaking Viewer Changes
+## Несумісні зміни переглядача
 
 Treat these as breaking changes для dDocs viewer:
 
@@ -90,7 +90,7 @@ Treat these as breaking changes для dDocs viewer:
 - internal Markdown link interception;
 - local image safety behavior.
 
-## Extension Rules
+## Правила розширення
 
 - Package docs залишаються Markdown файлами; generated HTML navigation не
   додаємо.

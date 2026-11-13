@@ -23,7 +23,7 @@ die aktuelle Kern-Tag-Oberfläche, damit die Beispiele konsistent bleiben.
 Verwenden Sie bei der Dokumentation abgegrenzte Beispiele mit den Sprachbezeichnungen `html` oder `blade`
 template code in Markdown.
 
-## Resource Fields And TVs
+## Ressourcenfelder und TVs
 
 Resource-Tags lesen zuerst das aktuelle Dokumentobjekt. Sie können auch lesen
 Template Variables, wenn TV-Werte für die Ressource geladen werden.
@@ -97,7 +97,7 @@ Daten, die an einen Chunk-/Parser-Aufruf übergeben werden.
 Placeholders can use modifiers. Modifiers are part of the classic parser
 Oberfläche und sollten mit der davon abhängigen Funktion dokumentiert werden.
 
-## URL Tags
+## URL-Tags
 
 URL tags are rewritten during output processing.
 

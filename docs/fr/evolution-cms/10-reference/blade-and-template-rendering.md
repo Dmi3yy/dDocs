@@ -46,7 +46,7 @@ Les modèles de document Blade reçoivent l'objet d'exécution actuel et les don
 Lorsque le processeur de blocs `DLTemplate` est actif, les mêmes données partagées sont également
 transmis dans son intégration Blade.
 
-## Manager Blade Vues
+## Vues Blade dans l’administration
 
 L'interface utilisateur du gestionnaire utilise les vues Blade sous l'espace de noms de la vue du gestionnaire.
 

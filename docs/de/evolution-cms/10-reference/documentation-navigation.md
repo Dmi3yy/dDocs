@@ -36,7 +36,7 @@ Short reader-focused opening paragraph.
 Wenn kein struktureller Nachbar existiert, lassen Sie diesen Link weg, anstatt einen zu erfinden
 Ziel.
 
-## Abschnitt Landing Pages
+## Einstiegsseiten der Abschnitte
 
 Abschnitt `README.md` Seiten sollten kleine Portale sein. Sie sollten Folgendes umfassen:
 
@@ -51,7 +51,7 @@ Quellreferenzseiten können Quelltabellen, Befehlslisten, Modelllisten usw. enth
 Konfigurationstabellen und Validierungsstatus. Sie dürfen keine privaten Daten enthalten
 Dateisystempfade, interne Planungsbegriffe oder generierte Analysemetadaten.
 
-## Extras Links
+## Links zu Extras
 
 Duplizieren Sie die installierte Extras-Dokumentation nicht im Evolution CMS-Produkt
 Dokumente. Link zu Dokumenten auf Paketebene, wenn ein verwaltetes Paket Eigentümer der Details ist.

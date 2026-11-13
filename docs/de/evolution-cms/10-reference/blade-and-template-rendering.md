@@ -46,7 +46,7 @@ Blade-Dokumentvorlagen empfangen die aktuellen Laufzeitobjekt- und Dokumentdaten
 Wenn der Chunk-Prozessor `DLTemplate` aktiv ist, sind dieselben gemeinsam genutzten Daten ebenfalls aktiv
 in seine Blade-Integration übergeben.
 
-## Manager Blade Ansichten
+## Blade-Ansichten im Manager
 
 Die Manager-Benutzeroberfläche verwendet Blade-Ansichten unter dem Manager-Ansichts-Namespace.
 

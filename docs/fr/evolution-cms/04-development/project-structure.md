@@ -64,7 +64,7 @@ ou les pages d'opérations.
 | `Tracy/` | Intégration du panneau de débogage. |
 | `Traits/` | Caractéristiques partagées pour les modèles et le comportement d'exécution. |
 
-## Manager Exécution
+## Fonctionnement de l’administration
 
 `manager/` est l'interface utilisateur du gestionnaire et la surface d'action.| Chemin | Responsabilité |
 | --- | --- |

@@ -1,4 +1,4 @@
-# Markdown example
+# Приклад Markdown
 
 Цей файл є smoke-документом для dDocs viewer і dTui Editor. Він спеціально
 містить майже всі формати, які ми хочемо підтримувати у документації Evolution
@@ -6,7 +6,7 @@
 relative links, external smoke images, raw HTML safety examples і PlantUML
 blocks.
 
-## Quick checklist
+## Короткий список перевірок
 
 - Відкрий цей документ у dDocs viewer.
 - Перевір, що заголовки, списки, таблиці, quote blocks і посилання виглядають
@@ -17,19 +17,19 @@ blocks.
 
 ---
 
-## h1-style Heading 8-)
+## Заголовок рівня H1 8-)
 
-## h2 Heading
+## Заголовок рівня H2
 
-### h3 Heading
+### Заголовок рівня H3
 
-#### h4 Heading
+#### Заголовок рівня H4
 
-##### h5 Heading
+##### Заголовок рівня H5
 
-###### h6 Heading
+###### Заголовок рівня H6
 
-## Horizontal Rules
+## Горизонтальні роздільники
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 ***
 
-## Typographic replacements
+## Типографічні заміни
 
 Enable typographer option to see result.
 
@@ -49,7 +49,7 @@ test.. test... test..... test?..... test!....
 
 "Smartypants, double quotes" and 'single quotes'
 
-## Paragraphs
+## Абзаци
 
 Documentation paragraphs should be short enough to scan. dDocs is used by
 humans and by AI agents, so the best paragraphs explain one workflow, one
@@ -58,7 +58,7 @@ contract, or one decision at a time.
 Line breaks inside the same paragraph should stay readable, while blank lines
 create a new paragraph.
 
-## Emphasis
+## Виділення тексту
 
 **This is bold text**
 
@@ -74,7 +74,7 @@ Use `inline code` for paths, config keys, commands, class names, and ids.
 
 Keyboard example with safe inline HTML: <kbd>Cmd</kbd> + <kbd>K</kbd>.
 
-## Blockquotes
+## Цитати
 
 > Blockquotes can also be nested...
 >> ...by using additional greater-than signs right next to each other...
@@ -83,7 +83,7 @@ Keyboard example with safe inline HTML: <kbd>Cmd</kbd> + <kbd>K</kbd>.
 > Use blockquotes for warnings, quoted decisions, and notes copied from an
 > external source.
 
-## Lists
+## Списки
 
 Unordered:
 
@@ -117,7 +117,7 @@ Task list:
 - [x] Add client-side rendering.
 - [ ] Verify all docs in dDocs.
 
-## Code
+## Код
 
 Inline `code`.
 
@@ -134,7 +134,7 @@ Plain fenced code:
 Sample text here...
 ```
 
-### Supported Prism languages
+### Мови, які підтримує Prism
 
 Use a language name after the opening fence. dTui currently highlights these
 languages and aliases.
@@ -308,14 +308,14 @@ Short explanation of what the package does.
 - [Developer Guide](developer-guide.md)
 ```
 
-#### Diff fallback
+#### Резервне відображення diff
 
 ```diff
 - Server-side Markdown HTML rendering
 + Client-side Markdown rendering with dTui viewer
 ```
 
-## Tables
+## Таблиці
 
 | Option | Description |
 | ------ | ----------- |
@@ -346,7 +346,7 @@ Evolution package metadata:
 | `icon` | yes | `book-open` |
 | `description` | recommended | File-first docs browser. |
 
-## Links
+## Посилання
 
 [Configuration](configuration.md)
 
@@ -370,7 +370,7 @@ Reference link to [configuration][config].
 
 [config]: configuration.md
 
-## Images
+## Зображення
 
 Ці external images є спеціальними remote-image smoke examples. Звичайна package
 documentation має використовувати images з `docs/assets/`.
@@ -395,7 +395,7 @@ Blocked local image example. Keep unsafe paths as code so editor preview does no
 ![Blocked path traversal](../../../../etc/passwd)
 ```
 
-## Raw HTML safety
+## Безпека вставок HTML
 
 Safe inline HTML can be useful:
 
@@ -414,7 +414,7 @@ Unsafe HTML must never execute. Keep examples inside code fences:
 <iframe src="https://example.com"></iframe>
 ```
 
-## Markdown-it style plugin syntax
+## Синтаксис розширень markdown-it
 
 Ці приклади перевіряють markdown-it style синтаксис, який dDocs нормалізує
 перед рендером у manager: emoji aliases, sub/sup, inserted/marked text,
@@ -422,24 +422,24 @@ footnotes, definition lists, abbreviations і warning containers. Якщо но�
 плагін-синтаксис ще не підтримується, він має лишатися читабельним текстом і не
 ламати сторінку.
 
-### Emojis
+### Емодзі
 
 Classic markup: :wink: :cry: :laughing: :yum:
 
 Shortcuts: :-) :-( 8-) ;)
 
-### Subscript and Superscript
+### Нижній і верхній індекси
 
 - 19^th^
 - H~2~O
 
-### Inserted and Marked Text
+### Вставлений і позначений текст
 
 ++Inserted text++
 
 ==Marked text==
 
-### Footnotes
+### Виноски
 
 Footnote 1 link[^first].
 
@@ -455,7 +455,7 @@ Duplicated footnote reference[^second].
 
 [^second]: Footnote text.
 
-### Definition Lists
+### Списки визначень
 
 Term 1
 
@@ -479,7 +479,7 @@ Term 2
   ~ Definition 2a
   ~ Definition 2b
 
-### Abbreviations
+### Скорочення
 
 This is HTML abbreviation example.
 
@@ -487,19 +487,19 @@ It converts "HTML", but keeps partial entries like "xxxHTMLyyy" intact.
 
 *[HTML]: Hyper Text Markup Language
 
-### Custom Containers
+### Користувацькі контейнери
 
 ::: warning
 *here be dragons*
 :::
 
-## PlantUML blocks
+## Блоки PlantUML
 
 dDocs keeps `$$uml` blocks as Markdown custom blocks for dTui/TOAST UI. Viewer
 має рендерити підтримані PlantUML типи як діаграми і зберігати читабельний
 контраст у dark theme.
 
-### Sequence diagram
+### Діаграма послідовності
 
 $$uml
 @startuml
@@ -514,7 +514,7 @@ Manager --> User: Render Markdown
 @enduml
 $$
 
-### Use case diagram
+### Діаграма варіантів використання
 
 $$uml
 @startuml
@@ -528,7 +528,7 @@ rectangle dDocs {
 @enduml
 $$
 
-### Class diagram
+### Діаграма класів
 
 $$uml
 @startuml
@@ -546,7 +546,7 @@ DocsIndexer --> FileDocumentRepository
 @enduml
 $$
 
-### Object diagram
+### Діаграма об’єктів
 
 $$uml
 @startuml
@@ -562,7 +562,7 @@ source --> document
 @enduml
 $$
 
-### Activity diagram
+### Діаграма діяльності
 
 $$uml
 @startuml
@@ -578,7 +578,7 @@ stop
 @enduml
 $$
 
-### Component diagram
+### Діаграма компонентів
 
 $$uml
 @startuml
@@ -594,7 +594,7 @@ package "dDocs" {
 @enduml
 $$
 
-### Deployment diagram
+### Діаграма розгортання
 
 $$uml
 @startuml
@@ -610,7 +610,7 @@ node "Filesystem" {
 @enduml
 $$
 
-### State diagram
+### Діаграма станів
 
 $$uml
 @startuml
@@ -623,7 +623,7 @@ ReadyToTest --> InProgress : feedback
 @enduml
 $$
 
-### Timing diagram
+### Часова діаграма
 
 $$uml
 @startuml
@@ -640,7 +640,7 @@ Viewer is Ready
 @enduml
 $$
 
-### Mindmap
+### Карта думок
 
 $$uml
 @startmindmap
@@ -658,7 +658,7 @@ $$uml
 @endmindmap
 $$
 
-### WBS
+### Ієрархічна структура робіт
 
 $$uml
 @startwbs
@@ -676,7 +676,7 @@ $$uml
 @endwbs
 $$
 
-### Gantt
+### Діаграма Ганта
 
 $$uml
 @startgantt
@@ -686,7 +686,7 @@ $$uml
 @endgantt
 $$
 
-### JSON diagram
+### Діаграма JSON
 
 $$uml
 @startjson
@@ -699,7 +699,7 @@ $$uml
 @endjson
 $$
 
-### YAML diagram
+### Діаграма YAML
 
 $$uml
 @startyaml
@@ -715,7 +715,7 @@ languages:
 @endyaml
 $$
 
-## Escaping examples
+## Приклади екранування
 
 Literal Blade syntax in documentation:
 
@@ -732,7 +732,7 @@ echo "Nested fence example";
 ```
 ````
 
-## Expected result
+## Очікуваний результат
 
 This page is valid when:
 

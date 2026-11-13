@@ -7,7 +7,7 @@ dostęp, blokady elementów i uprawnienia do plików. Ta strona dokumentuje bie�
 podstawowe powierzchnie uprawnień do dokumentacji produktu. Zezwolenie specyficzne dla pakietu
 ekrany należą do własnego źródła dDocs każdego pakietu.
 
-## Model do naśladowania Manager
+## Model ról w panelu administracyjnym
 
 Role Manager są reprezentowane przez model `UserRole`. Użytkownicy Manager otrzymują
 rolę poprzez atrybuty użytkownika i kontrole uprawnień odczytują aktywną sesję

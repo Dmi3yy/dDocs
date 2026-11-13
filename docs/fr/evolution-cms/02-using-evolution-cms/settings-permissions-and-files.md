@@ -49,7 +49,7 @@ Vérifiez :
 - PHP et limites de téléchargement sur le serveur Web ;
 - autorisations de lecture/écriture du répertoire.
 
-## Rôles et autorisations Manager
+## Rôles et autorisations dans l’administration
 
 Les rôles et autorisations Manager contrôlent ce à quoi les utilisateurs du gestionnaire peuvent accéder. Lorsqu'un utilisateur
 Impossible d'ouvrir un écran, vérifiez :

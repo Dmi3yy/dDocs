@@ -3,7 +3,7 @@
 Dieser Guide erklärt, wie dDocs verdrahtet ist, wie es Dokumentation findet und
 wie Entwickler es sicher erweitern sollten.
 
-## Runtime-Modell
+## Funktionsweise des Moduls
 
 ```text
 DocsSourceRegistry -> DocsIndexer -> FileIndexCache
@@ -18,7 +18,7 @@ FileSearch         -> title, path, source, and content search
 Das Dateisystem ist die Quelle der Wahrheit. dDocs verwendet keine
 Datenbanktabellen für Paketdokumentation.
 
-## Services
+## Dienste
 
 | Service | Verantwortung |
 | --- | --- |
@@ -33,7 +33,7 @@ Datenbanktabellen für Paketdokumentation.
 | `MarkdownExport` | Baut eine herunterladbare Markdown-Datei aus lesbaren Dokumenten im aktuellen Dateiindex. |
 | `Diagnostics` | Meldet read-only Source, Cache, Sprache und Path-Safety-Status für Manager/Debug. |
 
-## Runtime Lookup
+## Suche zur Laufzeit
 
 Halte exakte Lookup-Daten aus diesem Guide heraus, damit die Dokumentation
 wartbar bleibt.
@@ -48,7 +48,7 @@ Diagnostics enthalten Dateisystemmetadaten, daher müssen diagnostische Routes
 hinter dem Manager/Debug Guard bleiben, der in der [Referenz](reference.md)
 beschrieben ist.
 
-## Search Runtime Model
+## Funktionsweise der Suche
 
 dDocs verwendet aktuell filesystem live search: einen Live-Filter über dem
 Dateiindex, keine dedizierte Search Engine, keinen Full-text Index und keinen
@@ -78,7 +78,7 @@ Checksums gehören aktuell zu Metadaten und Cache-Invalidation. Sie werden noch
 nicht für Search-Index-Invalidation genutzt, weil es noch keinen separaten
 Search Index gibt.
 
-## Search Roadmap
+## Geplante Suchfunktionen
 
 Die Suche soll filesystem-first bleiben. Der nächste Schritt sollte ein
 generierter file-based `FileSearchIndexCache` sein, keine Datenbanktabelle und
@@ -101,7 +101,7 @@ Vermeide Elasticsearch, Meilisearch, Typesense, SQLite FTS, database-backed
 search content und vector search für den ersten Release. Sie bringen
 Infrastruktur, die nicht zum aktuellen file-as-source-of-truth Modell passt.
 
-## Source Discovery Contract
+## Regeln zur Quellenerkennung
 
 dDocs findet Dokumentation aus:
 
@@ -168,7 +168,7 @@ in der Datenbank.
 Aktualisiere den Index nach manuellen Package-Doc-Änderungen, Root-
 Konfigurationsänderungen oder Änderungen der Sprachstruktur.
 
-## Frontend-Grenze
+## Aufgaben der Benutzeroberfläche
 
 dDocs hat eine echte Frontend-Oberfläche: Blade shell, Livewire DOM, dTui/TOAST UI
 Viewer, Prism und Browser Post-Processing. Dokumentationsspezifisches Tree/Viewer-

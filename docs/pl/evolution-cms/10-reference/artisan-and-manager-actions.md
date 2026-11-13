@@ -1,4 +1,4 @@
-# Działania Artisan i Manager
+# Działania Artisan i panelu administracyjnego
 
 [Wstecz](events.md) / [W górę](../README.md) / [Dalej](source-inventory.md)
 
@@ -22,7 +22,7 @@ powierzchni i [Omówienie poleceń Artisan](artisan-commands.md) dla pełnego
 Powierzchnia poleceń zainstalowanego projektu. Ta strona to kompaktowa mapa, która łączy
 polecenia z powierzchniami akcji menedżera.
 
-## Źródła akcji Manager
+## Źródła działań panelu administracyjnego
 
 Akcje Manager nie są pojedynczym nowoczesnym plikiem trasy. Obecne zachowanie menedżera jest
 rozwiązany z kilku powierzchni:

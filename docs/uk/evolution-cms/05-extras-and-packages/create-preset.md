@@ -1,4 +1,4 @@
-# Створити Preset
+# Створення пресета
 
 [Extras Та Пакети](README.md) / Створити Preset
 
@@ -9,7 +9,7 @@ component до project; preset створює стартову форму сам
 theme assets, controllers, starter config, required Extras і optional seeders,
 які готують перший робочий сайт.
 
-## Preset Чи Package
+## Пресет чи пакет
 
 | Потреба | Використовуйте |
 | --- | --- |
@@ -22,7 +22,7 @@ Preset може містити малий custom package для site-specific co
 seeders або service provider wiring. Але preset все одно лишається project-layer
 scaffold, а не component package.
 
-## Встановити Preset
+## Встановлення пресета
 
 Presets застосовуються standalone installer під час створення project.
 
@@ -56,7 +56,7 @@ evo install preset-check \
   --preset=path/to/preset
 ```
 
-## Preset Layout
+## Структура пресета
 
 Modern preset містить тільки project layer, який installer копіює у generated
 site.
@@ -94,7 +94,7 @@ preset-name/
 Не комітьте Evolution core, manager files, runtime cache, local databases,
 local secrets або IDE workspace files у preset.
 
-## Project Composer
+## Composer у проєкті
 
 `core/custom/composer.json` описує project-layer autoloading і required Composer
 Extras.
@@ -117,7 +117,7 @@ Extras.
 Required Extras додавайте тільки тоді, коли starter site без них не працює.
 Optional Extras мають лишатися optional в installer.
 
-## Custom Package Layer
+## Пакет проєкту
 
 Майже кожен preset має маленький custom package у `core/custom/packages`.
 
@@ -132,7 +132,7 @@ Optional Extras мають лишатися optional в installer.
 Generic manager modules, reusable APIs, tables і integration logic мають жити в
 окремих packages.
 
-## Service Provider
+## Постачальник служб
 
 Preset service provider має лишатися малим.
 
@@ -160,7 +160,7 @@ final class BlogPresetServiceProvider extends ServiceProvider
 }
 ```
 
-## Views And Controllers
+## Шаблони й контролери
 
 Views задають стартовий frontend:
 
@@ -173,7 +173,7 @@ Controllers мають лишатися близько до starter use case. De
 потребує тільки `HomeController`. Blog preset може додати blog, post і contact
 controllers, бо це частина site baseline.
 
-## Theme Assets
+## Ресурси теми
 
 Theme assets тримайте у `themes/<preset-name>/`. Preset має працювати одразу
 після install. Якщо потрібен Node build, це має бути явно описано, але перша
@@ -183,13 +183,13 @@ DaisyUI presets можуть використовувати CDN-loaded DaisyUI/T
 assets і small theme controller script для light/dark/theme switching. Custom
 DaisyUI theme tokens тримайте у preset theme CSS file.
 
-## Preset Config
+## Конфігурація пресета
 
 Preset-specific settings тримайте у `core/custom/config/presets/<preset>.php`.
 Там доречні theme defaults, visible theme lists, feature flags і starter route
 defaults. Secrets у preset config не зберігайте.
 
-## Seeders
+## Сідери
 
 Seeders використовуйте тільки для starter state:
 
@@ -200,7 +200,7 @@ Seeders використовуйте тільки для starter state:
 
 Не додавайте великі demo records, які кожен реальний site мусить видаляти.
 
-## README Contract
+## Вимоги до README
 
 Кожен preset README має пояснювати:
 
@@ -212,7 +212,7 @@ Seeders використовуйте тільки для starter state:
 - де живуть views, theme assets, config і PHP site logic;
 - який наступний project step після install.
 
-## Validation
+## Перевірка
 
 Перед release створіть fresh project із preset.
 
@@ -242,7 +242,7 @@ evo install preset-check \
 - generated project `.gitignore` не комітить core, manager, cache, databases,
   local secrets і IDE files.
 
-## Release Checklist
+## Що перевірити перед випуском
 
 Перед publishing перевірте:
 

@@ -1,4 +1,4 @@
-# Actions Artisan et Manager
+# Actions d’Artisan et de l’administration
 
 [Retour](events.md) / [Haut](../README.md) / [Suivant](source-inventory.md)
 
@@ -22,7 +22,7 @@ surface et [Référence des commandes Artisan](artisan-commands.md) pour l'inté
 surface de commande du projet installé. Cette page est une carte compacte qui relie
 commandes avec les surfaces d'action du gestionnaire.
 
-## Manager Sources d'actions
+## Sources des actions d’administration
 
 Les actions Manager ne constituent pas un seul fichier de route moderne. Le comportement actuel du manager est
 résolu à partir de plusieurs surfaces :

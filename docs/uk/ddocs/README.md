@@ -24,12 +24,12 @@ dDocs - файловий браузер документації для мене
 
 - [Гайд користувача](user-guide.md)
 - [Гайд розробника](developer-guide.md)
-- [Frontend Guide](frontend-guide.md)
+- [Посібник із клієнтської частини](frontend-guide.md)
 - [Конфігурація](configuration.md)
-- [Reference](reference.md)
-- [Troubleshooting](troubleshooting.md)
+- [Довідка dDocs](reference.md)
+- [Усунення несправностей](troubleshooting.md)
 - [Стандарти документації](documentation-standards.md)
-- [Markdown example](markdown-example.md)
+- [Приклад Markdown](markdown-example.md)
 
 ## Рендеринг Markdown
 
@@ -44,7 +44,7 @@ dDocs також відповідає за безпеку viewer:
 - локальні зображення конвертуються тільки після перевірки safe roots;
 - відсутні відносні посилання лишаються неактивними і не навігують iframe.
 
-## Runtime Model
+## Робота модуля
 
 ```text
 Composer packages / local Evolution packages

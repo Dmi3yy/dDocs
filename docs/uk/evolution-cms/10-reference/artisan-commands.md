@@ -1,4 +1,4 @@
-# Artisan Довідка про команди
+# Довідка з команд Artisan
 
 [Назад](legacy-compatibility.md) / [Вгору](../README.md) / [Далі](models.md)
 

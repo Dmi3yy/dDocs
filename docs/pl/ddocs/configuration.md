@@ -32,7 +32,7 @@ config/dDocsSettings.php
 | `extra_docs_roots` | multiline paths | empty | Dodatkowe docs roots. |
 | `show_internal_task_docs` | boolean-like `0`/`1` | `0` | Pokazuje internal task artifacts. |
 
-## Search Behavior
+## Działanie wyszukiwania
 
 Search behavior jest głównie runtime behavior, nie stabilną configuration
 surface.
@@ -48,7 +48,7 @@ surface.
 | Active-source-only search | Not configurable yet. |
 | Search cache | Not implemented yet. |
 
-## Language Rules
+## Reguły wyboru języka
 
 Ukraińska dokumentacja używa tylko `uk`. Legacy manager value `ua` jest
 normalizowany do `uk`; nie twórz `docs/ua`.

@@ -1,4 +1,4 @@
-# Reference
+# Référence
 
 ## Routes
 
@@ -9,7 +9,7 @@
 | `GET` | `/ddocs/plantuml` | `dDocs.plantuml` | Redirect encoded UML. |
 | `GET` | `/dtui-plantuml` | `dDocs.plantuml.compat` | Compatibility route. |
 
-## Supported Files
+## Fichiers pris en charge
 
 | Item | Supported |
 | --- | --- |
@@ -18,7 +18,7 @@
 | Legacy docs folder | `Docs/`, compatibility only. |
 | Ukrainian docs folder | `uk` only. |
 
-## Search Reference
+## Référence de la recherche
 
 Current search is filesystem live search over indexed nodes.
 
@@ -34,7 +34,7 @@ Current search is filesystem live search over indexed nodes.
 | Parent folders | Included only as tree context for matching children. |
 | Search cache | None yet; `FileIndexCache` is navigation metadata. |
 
-## Document Node Metadata
+## Métadonnées des nœuds de document
 
 | Field | Meaning |
 | --- | --- |

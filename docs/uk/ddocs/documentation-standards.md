@@ -4,7 +4,7 @@
 Стандарт базується на Diataxis і організовує документацію навколо потреб
 читача, а не навколо внутрішньої структури команди.
 
-## Primary Documentation Types
+## Основні типи документації
 
 Кожна сторінка має мати один primary type.
 
@@ -18,7 +18,7 @@
 Не організовуйте package docs навколо назв команд типу frontend/backend, якщо
 package реально не має такого surface.
 
-## Required And Conditional Files
+## Обов’язкові та додаткові файли
 
 | File | Rule | Primary type | Audience |
 | --- | --- | --- | --- |
@@ -38,7 +38,7 @@ package реально не має такого surface.
 Якщо package не має frontend surface, не створюйте placeholder
 `frontend-guide.md`. Опишіть boundary у `developer-guide.md`.
 
-## Folder Layout
+## Структура каталогів
 
 Використовуйте lowercase `docs/`.
 
@@ -70,7 +70,7 @@ docs/
 нова документація має жити у `docs/`. Generated docsite переносимо в
 `docs_old/`.
 
-## Language Policy
+## Мовна політика
 
 English і Ukrainian - minimum release-quality locales для shared Extras
 packages. Polish, German і French очікуються для user-facing shared manager
@@ -88,7 +88,7 @@ surfaces, але можуть бути `partial`, поки переклад не
 `ua` нормалізується runtime-ом до `uk`; він не має бути docs folder, docs
 manifest locale, language index entry або release checklist target.
 
-## Package Metadata Contract
+## Вимоги до метаданих пакета
 
 Кожен package, який показується в dDocs, має мати localized manager metadata у
 `lang/<locale>/global.php`.
@@ -114,7 +114,7 @@ Rules:
 - Якщо metadata відсутня, dDocs fallback-иться до Composer aliases або package
   names; це прийнятно тільки для legacy packages.
 
-## Page Rules
+## Правила оформлення сторінок
 
 - One H1 per page.
 - Не пропускайте heading levels.
@@ -126,7 +126,7 @@ Rules:
 - Reference data краще оформлювати таблицями.
 - Paragraphs мають бути короткими і scannable.
 
-## Link Rules
+## Правила оформлення посилань
 
 Використовуйте relative links.
 
@@ -143,7 +143,7 @@ Rules:
 
 Не лінкуйте generated HTML, якщо є Markdown source.
 
-## Image And Diagram Rules
+## Правила для зображень і діаграм
 
 Screenshots і diagrams кладемо в `docs/assets/`.
 
@@ -161,7 +161,7 @@ Rules:
 - Diagram source files треба зберігати, коли це можливо.
 - Images мають лишатися всередині docs root.
 
-## Code Block Rules
+## Правила для блоків коду
 
 Кожен fenced code block має language.
 
@@ -179,7 +179,7 @@ docs/
   uk/
 ```
 
-## Task Artifact Rules
+## Правила для матеріалів завдання
 
 Не змішуйте implementation task artifacts із public package documentation.
 dIssues artifacts мають жити у configured artifact store, не в package
@@ -188,7 +188,7 @@ dIssues artifacts мають жити у configured artifact store, не в pack
 `docs/tasks/` дозволений тільки для legacy material або explicit migration work
 і прихований за замовчуванням через `show_internal_task_docs = 0`.
 
-## Quality Gates
+## Перевірки якості
 
 Documentation release-ready тільки коли проходять:
 
@@ -218,7 +218,7 @@ Local fallback для dDocs:
 php docs/checks/docs-check.php
 ```
 
-## Definition Of Done
+## Критерії готовності
 
 Package documentation done, якщо:
 

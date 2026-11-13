@@ -1,4 +1,4 @@
-# Resources et arborescence des documents
+# Ressources et arborescence des documents
 
 [Retour](README.md) / [Haut](README.md) / [Suivant](elements.md)
 

@@ -52,7 +52,7 @@ leer.
 | `OnCacheUpdate` | Nach dem Cache-Neuaufbau. |
 | `OnSiteRefresh` | Manager Site-Aktualisierungsaktion. |
 
-## Manager Shell-Ereignisse
+## Ereignisse der Manager-Oberfläche
 
 | Veranstaltung | Typischer Bereich |
 | --- | --- |

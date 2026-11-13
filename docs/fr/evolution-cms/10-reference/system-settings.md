@@ -7,7 +7,7 @@ Les valeurs par défaut pour une nouvelle installation sont définies par l'usin
 et peut être modifié via l'écran Paramètres système du gestionnaire lorsque le
 L'utilisateur gestionnaire est autorisé à modifier les paramètres.
 
-## Manager Onglets
+## Onglets de l’administration
 
 | Onglet | Zone de paramètres |
 | --- | --- |
@@ -83,7 +83,7 @@ Plugins peut ajouter HTML aux onglets de paramètres via le rendu des paramètre
 Voir [Référence des balises Parser](parser-tags.md) avant de documenter la syntaxe du modèle
 ou le comportement de l'analyseur.
 
-## Manager Paramètres par défaut de l'interface
+## Paramètres par défaut de l’interface d’administration
 
 | Paramètre | Par défaut | Signification |
 | --- | --- | --- |

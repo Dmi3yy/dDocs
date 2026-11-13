@@ -29,7 +29,7 @@ Tabler залишається типовим варіантом. Для влас
 Іконка відображається як зображення, не як inline SVG; форма й кольори зберігаються.
 Без `icon_svg` поведінка інших пакетів не змінюється.
 
-## Runtime Model
+## Робота модуля
 
 ```text
 DocsSourceRegistry -> DocsIndexer -> FileIndexCache
@@ -44,7 +44,7 @@ FileSearch         -> title, path, source, and content search
 Filesystem є source of truth. dDocs не використовує database tables для package
 documentation.
 
-## Services
+## Служби
 
 | Service | Responsibility |
 | --- | --- |
@@ -59,7 +59,7 @@ documentation.
 | `MarkdownExport` | Збирає один downloadable Markdown file з readable documents у поточному file index. |
 | `Diagnostics` | Повертає read-only source/cache/language/path-safety state для manager/debug. |
 
-## Runtime Lookup
+## Пошук під час виконання
 
 Точні lookup-таблиці живуть на reference-сторінках, щоб цей guide не дублював
 довідник:
@@ -74,7 +74,7 @@ documentation.
 Diagnostics містить filesystem metadata, тому diagnostic routes мають лишатися
 за manager/debug guard.
 
-## Search Runtime Model
+## Як працює пошук
 
 dDocs зараз використовує filesystem live search: live filter поверх file index,
 а не окремий search engine, full-text index або indexed search service.
@@ -100,7 +100,7 @@ nodes, allowed extensions, safe docs roots і файли нижче `max_file_si
 Checksums зараз належать metadata/cache invalidation. Вони ще не є
 search-index invalidation, бо окремого search index немає.
 
-## Search Roadmap
+## План розвитку пошуку
 
 Пошук має лишатися filesystem-first. Наступний крок - generated file-based
 `FileSearchIndexCache`, не database table і не external search service.
@@ -126,7 +126,7 @@ search-index invalidation, бо окремого search index немає.
 search content або vector search для першого релізу. Це зайва інфраструктура
 для поточної моделі file-as-source-of-truth.
 
-## Source Discovery Contract
+## Правила виявлення джерел
 
 dDocs знаходить docs із:
 
@@ -139,7 +139,7 @@ dDocs знаходить docs із:
 Нові пакети мають використовувати lowercase `docs/`. Legacy `Docs/` лишається
 тільки для compatibility.
 
-## Language Contract
+## Правила вибору мови
 
 dDocs вибирає одне effective language tree:
 
@@ -153,7 +153,7 @@ Tree не має показувати всі локалі одночасно. Do
 використовувати `uk` для українського контенту. Legacy `docs/ua` може читатись
 тільки як migration alias і в індексі показується як `uk`.
 
-## Extension Points
+## Точки розширення
 
 | Surface | Status | Rule |
 | --- | --- | --- |
@@ -164,7 +164,7 @@ Tree не має показувати всі локалі одночасно. Do
 | Diagnostics | Guarded manager/debug route | Не відкривайте filesystem metadata без diagnostics guard. |
 | Search indexing | Internal service | Не прибирайте file-size limits і safe reads. |
 
-## Path Safety
+## Безпека шляхів
 
 Усі reads/writes мають проходити через normalized paths і safe-root checks. Raw
 path із request не можна trust.
@@ -172,7 +172,7 @@ path із request не можна trust.
 Writable actions обмежені Project Documentation. Vendor docs індексуються і
 рендеряться, але manager UI їх не записує.
 
-## Cache Behavior
+## Поведінка кешу
 
 Коли `cache_index` enabled, dDocs пише generated PHP file тільки з metadata:
 source nodes, folder nodes, document paths, language metadata, timestamps і
@@ -181,14 +181,14 @@ checksums. Canonical Markdown лишається у source files.
 Оновлюйте індекс після ручних змін package docs, змін root configuration або
 language structure.
 
-## Frontend Boundary
+## Відповідальність клієнтської частини
 
 dDocs має реальний frontend surface: Blade shell, Livewire DOM, dTui/TOAST UI
 viewer, Prism і browser post-processing. Documentation-specific tree/viewer
 behavior тримаємо локально в dDocs, поки ще один package не потребує такого
 primitive. Shared primitive треба переносити через evo-ui.
 
-## Verification Commands
+## Команди перевірки
 
 ```bash
 find . -path './vendor' -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l

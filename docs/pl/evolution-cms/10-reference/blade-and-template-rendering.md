@@ -46,7 +46,7 @@ Szablony dokumentów Blade otrzymują bieżący obiekt wykonawczy i dane dokumen
 Gdy procesor porcji `DLTemplate` jest aktywny, te same współużytkowane dane są również aktywne
 przeszedł do integracji Blade.
 
-## Manager Blade Widoki
+## Widoki Blade w panelu administracyjnym
 
 Interfejs menedżera używa widoków Blade w przestrzeni nazw widoku menedżera.
 

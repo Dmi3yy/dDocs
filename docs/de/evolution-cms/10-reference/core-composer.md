@@ -1,4 +1,4 @@
-# Core Composer-Referenz
+# Composer-Referenz für den Kern
 
 [Zurück](configuration-runtime.md) / [Nach oben](../README.md) / [Weiter](legacy-compatibility.md)
 
@@ -17,18 +17,20 @@ Evolution CMS-Projekt.
 Die Stammdatei Composer beschreibt das Projektpaket. Die Laufzeitabhängigkeit
 Graph steht unter `core/composer.json`.
 
-## Metadaten des Laufzeitpakets
+## Metadaten des Kernpakets
 
-| Feld | Aktueller Wert |
+Im Manager zeigt dDocs die Werte aus `core/composer.json` dieser Installation. Außerhalb des Managers oder bei fehlendem Wert zeigt die Tabelle den Composer-Schlüssel.
+
+| Feld | Wert oder Composer-Schlüssel |
 | --- | --- |
-| Paket | `evolution-cms/evolution` |
-| Geben Sie | ein `project` |
-| Version | `3.5.7` |
-| Lizenz | `GPL-3.0-or-later` |
-| PHP-Basislinie | `^8.3` |
-| Anbieterverzeichnis | `vendor` innerhalb von `core/` |
-| Mindeststabilität | `dev` |
-| Bevorzugen Sie stabile | `true` |
+| Paket | `name`<!-- core-composer --> |
+| Typ | `type`<!-- core-composer --> |
+| Version in Composer | `version`<!-- core-composer --> |
+| Lizenz | `license`<!-- core-composer --> |
+| PHP-Anforderung | `require.php`<!-- core-composer --> |
+| Abhängigkeitsverzeichnis | `config.vendor-dir`<!-- core-composer --> |
+| Mindeststabilität | `minimum-stability`<!-- core-composer --> |
+| Stabile Versionen bevorzugen | `prefer-stable`<!-- core-composer --> |
 
 ## Laufzeitabhängigkeitsgruppen
 

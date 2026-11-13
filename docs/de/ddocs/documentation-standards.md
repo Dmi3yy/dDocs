@@ -3,7 +3,7 @@
 Jede Seite hat einen primary documentation type: Tutorial, How-to guide,
 Reference oder Explanation.
 
-## Required And Conditional Files
+## Pflichtdateien und optionale Dateien
 
 | File | Rule |
 | --- | --- |
@@ -15,13 +15,13 @@ Reference oder Explanation.
 | `docs/<locale>/reference.md` | Required when routes, APIs, services, or formats need lookup. |
 | `docs/<locale>/frontend-guide.md` | Conditional, only when package has frontend surface. |
 
-## Locale Policy
+## Sprachrichtlinie
 
 Die ukrainische Dokumentationslocale ist nur `uk`. Legacy `ua` ist ein runtime
 alias und darf nicht als docs folder, manifest locale, language index entry oder
 release target erscheinen.
 
-## Quality Gates
+## Qualitätsprüfungen
 
 - One H1 per page.
 - No skipped heading levels.

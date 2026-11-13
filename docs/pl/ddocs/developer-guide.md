@@ -1,9 +1,9 @@
-# Gaid dewelopera
+# Przewodnik dla programistów
 
 Ten przewodnik wyjaśnia, jak dDocs jest połączony, jak wykrywa dokumentację i
 jak deweloperzy powinni bezpiecznie go rozszerzać.
 
-## Model runtime
+## Działanie modułu
 
 ```text
 DocsSourceRegistry -> DocsIndexer -> FileIndexCache
@@ -33,7 +33,7 @@ dokumentacji pakietów.
 | `MarkdownExport` | Buduje jeden pobieralny plik Markdown z czytelnych dokumentów bieżącego indeksu plików. |
 | `Diagnostics` | Raportuje stan źródeł read-only, cache, języka i path safety dla manager/debug. |
 
-## Dane lookup runtime
+## Wyszukiwanie podczas działania
 
 Nie trzymaj dokładnych danych lookup w tym przewodniku, aby dokumentacja była
 łatwa do utrzymania.
@@ -47,7 +47,7 @@ Nie trzymaj dokładnych danych lookup w tym przewodniku, aby dokumentacja była
 Diagnostyka zawiera metadane systemu plików, dlatego trasy diagnostyczne muszą
 pozostać za guardem manager/debug opisanym w [Referencji](reference.md).
 
-## Model runtime wyszukiwania
+## Jak działa wyszukiwanie
 
 dDocs obecnie używa filesystem live search: live filter nad indeksem plików, a
 nie dedykowanego search engine, full-text index ani indeksowanej usługi search.
@@ -75,7 +75,7 @@ pozostaje czytelne podczas aktywnego wyszukiwania.
 Checksumy obecnie należą do metadanych i invalidacji cache. Nie są jeszcze używane
 do invalidacji indeksu search, bo oddzielny indeks search jeszcze nie istnieje.
 
-## Roadmap wyszukiwania
+## Plan rozwoju wyszukiwania
 
 Wyszukiwanie powinno pozostać filesystem-first. Następnym krokiem powinien być
 wygenerowany file-based `FileSearchIndexCache`, a nie tabela w bazie danych ani
@@ -163,7 +163,7 @@ języka, timestampy i checksumy. Nie przechowuje kanonicznego Markdown w bazie d
 Odśwież indeks po ręcznych zmianach package docs, zmianach konfiguracji roots albo
 zmianach struktury językowej.
 
-## Granica frontend
+## Zakres działania interfejsu
 
 dDocs ma prawdziwą powierzchnię frontend: Blade shell, Livewire DOM, dTui/TOAST UI
 viewer, Prism i browser post-processing. Zachowanie drzewa/viewer specyficzne dla

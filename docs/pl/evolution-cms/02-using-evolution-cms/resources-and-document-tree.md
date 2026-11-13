@@ -1,4 +1,4 @@
-# Resources i drzewo dokumentów
+# Zasoby i drzewo dokumentów
 
 [Wstecz](README.md) / [W górę](README.md) / [Dalej](elements.md)
 

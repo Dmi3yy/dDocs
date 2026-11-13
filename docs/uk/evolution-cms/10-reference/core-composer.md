@@ -1,4 +1,4 @@
-# Core Composer Reference
+# Довідка з Composer ядра
 
 [Назад](configuration-runtime.md) / [Вгору](../README.md) / [Далі](legacy-compatibility.md)
 
@@ -6,7 +6,7 @@ Evolution CMS використовує файл Composer рівня проект
 основний файл Composer є основною межею залежності середовища виконання для встановленого
 Проект Evolution CMS.
 
-## Composer Файли
+## Файли Composer
 
 | Файл | Відповідальність |
 | --- | --- |
@@ -17,18 +17,20 @@ Evolution CMS використовує файл Composer рівня проект
 Кореневий файл Composer описує пакет проекту. Залежність часу виконання
 графік живе під `core/composer.json`.
 
-## Метадані пакета виконання
+## Метадані пакета ядра
 
-| Поле | Поточне значення |
+В адмінці dDocs показує значення з `core/composer.json` цієї інсталяції. Поза адмінкою або коли значення недоступне, таблиця показує ключ Composer.
+
+| Поле | Значення або ключ Composer |
 | --- | --- |
-| Пакет | `evolution-cms/evolution` |
-| Тип | `project` |
-| Версія | `3.5.7` |
-| Ліцензія | `GPL-3.0-or-later` |
-| PHP базовий рівень | `^8.3` |
-| Каталог постачальників | `vendor` всередині `core/` |
-| Мінімальна стійкість | `dev` |
-| Віддаю перевагу стабільному | `true` |
+| Пакет | `name`<!-- core-composer --> |
+| Тип | `type`<!-- core-composer --> |
+| Версія в Composer | `version`<!-- core-composer --> |
+| Ліцензія | `license`<!-- core-composer --> |
+| Вимога до PHP | `require.php`<!-- core-composer --> |
+| Каталог залежностей | `config.vendor-dir`<!-- core-composer --> |
+| Мінімальна стабільність | `minimum-stability`<!-- core-composer --> |
+| Перевага стабільним версіям | `prefer-stable`<!-- core-composer --> |
 
 ## Групи залежностей під час виконання
 
@@ -53,7 +55,7 @@ Evolution CMS використовує файл Composer рівня проект
 `openssl`, `pcre`, `pdo`, `session`, `simplexml`, `tokenizer`, `xml`,
 `xmlreader` і `zip`.
 
-## Composer Об’єднати Plugin
+## Плагін об’єднання конфігурацій Composer
 
 Основна конфігурація Composer використовує `wikimedia/composer-merge-plugin` для включення:
 
@@ -84,7 +86,7 @@ custom/composer.json
 Список автозавантаження файлів зберігає застарілі функції помічника/дій, доступні в
 сучасний час виконання.
 
-## Composer Скрипти
+## Скрипти Composer
 
 | Сценарій | Призначення |
 | --- | --- |
@@ -101,7 +103,7 @@ custom/composer.json
 метадані пакета не оновлювати, запустити дамп автозавантаження Composer і перевірити пакет
 результат відкриття.
 
-## Dev Tooling
+## Інструменти розробки
 
 Основні залежності розробника включають:
 

@@ -1,4 +1,4 @@
-# Створити Пакет
+# Створення пакета
 
 [Extras Та Пакети](README.md) / Створити Пакет
 
@@ -10,7 +10,7 @@ frontend helper package.
 packages додають багатші поверхні: EvoUI presets, Livewire manager panels,
 settings forms, builder blocks, published assets і localized filesystem docs.
 
-## Створити Scaffold Пакета
+## Створення каркаса пакета
 
 Для нового local package починайте з package generator у встановленому проекті:
 
@@ -99,7 +99,7 @@ package/
 placeholder folders допустимі лише тоді, коли вони потрібні installer або
 package loader.
 
-## Composer Contract
+## Вимоги Composer
 
 `composer.json` є discovery contract пакета.
 
@@ -138,7 +138,7 @@ package loader.
 Додавайте `evolution-cms/evo-ui` тільки якщо package використовує EvoUI manager
 surfaces. Frontend build dependencies потрібні лише пакетам із browser assets.
 
-## Service Provider
+## Постачальник служб
 
 Service provider є entrypoint пакета. Він має явно реєструвати surfaces і
 розділяти їх за runtime area.
@@ -167,7 +167,7 @@ Manager-only surfaces реєструйте тільки в manager mode:
 Provider має бути declarative. Business logic належить services, controllers,
 table providers, models або support classes.
 
-## Manager Module
+## Модуль адмінки
 
 Manager module відповідає за дві речі:
 
@@ -182,7 +182,7 @@ defensively, будувати малий context array, рендерити Blade
 виносити query/save/delete logic у controllers, services, models або EvoUI
 providers.
 
-## EvoUI Pattern
+## Використання EvoUI
 
 Використовуйте EvoUI для repeatable manager surfaces: tables, filters, row
 actions, modals, confirmation dialogs, settings forms, choices fields і builder
@@ -196,7 +196,7 @@ fields.
 | Runtime settings defaults | package config defaults |
 | Project overrides | project custom config |
 
-## Livewire Pattern
+## Використання Livewire
 
 Livewire використовуйте, коли manager workspace потребує reactive state, tab
 switching або partial updates без повного reload.
@@ -212,7 +212,7 @@ Typical Livewire manager panel має:
 
 Component координує UI, але не є domain service.
 
-## Routes, Controllers І Facades
+## Маршрути, контролери й фасади
 
 Package routes групуйте з package prefix і stable route name.
 
@@ -227,7 +227,7 @@ Controllers обробляють HTTP requests. Services або facades трим
 methods описуйте у package reference; internal helpers не виносьте в public
 docs.
 
-## Config And Settings
+## Конфігурація та налаштування
 
 Розділяйте три config layers:
 
@@ -245,7 +245,7 @@ docs.
 - destructive або externally visible behavior робіть opt-in;
 - manager-editable settings краще відкривати через settings forms.
 
-## Assets And Build Output
+## Ресурси та результати збірки
 
 Package може постачати prebuilt assets, щоб runtime працював без Node.js.
 Source files тримайте у `resources/`, built assets у `public/` або явній package
@@ -259,13 +259,13 @@ Use package-specific publish tags:
 - `package-migrations`;
 - `package-images`.
 
-## Migrations, Seeders, And Commands
+## Міграції, сідери й команди
 
 Migrations відповідають за package-owned tables. Seeders або install commands
 мають бути idempotent, не дублювати records і не ставити demo data у production
 без явної дії користувача.
 
-## Localization
+## Локалізація
 
 Використовуйте canonical locale folders.
 
@@ -279,7 +279,7 @@ Migrations відповідають за package-owned tables. Seeders або in
 Legacy manager language values можуть нормалізуватись runtime code, але нова
 package documentation не має публікувати `ua` як documentation locale.
 
-## Package Documentation
+## Документація пакета
 
 Кожен package, видимий у dDocs, має постачати filesystem documentation.
 
@@ -303,7 +303,7 @@ docs/
 CSS, assets або browser runtime. Не створюйте placeholder frontend guide для
 backend-only packages.
 
-## Tests And Verification
+## Тести й перевірка
 
 Мінімум:
 
@@ -325,7 +325,7 @@ php artisan migrate --pretend
 - package docs appear in dDocs;
 - internal Markdown links resolve.
 
-## Release Checklist
+## Що перевірити перед випуском
 
 Перед release перевірте:
 
